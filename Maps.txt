@@ -1,0 +1,20 @@
+# This file specifies a list of custom maps to be loaded
+# by the system. The format should look like the following:
+# #-----MAP 1-----
+# SWLat=32:00:00.0N
+# SWLon=106:00:00.0W
+# SWAlt=10
+# NELat=33:00:00.0N
+# NELon=105:00:00.0W
+# NEAlt=10
+# VisibleAltitude=50
+# DrawPriority=0
+# Image=hello.jpg
+# ENDMAP
+# #-----MAP 2-----
+# SWLat=32:00:00.0N
+# ...
+# ENDMAP
+#
+# Note that the altitudes are in KM
+#

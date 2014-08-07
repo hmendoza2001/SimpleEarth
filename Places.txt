@@ -1,0 +1,6 @@
+PLACES
+PlaceName=Franklin Mountains
+PlaceLatitude=31.781684
+PlaceLongitude=-106.479484
+PlaceAltitude=1.855518
+ENDPLACE
