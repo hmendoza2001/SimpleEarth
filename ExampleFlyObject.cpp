@@ -79,20 +79,6 @@ void ExampleFlyObject::run()
   rotation.z = 0.0;
   worldObject->setRotation(rotation);
 
-
-
-
-  worldObject->setIsClickable(true);
-  QStringList stringList;
-  stringList.append("Hello there!");
-  worldObject->setCustomInfo(stringList);
-  worldObject->setSpeed(80.0f);
-  worldObject->setGroup(WorldObject::TRACK);
-
-
-
-
-
   //add object to manager so that it gets rendered
   WorldObjectMgr::getInstance()->addWorldObject(worldObject);
 
