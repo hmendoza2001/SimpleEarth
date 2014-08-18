@@ -114,8 +114,6 @@ void ShapeRenderer::render()
     SimpleColor color = mWorldObject->getColor();
     glColor4f(color.red, color.green, color.blue, 0.5f);
 
-    glPointSize(3.0f);
-
     //draw outline
     glDisable(GL_CULL_FACE);
     glPolygonMode(GL_BACK, GL_LINE);
