@@ -103,16 +103,30 @@ void MeasuringTool::render()
   GeodeticPosition startPointGeo = Utilities::xyzToGeodetic(mStartPoint);
   if (!Utilities::checkObscure(Camera::getInstance()->getGeodeticPosition(), startPointGeo))
   {
-    glColor4f(0.0f,1.0f,1.0f,1.0f);
+    if (!(mStartPoint.x == 0 && mStartPoint.y == 0 && mStartPoint.z == 0))
+    {
+      glDisable(GL_DEPTH_TEST);
 
-    glDisable(GL_DEPTH_TEST);
-    glLineWidth(3.0f);
-    glBegin(GL_LINES);
-    glVertex3f(mStartPoint.x, mStartPoint.y, mStartPoint.z);
-    glVertex3f(mEndPoint.x, mEndPoint.y, mEndPoint.z);
-    glEnd();
-    glLineWidth(1.0f);
-    glEnable(GL_DEPTH_TEST);
+      //draw end points
+      glColor4f(1.0f,0.5f,0.0f,1.0f);
+      glPointSize(6.0f);
+      glBegin(GL_POINTS);
+      glVertex3f(mStartPoint.x, mStartPoint.y, mStartPoint.z);
+      glVertex3f(mEndPoint.x, mEndPoint.y, mEndPoint.z);
+      glEnd();
+      glPointSize(1.0f);
+
+      //draw line
+      glColor4f(0.0f,1.0f,1.0f,1.0f);
+      glLineWidth(2.0f);
+      glBegin(GL_LINES);
+      glVertex3f(mStartPoint.x, mStartPoint.y, mStartPoint.z);
+      glVertex3f(mEndPoint.x, mEndPoint.y, mEndPoint.z);
+      glEnd();
+      glLineWidth(1.0f);
+
+      glEnable(GL_DEPTH_TEST);
+    }
   }
 }
 
