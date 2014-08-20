@@ -49,7 +49,7 @@ ToolMgr::~ToolMgr()
 /**
  * Singleton pattern implementation. Returns the single instance of this class.
  *
- * @return Returns the single instance of this class.
+ * @return The single instance of this object.
  */
 ToolMgr* ToolMgr::getInstance()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
