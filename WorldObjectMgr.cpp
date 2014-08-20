@@ -36,7 +36,6 @@ WorldObjectMgr* WorldObjectMgr::mInstance = NULL;
 WorldObjectMgr::WorldObjectMgr()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
-  mShowLabels = false;
   //set timer to check for expired tracks
   mExpireTimer = new QTimer(0);
   connect(mExpireTimer, SIGNAL(timeout()), this, SLOT(onExpireTimer()));
@@ -286,28 +285,4 @@ void WorldObjectMgr::onExpireTimer()
       }
     }
   }
-}
-
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-/**
- * Returns the global that controls the showing/hiding of icon labels.
- *
- * @return True if labels are shown, false otherwise
- */
-bool WorldObjectMgr::getShowLabels()
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-{
-  return mShowLabels;
-}
-
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-/**
- * Sets the global that controls the showing/hiding of icon labels.
- *
- * @param show Set to true if you want labels to be shown
- */
-void WorldObjectMgr::setShowLabels(bool show)
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-{
-  mShowLabels = show;
 }

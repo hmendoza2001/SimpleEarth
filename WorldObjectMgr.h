@@ -61,8 +61,6 @@ class WorldObjectMgr : public QWidget
     void renderObjects();
     int getNumberOfObjects();
     int findWorldObject(QString name);
-    bool getShowLabels();
-    void setShowLabels(bool show);
 
   public slots:
     void onExpireTimer();
@@ -74,7 +72,6 @@ class WorldObjectMgr : public QWidget
     QList<WorldObject*> mWorldObjectList;
     QTimer* mExpireTimer;
     QMutex mMutex;
-    bool mShowLabels;
 };
 
 #endif//WORLD_OBJECT_MGR_H
