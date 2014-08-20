@@ -30,7 +30,7 @@
  * This class encapsulates the functionality to render the Heads Up Display
  * (HUD). Currently, the HUD renders text representing the camera position on
  * the upper left corner of the screen and also renders the labels for world
- * object.
+ * objects.
  *
  * @version 1.0
  * @author Hector Mendoza
@@ -39,15 +39,23 @@ class Hud
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   public:
-    Hud();
+    static Hud* getInstance();
     ~Hud();
 
+    bool getShowHud();
+    bool getShowLabels();
+    void setShowHud(bool show);
+    void setShowLabels(bool show);
     void setPainter(QPainter* painter);
     void renderHud();
 
   private:
+    Hud();//private due to Singleton implementation
     void renderWorldObjectLabels();
 
+    bool mShowHud;
+    bool mShowLabels;
+    static Hud* mInstance;
     QPainter* mPainter;
 };
 

@@ -24,7 +24,7 @@
 #include <QProgressDialog>
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
-#include "WorldObjectMgr.h"
+#include "Hud.h"
 #include "ToolMgr.h"
 #include "PathTool.h"
 #include "VolumeTool.h"
@@ -107,11 +107,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
   connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(onOpen()));
   connect(ui->actionPaths, SIGNAL(triggered()), this, SLOT(onPathSave()));
   connect(ui->actionVolumes, SIGNAL(triggered()), this, SLOT(onVolumeSave()));
+  connect(ui->actionHud, SIGNAL(triggered()), this, SLOT(onHud()));
+  connect(ui->actionLabels, SIGNAL(triggered()), this, SLOT(onLabels()));
   connect(ui->actionToolbar, SIGNAL(triggered()), this, SLOT(onToolbar()));
   connect(ui->actionPlaces, SIGNAL(triggered()), this, SLOT(onPlaces()));
   connect(ui->actionTrackInfo, SIGNAL(triggered()), this, SLOT(onTrackInfo()));
   connect(ui->actionPathVolume, SIGNAL(triggered()), this, SLOT(onPathVolume()));
-  connect(ui->actionLabels, SIGNAL(triggered()), this, SLOT(onTrackLabels()));
   connect(ui->actionHelp, SIGNAL(triggered()), this, SLOT(onHelp()));
   connect(ui->actionAbout, SIGNAL(triggered()), this, SLOT(onAbout()));
   connect(ui->actionExit, SIGNAL(triggered()), this, SLOT(onExit()));
@@ -399,8 +400,30 @@ void MainWindow::onVolumeSave()
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
- * Qt SLOT. Gets called when the Toolbar menu item is selected. Shows/Hides the
- * toolbar.
+ * Qt SLOT. Gets called when the Hud item is selected under the View menu.
+ * Shows/Hides the Heads Up Display (HUD).
+ */
+void MainWindow::onHud()
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+{
+  Hud::getInstance()->setShowHud(ui->actionHud->isChecked());
+}
+
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+/**
+ * Qt SLOT. Gets called when the Labels item is selected under the View
+ * menu. Sets global showLabels flag.
+ */
+void MainWindow::onLabels()
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+{
+  Hud::getInstance()->setShowLabels(ui->actionLabels->isChecked());
+}
+
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+/**
+ * Qt SLOT. Gets called when the Toolbar item is selected under the View menu.
+ * Shows/Hides the toolbar.
  */
 void MainWindow::onToolbar()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -447,17 +470,6 @@ void MainWindow::onPathVolume()
 {
   mPathVolumeWindow->initialize();
   mPathVolumeWindow->show();
-}
-
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-/**
- * Qt SLOT. Gets called when the Track Labels item is selected under the View
- * menu. Sets global showLabels flag.
- */
-void MainWindow::onTrackLabels()
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-{
-  WorldObjectMgr::getInstance()->setShowLabels(ui->actionLabels->isChecked());
 }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

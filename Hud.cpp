@@ -26,6 +26,8 @@
 #include "Utilities.h"
 #include "Camera.h"
 
+Hud* Hud::mInstance = NULL;//Singleton implementation
+
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
  * Constructor. Initializes attributes.
@@ -33,6 +35,8 @@
 Hud::Hud()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
+  mShowHud = true;
+  mShowLabels = false;
   mPainter = NULL;
 }
 
@@ -43,6 +47,71 @@ Hud::Hud()
 Hud::~Hud()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
+}
+
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+/**
+ * Singleton pattern implementation. Returns the single instance of this class.
+ *
+ * @return The single instance of this class
+ */
+Hud* Hud::getInstance()
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+{
+  if (mInstance == NULL)
+  {
+    mInstance = new Hud();
+  }
+
+  return mInstance;
+}
+
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+/**
+ * Returns true if Heads Up Display (HUD) is shown.
+ *
+ * @return True if Heads Up Display (HUD) is shown, false otherwise
+ */
+bool Hud::getShowHud()
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+{
+  return mShowHud;
+}
+
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+/**
+ * Returns true if world object labels are shown.
+ *
+ * @return True if world object labels are shown, false otherwise
+ */
+bool Hud::getShowLabels()
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+{
+  return mShowLabels;
+}
+
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+/**
+ * Sets the value of flag to show/hide Heads Up Display (HUD).
+ *
+ * @param show Set to true if you want the HUD to be shown
+ */
+void Hud::setShowHud(bool show)
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+{
+  mShowHud = show;
+}
+
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+/**
+ * Sets the value of flag to show/hide world object labels.
+ *
+ * @param show Set to true if you want world object labels to be shown
+ */
+void Hud::setShowLabels(bool show)
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+{
+  mShowLabels = show;
 }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -67,36 +136,42 @@ void Hud::setPainter(QPainter* painter)
 void Hud::renderHud()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
-  //set semi-transparent black rectangle
   mPainter->setBrush(QBrush(QColor(0,0,0,100)));
-  mPainter->drawRect(12,10,195,68);
-
-  mPainter->setPen(Qt::white);
   mPainter->setFont(QFont("Arial", 13));
 
-  GeodeticPosition cameraPosition = Camera::getInstance()->getGeodeticPosition();
-  QString latStr = "Lat: " + Utilities::decimalDegreesToDMS(cameraPosition.latitude, true);
-  QString lonStr = "Lon: " + Utilities::decimalDegreesToDMS(cameraPosition.longitude, false);
-
-  //display camera altitude in Km or m
-  float altitudeKm = cameraPosition.altitude;
-  QString altStr;
-  if (altitudeKm < 1.0f)
+  if (mShowHud)
   {
-    int altitudeMeters = altitudeKm * 1000.0f;
-    altStr = "Alt: " + QString::number(altitudeMeters) + "m";
+    //draw semi-transparent black rectangle
+    mPainter->drawRect(12,10,195,68);
+
+    GeodeticPosition cameraPosition = Camera::getInstance()->getGeodeticPosition();
+    QString latStr = "Lat: " + Utilities::decimalDegreesToDMS(cameraPosition.latitude, true);
+    QString lonStr = "Lon: " + Utilities::decimalDegreesToDMS(cameraPosition.longitude, false);
+
+    //display camera altitude in Km or m
+    float altitudeKm = cameraPosition.altitude;
+    QString altStr;
+    if (altitudeKm < 1.0f)
+    {
+      int altitudeMeters = altitudeKm * 1000.0f;
+      altStr = "Alt: " + QString::number(altitudeMeters) + "m";
+    }
+    else
+    {
+      altStr = "Alt: " + QString::number(altitudeKm, 'f', 1) + "Km";
+    }
+
+    mPainter->setPen(Qt::white);
+    mPainter->drawText(20, 30, latStr);
+    mPainter->drawText(20, 50, lonStr);
+    mPainter->drawText(20, 70, altStr);
   }
-  else
+
+  if (mShowLabels)
   {
-    altStr = "Alt: " + QString::number(altitudeKm, 'f', 1) + "Km";
+    //render world object labels
+    renderWorldObjectLabels();
   }
-
-  mPainter->drawText(20, 30, latStr);
-  mPainter->drawText(20, 50, lonStr);
-  mPainter->drawText(20, 70, altStr);
-
-  //render world object labels
-  renderWorldObjectLabels();
 }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -120,7 +195,7 @@ void Hud::renderWorldObjectLabels()
     worldObject = worldObjectMgr->getWorldObject(i);
     if (worldObject != NULL && !worldObject->getHasExpired())
     {
-      if (worldObjectMgr->getShowLabels())
+      if (mShowLabels)
       {
         screenLocation = worldObject->getScreenLocation();
         screenLocation.y = (float)screenSize.y - screenLocation.y;//reverse Y
@@ -133,14 +208,14 @@ void Hud::renderWorldObjectLabels()
         {
           label = worldObject->getLabel();
 
-          //set pen color
+          //set pen color to world object color
           SimpleColor color = worldObject->getColor();
-          int red = color.red * 255.0;
-          int green = color.green * 255.0;
-          int blue = color.blue * 255.0;
+          int red = color.red * 255.0f;
+          int green = color.green * 255.0f;
+          int blue = color.blue * 255.0f;
           mPainter->setPen(QColor(red, green, blue));
 
-          mPainter->drawText(screenLocation.x+20.0, screenLocation.y, label);
+          mPainter->drawText((int)(screenLocation.x+20.0), (int)screenLocation.y, label);
         }
       }
     }

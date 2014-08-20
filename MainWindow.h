@@ -85,11 +85,12 @@ class MainWindow : public QMainWindow
     void onOpen();
     void onPathSave();
     void onVolumeSave();
+    void onHud();
+    void onLabels();
     void onToolbar();
     void onPlaces();
     void onTrackInfo();
     void onPathVolume();
-    void onTrackLabels();
     void onHelp();
     void onAbout();
     void onExit();

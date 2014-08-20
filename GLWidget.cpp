@@ -63,7 +63,7 @@ GLWidget::GLWidget(QWidget* parent) : QGLWidget(QGLFormat(QGL::SampleBuffers), p
   //get handles for local variables
   camera = Camera::getInstance();
   worldObjectMgr = WorldObjectMgr::getInstance();
-  hud = new Hud();
+  hud = Hud::getInstance();
   toolMgr = ToolMgr::getInstance();
 
   //there are two "special" world objects, the Earth and the Atmosphere,
