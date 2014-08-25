@@ -20,27 +20,34 @@
  *  <http://www.gnu.org/licenses/>.
  */
 
-#ifndef TRACK_SELECTION_LISTENER_H
-#define TRACK_SELECTION_LISTENER_H
+#ifndef EVENT_PUBLISHER_H
+#define EVENT_PUBLISHER_H
 
-#include <QString>
+#include "EventListener.h"
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
- * Interface definition for a track selection listener. This class, along with
- * TrackSelectionBroadcaster are an implementation of the observer pattern. In
- * order to be able to listen for track selections, an object must inherit from
- * this class and subscribe to TrackSelectionBroadcaster which is a Singleton.
+ * This class, along with EventListener implement the observer pattern. These
+ * two classes provide a generic way to publish/subscribe any event because they
+ * implement the event as a list of strings. First string in the list denotes a
+ * unique event type followed by as many arguments that specific event might
+ * have.
  *
  * @version 1.0
  * @author Hector Mendoza
  */
-class TrackSelectionListener
+class EventPublisher
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   public:
-    virtual ~TrackSelectionListener();
-    virtual void onTrackSelection(QString trackName) = 0;//forced override
+    EventPublisher();
+    virtual ~EventPublisher();
+
+    void addListener(EventListener* listener);
+    void publishEvent(const QStringList& event);
+
+  private:
+    QList<EventListener*> mListenerList;
 };
 
-#endif//TRACK_SELECTION_LISTENER_H
+#endif//EVENT_PUBLISHER_H

@@ -54,6 +54,8 @@ HEADERS += AboutWindow.h \
     CrossPlatformSleep.h \
     Earth.h \
     ElevationMgr.h \
+    EventListener.h \
+    EventPublisher.h \
     ExampleExpirableObject.h \
     ExampleFlyObject.h \
     ExampleHelloWorld.h \
@@ -80,8 +82,6 @@ HEADERS += AboutWindow.h \
     Tool.h \
     ToolMgr.h \
     TrackInfoWindow.h \
-    TrackSelectionBroadcaster.h \
-    TrackSelectionListener.h \
     Utilities.h \
     VolumeRenderer.h \
     VolumeTool.h \
@@ -97,6 +97,7 @@ SOURCES += AboutWindow.cpp \
     CrossPlatformSleep.cpp \
     Earth.cpp \
     ElevationMgr.cpp \
+    EventPublisher.cpp \
     ExampleExpirableObject.cpp \
     ExampleFlyObject.cpp \
     ExampleHelloWorld.cpp \
@@ -123,7 +124,6 @@ SOURCES += AboutWindow.cpp \
     Tool.cpp \
     ToolMgr.cpp \
     TrackInfoWindow.cpp \
-    TrackSelectionBroadcaster.cpp \
     Utilities.cpp \
     VolumeRenderer.cpp \
     VolumeTool.cpp \

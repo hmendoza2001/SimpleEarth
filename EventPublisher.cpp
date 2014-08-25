@@ -20,16 +20,13 @@
  *  <http://www.gnu.org/licenses/>.
  */
 
-#include "TrackSelectionBroadcaster.h"
-
-//Singleton implementation
-TrackSelectionBroadcaster* TrackSelectionBroadcaster::mInstance = NULL;
+#include "EventPublisher.h"
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
  * Constructor.
  */
-TrackSelectionBroadcaster::TrackSelectionBroadcaster()
+EventPublisher::EventPublisher()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
 }
@@ -38,37 +35,18 @@ TrackSelectionBroadcaster::TrackSelectionBroadcaster()
 /**
  * Destructor.
  */
-TrackSelectionBroadcaster::~TrackSelectionBroadcaster()
+EventPublisher::~EventPublisher()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
-  mInstance = NULL;
 }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
- * Singleton pattern implementation. Returns the single instance of this class.
+ * Adds an EventListener to the list.
  *
- * @return The single instance of this class
+ * @param listener Handle to listener object
  */
-TrackSelectionBroadcaster* TrackSelectionBroadcaster::getInstance()
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-{
-  if (mInstance == NULL)
-  {
-    mInstance = new TrackSelectionBroadcaster();
-  }
-
-  return mInstance;
-}
-
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-/**
- * Adds a listener to the current broadcast list.
- *
- * @param listener Handle to listener object that wants to be added to the
- *        broadcast list
- */
-void TrackSelectionBroadcaster::addListener(TrackSelectionListener* listener)
+void EventPublisher::addListener(EventListener* listener)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   mListenerList.append(listener);
@@ -76,15 +54,15 @@ void TrackSelectionBroadcaster::addListener(TrackSelectionListener* listener)
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
- * Broadcasts the track selection that happened on the specific track.
+ * Publishes generic event. The first string in the list denotes event type.
  *
- * @param trackName Which track just got selected
+ * @param event String list representing event type and arguments
  */
-void TrackSelectionBroadcaster::broadcastSelection(QString trackName)
+void EventPublisher::publishEvent(const QStringList& event)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   for (int i=0; i<mListenerList.size(); i++)
   {
-    mListenerList[i]->onTrackSelection(trackName);
+    mListenerList[i]->onEvent(event);
   }
 }

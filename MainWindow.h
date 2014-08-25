@@ -25,6 +25,7 @@
 
 #include <QMainWindow>
 #include <QToolButton>
+#include "EventPublisher.h"
 #include "PathWindow.h"
 #include "VolumeWindow.h"
 #include "MeasuringWindow.h"
@@ -52,7 +53,7 @@ namespace Ui
  * @version 1.0
  * @author Hector Mendoza
  */
-class MainWindow : public QMainWindow
+class MainWindow : public QMainWindow, public EventPublisher
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   Q_OBJECT

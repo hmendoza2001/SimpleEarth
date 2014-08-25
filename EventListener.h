@@ -20,41 +20,28 @@
  *  <http://www.gnu.org/licenses/>.
  */
 
-#ifndef TRACK_SELECTION_BROADCASTER_H
-#define TRACK_SELECTION_BROADCASTER_H
+#ifndef EVENT_LISTENER_H
+#define EVENT_LISTENER_H
 
-#include <QList>
-#include <QString>
-#include "TrackSelectionListener.h"
+#include <QStringList>
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
- * Singleton class that implements a track selection broadcaster. This class,
- * along with TrackSelectionListener are an implementation of the observer
- * pattern. Since this class is a Singleton, any class can subscribe (add itself
- * as a listener) to track selections as long as it inherits from
- * TrackSelectionListener. The broadcastSelection method is called from the
- * GLWidget object which is the one that handles mouse clicks and determines if
- * a track has been selected.
+ * This class, along with EventPublisher implement the observer pattern. These
+ * two classes provide a generic way to publish/subscribe any event because they
+ * implement the event as a list of strings. First string in the list denotes a
+ * unique event type followed by as many arguments that specific event might
+ * have.
  *
  * @version 1.0
  * @author Hector Mendoza
  */
-class TrackSelectionBroadcaster
+class EventListener
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   public:
-    static TrackSelectionBroadcaster* getInstance();
-    ~TrackSelectionBroadcaster();
-
-    void addListener(TrackSelectionListener* listener);
-    void broadcastSelection(QString trackName);
-
-  private:
-    TrackSelectionBroadcaster();//private due to Singleton implementation
-
-    static TrackSelectionBroadcaster* mInstance;
-    QList<TrackSelectionListener*> mListenerList;
+    virtual ~EventListener(){}
+    virtual void onEvent(const QStringList& event) = 0;//forced override
 };
 
-#endif//TRACK_SELECTION_BROADCASTER_H
+#endif//EVENT_LISTENER_H

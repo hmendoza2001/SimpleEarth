@@ -32,7 +32,6 @@
 #include "PathTool.h"
 #include "VolumeTool.h"
 #include "MeasuringTool.h"
-#include "TrackSelectionBroadcaster.h"
 #include "Utilities.h"
 #include "ToolMgr.h"
 
@@ -468,7 +467,12 @@ void GLWidget::mouseReleaseEvent(QMouseEvent* event)
           {
             //display track information
             MainWindow::getInstance()->displayTrackInfo(worldObject->getName());
-            TrackSelectionBroadcaster::getInstance()->broadcastSelection(worldObject->getName());
+
+            //publish track selection event
+            QStringList event;
+            event.append("TrackSelection");
+            event.append(worldObject->getName());
+            MainWindow::getInstance()->publishEvent(event);
             break;
           }
         }
