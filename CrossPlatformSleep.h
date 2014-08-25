@@ -34,7 +34,7 @@
  * @version 1.0
  * @author Hector Mendoza
  */
-class CrossPlatformSleep : QThread
+class CrossPlatformSleep : public QThread
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   public:
