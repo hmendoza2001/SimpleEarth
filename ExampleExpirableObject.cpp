@@ -126,7 +126,7 @@ void ExampleExpirableObject::setPositionAndOrientation(WorldObject* worldObject)
     geoPosition.altitude = 10.0;//in Km
 
     SimpleVector orientation;
-    orientation. = -90.0;//in degrees
+    orientation.x = -90.0;//in degrees
     orientation.y = 180.0;
     orientation.z = 0.0;
 
