@@ -22,7 +22,6 @@
 
 #include "ExampleExpirableObject.h"
 #include "WorldObjectMgr.h"
-#include "Utilities.h"
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
@@ -72,10 +71,10 @@ void ExampleExpirableObject::run()
   worldObject->setName(name);
 
   //load icon and model to be associated with object
-  //note: The model is a jeep ( no airplane :-( ) taken from the
-  //samples that come with the Assimp library. The model has an
-  //exaggerated scale (since model scale is in meters but our world scale
-  //is in Km) which makes it easier to find for this test. Use the
+  //note: The model is a jeep ( there is no airplane in the samples :-( )
+  //taken from the samples that come with the Assimp library. The model
+  //has an exaggerated scale (since model scale is in meters but our world
+  //scale is in Km) which makes it easier to find for this test. Use the
   //setScale method for your own models if you want a realistic scale
   worldObject->loadIcon("images/fixedWingFriend.png");
   worldObject->loadModel("models/jeep1.3ds");
@@ -119,12 +118,19 @@ void ExampleExpirableObject::setPositionAndOrientation(WorldObject* worldObject)
   GeodeticPosition geoPosition;
   geoPosition = worldObject->getGeodeticPosition();
 
-  //set initial position if we have not done so
+  //set initial position and orientation if we have not done so
   if (geoPosition.altitude <= 0.0)
   {
     geoPosition.latitude = 0.0;//in decimal degrees
     geoPosition.longitude = 0.0;
     geoPosition.altitude = 10.0;//in Km
+
+    SimpleVector orientation;
+    orientation. = -90.0;//in degrees
+    orientation.y = 180.0;
+    orientation.z = 0.0;
+
+    worldObject->setRotation(orientation);
   }
 
   geoPosition.longitude += 0.1;
@@ -135,11 +141,4 @@ void ExampleExpirableObject::setPositionAndOrientation(WorldObject* worldObject)
   }
 
   worldObject->setGeodeticPosition(geoPosition);
-
-  SimpleVector orientation;
-  orientation.x = -90.0;//in degrees
-  orientation.y = 180.0;
-  orientation.z = 0.0;
-
-  worldObject->setRotation(orientation);
 }

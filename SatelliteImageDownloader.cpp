@@ -45,7 +45,6 @@ static projPJ latlonProjection;
 SatelliteImageDownloader::SatelliteImageDownloader()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
-  qRegisterMetaType<Tile>("Tile");
   mWebDownloadEnabled = true;
   mIsRunning = false;
   mLatitudeLookupTableAlreadyGenerated = false;

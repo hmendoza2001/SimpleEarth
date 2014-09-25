@@ -83,7 +83,7 @@ void ExampleFlyObject::run()
   WorldObjectMgr::getInstance()->addWorldObject(worldObject);
 
   //update position in a 10 times per second loop
-  while(true)
+  while (true)
   {
     position.longitude += 0.01;
     //wrap longitude if necessary

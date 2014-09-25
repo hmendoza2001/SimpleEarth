@@ -32,7 +32,7 @@
  * is more of an illustration than a realistic scenario on how you should update
  * object positions. This example shows you how to use expirable objects and
  * how to update their position as if you were getting a position update from
- * a real source (e.g. gps). This class is better suited to serve as a template
+ * a real source (e.g. GPS). This class is better suited to serve as a template
  * for your own SimpleEarth application.
  *
  * @version 1.0

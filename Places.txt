@@ -4,3 +4,8 @@ PlaceLatitude=31.781684
 PlaceLongitude=-106.479484
 PlaceAltitude=1.855518
 ENDPLACE
+PlaceName=London
+PlaceLatitude=51.487712
+PlaceLongitude=-0.153403
+PlaceAltitude=5.293021
+ENDPLACE
