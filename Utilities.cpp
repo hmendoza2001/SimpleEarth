@@ -27,6 +27,10 @@
 #include "Utilities.h"
 #include "Constants.h"
 
+#ifndef GL_CLAMP_TO_EDGE
+#define GL_CLAMP_TO_EDGE 0x812F
+#endif
+
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
  * Converts the given XYZ position to geodetic. Our XYZ coordinates are very
