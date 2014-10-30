@@ -44,12 +44,36 @@ EventPublisher::~EventPublisher()
 /**
  * Adds an EventListener to the list.
  *
- * @param listener Handle to listener object
+ * @param listener Handle to Event Listener object
  */
 void EventPublisher::addListener(EventListener* listener)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
-  mListenerList.append(listener);
+  mListeners.append(listener);
+}
+
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+/**
+ * Removes the given listener instance from our list of listeners.
+ *
+ * @param listener Handle to Event Listener object
+ */
+void EventPublisher::removeListener(EventListener* listener)
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+{
+  mMutex.lock();
+
+  //find and delete instance
+  for(int i=0; i<mListeners.size(); i++)
+  {
+    if(mListeners[i] == listener)
+    {
+      EventListener* temp = mListeners.takeAt(i);//remove from list
+      delete temp;
+    }
+  }
+
+  mMutex.unlock();
 }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -61,8 +85,12 @@ void EventPublisher::addListener(EventListener* listener)
 void EventPublisher::publishEvent(const QStringList& event)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
-  for (int i=0; i<mListenerList.size(); i++)
+  mMutex.lock();
+
+  for (int i=0; i<mListeners.size(); i++)
   {
-    mListenerList[i]->onEvent(event);
+    mListeners[i]->onEvent(event);
   }
+
+  mMutex.unlock();
 }

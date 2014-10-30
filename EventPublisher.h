@@ -23,6 +23,7 @@
 #ifndef EVENT_PUBLISHER_H
 #define EVENT_PUBLISHER_H
 
+#include <QMutex>
 #include "EventListener.h"
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -44,10 +45,12 @@ class EventPublisher
     virtual ~EventPublisher();
 
     void addListener(EventListener* listener);
+    void removeListener(EventListener* listener);
     void publishEvent(const QStringList& event);
 
   private:
-    QList<EventListener*> mListenerList;
+    QList<EventListener*> mListeners;
+    QMutex mMutex;
 };
 
 #endif//EVENT_PUBLISHER_H
