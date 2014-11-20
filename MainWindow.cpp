@@ -22,6 +22,7 @@
 
 #include <QFileDialog>
 #include <QProgressDialog>
+#include <QDesktopServices>
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
 #include "Hud.h"
@@ -480,11 +481,7 @@ void MainWindow::onPathVolume()
 void MainWindow::onHelp()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
-#ifdef WIN32
-  system("startHelp.bat");
-#else
-  system("./startHelp&");
-#endif
+  QDesktopServices::openUrl(QUrl("./help/help.html"));
 }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
