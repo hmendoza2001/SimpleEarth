@@ -64,12 +64,13 @@ void EventPublisher::removeListener(EventListener* listener)
   mMutex.lock();
 
   //find and delete instance
-  for(int i=0; i<mListeners.size(); i++)
+  for (int i=0; i<mListeners.size(); i++)
   {
-    if(mListeners[i] == listener)
+    if (mListeners[i] == listener)
     {
       EventListener* temp = mListeners.takeAt(i);//remove from list
       delete temp;
+      break;
     }
   }
 

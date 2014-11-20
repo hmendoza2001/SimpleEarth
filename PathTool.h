@@ -30,7 +30,7 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
  * This class encapsulates the functionality behind path tool rendering. This
- * class inherits from WorldObject.
+ * class inherits from Tool.
  *
  * @version 1.0
  * @author Hector Mendoza
@@ -50,7 +50,7 @@ class PathTool : public Tool
     void onMouseReleaseEvent(QMouseEvent* event);
 
   private:
-    SimpleVector mPointList[50];
+    SimpleVector mPoints[50];
     int mCurrentNumberOfPoints;
     ScreenCoordinates mClickCordinates;
     bool mAddPoint;

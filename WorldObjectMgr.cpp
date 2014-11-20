@@ -162,12 +162,10 @@ void WorldObjectMgr::removeWorldObject(QString name)
 {
   mMutex.lock();
 
-  WorldObject* object;
   int index = findWorldObject(name);
   if (index != -1)
   {
-    //remove entity from list and delete memory
-    object = mWorldObjectList.takeAt(index);
+    WorldObject* object = mWorldObjectList.takeAt(index);//remove from list
     delete object;
   }
 

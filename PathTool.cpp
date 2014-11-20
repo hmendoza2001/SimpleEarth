@@ -76,7 +76,7 @@ void PathTool::render()
   if (mAddPoint)
   {
     //convert click coordinates and add point to our list
-    mPointList[mCurrentNumberOfPoints] = Utilities::screenToWorld(mClickCordinates);
+    mPoints[mCurrentNumberOfPoints] = Utilities::screenToWorld(mClickCordinates);
 
     mAddPoint = false;
     mCurrentNumberOfPoints++;
@@ -89,7 +89,7 @@ void PathTool::render()
   glBegin(GL_LINE_STRIP);
   for (int i=0; i<mCurrentNumberOfPoints; i++)
   {
-    glVertex3f(mPointList[i].x, mPointList[i].y, mPointList[i].z);
+    glVertex3f(mPoints[i].x, mPoints[i].y, mPoints[i].z);
   }
   glEnd();
   glLineWidth(1.0f);
@@ -142,14 +142,13 @@ bool PathTool::addCurrent()
     PathRenderer* pathRenderer = new PathRenderer();
     for (int i=0; i<mCurrentNumberOfPoints; i++)
     {
-      pathRenderer->addPoint(mPointList[i]);
+      pathRenderer->addPoint(mPoints[i]);
     }
     worldObject->setMeshRenderer(pathRenderer);
 
-    //check if entity already exists before adding
+    //if entity already exists (cannot add) perform cleanup
     if (!WorldObjectMgr::getInstance()->addWorldObject(worldObject))
     {
-      //entity already exists, cannot add, delete pointer
       delete worldObject;
       delete pathRenderer;
       returnValue = false;
