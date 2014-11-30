@@ -23,6 +23,7 @@
 #include <QFileDialog>
 #include <QProgressDialog>
 #include <QDesktopServices>
+#include <QUrl>
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
 #include "Hud.h"
