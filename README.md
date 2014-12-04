@@ -1,4 +1,4 @@
-<img src="http://www.huesoftllc.com/slider1.jpg" width=300>
+<img src="http://www.huesoftllc.com/slider1.jpg" width=400>
 
 
 SimpleEarth
@@ -38,19 +38,19 @@ Hello World
 
 To start understanding the code and API, look at WorldObject and WorldObjectMgr classes and the globals.h header file. The hello world example emplaces a label in the world with the following code:
 
-//instantiate world object and set label
-WorldObject* worldObject = new WorldObject();
-worldObject->setLabel("Hello World!");
+//instantiate world object and set label<br>
+WorldObject* worldObject = new WorldObject();<br>
+worldObject->setLabel("Hello World!");<br>
 
-//set world object position
-GeodeticPosition position;
-position.latitude = 0.0;//in decimal degrees
-position.longitude = 0.0;//in decimal degrees
-position.altitude = 1.0;//in Km
-worldObject->setGeodeticPosition(position);
+//set world object position<br>
+GeodeticPosition position;<br>
+position.latitude = 0.0;//in decimal degrees<br>
+position.longitude = 0.0;//in decimal degrees<br>
+position.altitude = 1.0;//in Km<br>
+worldObject->setGeodeticPosition(position);<br>
 
-//add world object to manager so that it gets rendered
-WorldObjectMgr::getInstance()->addWorldObject(worldObject);
+//add world object to manager so that it gets rendered<br>
+WorldObjectMgr::getInstance()->addWorldObject(worldObject);<br>
 
 
 Contact us
