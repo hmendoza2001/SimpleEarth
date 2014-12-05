@@ -16,9 +16,10 @@ Main features
 -------------
    * Simple code you can learn and leverage
    * Easy to load your own maps and icons
+   * Measuring, Volumes and Paths
    * Supports digital elevation data
    * Supports satellite imagery
-   * Support 3D model loading
+   * Supports 3D model loading
 
 
 Build Requirements
@@ -30,7 +31,7 @@ Build Requirements
 
 Runtime Requirements
 --------------------
-  * Graphics card with "good" OpenGL support
+  * Graphics card with OpenGL support
 
 
 Hello World
@@ -44,9 +45,9 @@ worldObject->setLabel("Hello World!");<br>
 
 //set world object position<br>
 GeodeticPosition position;<br>
-position.latitude = 0.0;//in decimal degrees<br>
-position.longitude = 0.0;//in decimal degrees<br>
-position.altitude = 1.0;//in Km<br>
+position.latitude = 0.0;  //in decimal degrees<br>
+position.longitude = 0.0;<br>
+position.altitude = 1.0;  //in Km<br>
 worldObject->setGeodeticPosition(position);<br>
 
 //add world object to manager so that it gets rendered<br>
