@@ -1,4 +1,9 @@
-QT += core gui opengl network
+TEMPLATE = app
+TARGET = SimpleEarth
+
+QT = core gui opengl network
+
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 #uncomment next line if you want to use elevation databases
 #CONFIG += using_gdal
@@ -6,9 +11,6 @@ QT += core gui opengl network
 #CONFIG += using_proj4
 #uncomment next line if you want to load 3D models
 #CONFIG += using_assimp
-
-TARGET = SimpleEarth
-TEMPLATE = app
 
 win32 {
 LIBS += -lopengl32
