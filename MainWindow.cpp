@@ -482,7 +482,7 @@ void MainWindow::onPathVolume()
 void MainWindow::onHelp()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
-  QDesktopServices::openUrl(QUrl("./help/help.html"));
+  QDesktopServices::openUrl(QUrl("file:///" + QFileInfo("./help/help.html").absoluteFilePath()));
 }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
