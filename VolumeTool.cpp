@@ -157,7 +157,7 @@ void VolumeTool::onMouseReleaseEvent(QMouseEvent* event)
  *
  * @param name New name for current volume
  */
-void VolumeTool::setName(QString name)
+void VolumeTool::setName(const QString& name)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   mWorldObject->setName(name);
@@ -181,7 +181,7 @@ void VolumeTool::setType(int type)
  *
  * @param position New position for the current volume
  */
-void VolumeTool::setPosition(SimpleVector position)
+void VolumeTool::setPosition(const SimpleVector& position)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   mWorldObject->setPosition(position);
@@ -193,7 +193,7 @@ void VolumeTool::setPosition(SimpleVector position)
  *
  * @param rotation New rotation for the current volume
  */
-void VolumeTool::setRotation(SimpleVector rotation)
+void VolumeTool::setRotation(const SimpleVector& rotation)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   mWorldObject->setRotation(rotation);
@@ -205,7 +205,7 @@ void VolumeTool::setRotation(SimpleVector rotation)
  *
  * @param scale New scale for the current volume
  */
-void VolumeTool::setScale(SimpleVector scale)
+void VolumeTool::setScale(const SimpleVector& scale)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   mWorldObject->setScale(scale);
@@ -217,7 +217,7 @@ void VolumeTool::setScale(SimpleVector scale)
  *
  * @param color New color for the current volume
  */
-void VolumeTool::setColor(SimpleColor color)
+void VolumeTool::setColor(const SimpleColor& color)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   mWorldObject->setColor(color);

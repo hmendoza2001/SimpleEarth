@@ -95,7 +95,7 @@ class SatelliteImageDownloader : public QThread
     void setElevationMode(bool value);
 
   public slots:
-    void onNetworkRequest(QString url);
+    void onNetworkRequest(const QString& url);
     void onNetworkReply(QNetworkReply* networkReply);
 
   signals:

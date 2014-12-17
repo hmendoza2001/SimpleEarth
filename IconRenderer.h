@@ -40,7 +40,7 @@ class IconRenderer
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   public:
-    IconRenderer(QString filePath = "");
+    IconRenderer(const QString& filePath = "");
     ~IconRenderer();
 
     void render();
@@ -48,13 +48,13 @@ class IconRenderer
     //get methods
     WorldObject* getWorldObject();
     QString getFilePath();
-    int getIconTexture();
+    int getTexture();
     float getDepth();
 
     //set methods
     void setWorldObject(WorldObject* worldObject);
-    void setFilePath(QString filePath);
-    void setIconTexture(int texture);
+    void setFilePath(const QString& filePath);
+    void setTexture(int texture);
     void setDepth(float depth);
 
   private:

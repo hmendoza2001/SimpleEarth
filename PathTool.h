@@ -44,9 +44,9 @@ class PathTool : public Tool
 
     void render();//OVERRIDE
     void initialize();
-    void setName(QString name);
+    void setName(const QString& name);
     bool addCurrent();
-    void setColor(SimpleColor color);
+    void setColor(const SimpleColor& color);
     void onMouseReleaseEvent(QMouseEvent* event);
 
   private:

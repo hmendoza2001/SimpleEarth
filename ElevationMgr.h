@@ -44,7 +44,7 @@ class ElevationMgr
     static ElevationMgr* getInstance();
     ~ElevationMgr();
 
-    void loadElevationDatabase(QString filePath);
+    void loadElevationDatabase(const QString& filePath);
     float getElevation(double latitude, double longitude);
 
   private:

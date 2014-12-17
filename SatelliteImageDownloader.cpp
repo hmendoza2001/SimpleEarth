@@ -162,7 +162,7 @@ void SatelliteImageDownloader::setElevationMode(bool value)
  *
  * @param url String representing the URL
  */
-void SatelliteImageDownloader::onNetworkRequest(QString url)
+void SatelliteImageDownloader::onNetworkRequest(const QString& url)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   mNetworkAccessManager.get(QNetworkRequest(QUrl(url)));

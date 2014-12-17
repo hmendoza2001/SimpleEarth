@@ -44,8 +44,8 @@ class ToolMgr
     ~ToolMgr();
 
     void addTool(Tool* tool);
-    Tool* getTool(QString toolID);
-    void selectTool(QString toolID);
+    Tool* getTool(const QString& toolID);
+    void selectTool(const QString& toolID);
     void renderSelectedTool();
 
   private:

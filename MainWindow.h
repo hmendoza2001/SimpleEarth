@@ -73,8 +73,8 @@ class MainWindow : public QMainWindow, public EventPublisher
     VolumeWindow* getVolumeWindow();
     MeasuringWindow* getMeasuringWindow();
     QToolButton* getToolButton(int toolButton);
-    void displayTrackInfo(QString trackName);
-    void displayVolumeEdit(QString volumeName);
+    void displayTrackInfo(const QString& trackName);
+    void displayVolumeEdit(const QString& volumeName);
     void setNavigationModeToOrbit();
     void closeEvent(QCloseEvent* event);//OVERRIDE
 

@@ -73,7 +73,7 @@ void TrackInfoWindow::initialize()
  *
  * @param name New value for selected track name
  */
-void TrackInfoWindow::setSelectedName(QString name)
+void TrackInfoWindow::setSelectedName(const QString& name)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   mSelectedName = name;

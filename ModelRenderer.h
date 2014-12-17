@@ -40,13 +40,13 @@ class ModelRenderer : public MeshRenderer
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   public:
-    ModelRenderer(QString filePath = "");
+    ModelRenderer(const QString& filePath = "");
     ~ModelRenderer();
 
     void render();//OVERRIDE
 
-    QString getFilePath();
-    void setFilePath(QString filePath);
+    const QString& getFilePath() const;
+    void setFilePath(const QString& filePath);
 
   private:
     void recursiveRender(void* scene, void* node, int texture);

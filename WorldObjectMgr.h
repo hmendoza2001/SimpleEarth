@@ -38,7 +38,7 @@
  *
  * This class inherits from QObject in order to listen for expire timer events.
  * It keeps track of objects whose timer has expired and deletes them.
- * Deallocation of World Objects should only be done through the
+ * Deallocation of world objects should only be done through the
  * removeWorldObject method.
  *
  * @version 1.0
@@ -55,17 +55,17 @@ class WorldObjectMgr : public QWidget
 
     bool addWorldObject(WorldObject* object);
     WorldObject* getWorldObject(int index);
-    WorldObject* getWorldObject(QString name);
+    WorldObject* getWorldObject(const QString& name);
     void removeWorldObject(int index);
-    void removeWorldObject(QString name);
+    void removeWorldObject(const QString& name);
     void renderObjects();
     int getNumberOfObjects();
-    int findWorldObject(QString name);
+    int findWorldObject(const QString& name);
 
   public slots:
     void onExpireTimer();
 
-  private://methods
+  private:
     WorldObjectMgr();//private due to Singleton implementation
 
     static WorldObjectMgr* mInstance;

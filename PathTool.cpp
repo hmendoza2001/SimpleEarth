@@ -102,7 +102,7 @@ void PathTool::render()
  *
  * @param name New name for this path
  */
-void PathTool::setName(QString name)
+void PathTool::setName(const QString& name)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   mName = name;
@@ -114,7 +114,7 @@ void PathTool::setName(QString name)
  *
  * @param color New color for this path
  */
-void PathTool::setColor(SimpleColor color)
+void PathTool::setColor(const SimpleColor& color)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   mColor = color;

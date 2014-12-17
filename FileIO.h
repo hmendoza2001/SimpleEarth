@@ -46,8 +46,8 @@ class FileIO
     FileIO();
     ~FileIO();
 
-    void readFile(QString fileName);
-    void writeFile(QString fileName, int fileType);
+    void readFile(const QString& fileName);
+    void writeFile(const QString& fileName, int fileType);
 };
 
 #endif//FILE_IO_H

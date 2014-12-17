@@ -86,7 +86,7 @@ IconModelMgr* IconModelMgr::getInstance()
  * @param filePath Path to icon/image file
  * @return True if image was loaded successfully
  */
-bool IconModelMgr::loadIcon(QString filePath)
+bool IconModelMgr::loadIcon(const QString& filePath)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   bool returnValue = false;
@@ -136,7 +136,7 @@ bool IconModelMgr::loadIcon(QString filePath)
  * @param filePath Path to model file
  * @return True if model was loaded successfully
  */
-bool IconModelMgr::loadModel(QString filePath)
+bool IconModelMgr::loadModel(const QString& filePath)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   bool returnValue = false;
@@ -222,7 +222,7 @@ bool IconModelMgr::loadModel(QString filePath)
  * @param depth Depth value returned
  * @return True if texture was found
  */
-bool IconModelMgr::getIcon(QString filePath, int& texture, float& depth)
+bool IconModelMgr::getIcon(const QString& filePath, int& texture, float& depth)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   int returnValue = false;
@@ -235,7 +235,7 @@ bool IconModelMgr::getIcon(QString filePath, int& texture, float& depth)
       //load texture to graphics card if not done so already
       if (mIconList[i].texture == -1)
       {
-        mIconList[i].texture = Utilities::imageToTexture(mIconList[i].image);
+        mIconList[i].texture = Utilities::imageToTexture(*mIconList[i].image);
       }
       texture = mIconList[i].texture;
       depth = mIconList[i].depth;
@@ -258,7 +258,7 @@ bool IconModelMgr::getIcon(QString filePath, int& texture, float& depth)
  * @param texture Texture index value returned
  * @return True if model was found
  */
-bool IconModelMgr::getModel(QString filePath, void*& modelData, int& texture)
+bool IconModelMgr::getModel(const QString& filePath, void*& modelData, int& texture)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   int returnValue = false;
@@ -271,7 +271,7 @@ bool IconModelMgr::getModel(QString filePath, void*& modelData, int& texture)
       //load textures to graphics card if not done so already
       if (mModelList[i].texture == -1)
       {
-        mModelList[i].texture = Utilities::imageToTexture(mModelList[i].image);
+        mModelList[i].texture = Utilities::imageToTexture(*mModelList[i].image);
       }
       texture = mModelList[i].texture;
       modelData = mModelList[i].modelData;

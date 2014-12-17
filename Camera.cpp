@@ -243,7 +243,7 @@ void Camera::moveByDiscrete(int movement)
  *
  * @param desiredPosition The desired end point for the navigation.
  */
-void Camera::moveByDestinationPoint(GeodeticPosition desiredPosition)
+void Camera::moveByDestinationPoint(const GeodeticPosition& desiredPosition)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   mDesiredEndPoint = desiredPosition;
@@ -306,7 +306,7 @@ void Camera::run()
  * @param initialLocation Initial pixel location
  * @param finalLocation Final pixel location
  */
-void Camera::moveByScreen(ScreenCoordinates initialPoint, ScreenCoordinates finalPoint)
+void Camera::moveByScreen(const ScreenCoordinates& initialPoint, const ScreenCoordinates& finalPoint)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   mMoveByScreenInitialPoint = initialPoint;
@@ -392,7 +392,7 @@ SimpleVector Camera::getPosition()
  *
  * @return Current geodetic position for the camera
  */
-GeodeticPosition Camera::getGeodeticPosition()
+const GeodeticPosition& Camera::getGeodeticPosition() const
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   return mPosition;
@@ -404,7 +404,7 @@ GeodeticPosition Camera::getGeodeticPosition()
  *
  * @return Current look-at position of the camera
  */
-SimpleVector Camera::getLookAt()
+const SimpleVector& Camera::getLookAt() const
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   return mLookAt;
@@ -416,7 +416,7 @@ SimpleVector Camera::getLookAt()
  *
  * @return Current camera up vector
  */
-SimpleVector Camera::getUpVector()
+const SimpleVector& Camera::getUpVector() const
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   return mUpVector;
@@ -467,7 +467,7 @@ bool Camera::getCameraOrbitMove()
  *
  * @return Screen size
  */
-ScreenCoordinates Camera::getScreenSize()
+const ScreenCoordinates& Camera::getScreenSize() const
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   return mScreenSize;
@@ -479,7 +479,7 @@ ScreenCoordinates Camera::getScreenSize()
  *
  * @param position Desired camera position in XYZ
  */
-void Camera::setPosition(SimpleVector position)
+void Camera::setPosition(const SimpleVector& position)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   setGeodeticPosition(Utilities::xyzToGeodetic(position));
@@ -491,7 +491,7 @@ void Camera::setPosition(SimpleVector position)
  *
  * @param position Desired geodetic position
  */
-void Camera::setGeodeticPosition(GeodeticPosition position)
+void Camera::setGeodeticPosition(const GeodeticPosition& position)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   mDesiredPosition = position;
@@ -510,7 +510,7 @@ void Camera::setGeodeticPosition(GeodeticPosition position)
  *
  * @param lookAt New look at position
  */
-void Camera::setLookAt(SimpleVector lookAt)
+void Camera::setLookAt(const SimpleVector& lookAt)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   mDesiredLookAt = lookAt;
@@ -522,7 +522,7 @@ void Camera::setLookAt(SimpleVector lookAt)
  *
  * @param upVector New camera up vector
  */
-void Camera::setUpVector(SimpleVector upVector)
+void Camera::setUpVector(const SimpleVector& upVector)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   mDesiredUpVector = upVector;
@@ -588,7 +588,7 @@ void Camera::setCameraOrbitMove(bool value)
  *
  * @param screenSize New value for screen size
  */
-void Camera::setScreenSize(ScreenCoordinates screenSize)
+void Camera::setScreenSize(const ScreenCoordinates& screenSize)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   mScreenSize = screenSize;

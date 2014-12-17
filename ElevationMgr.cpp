@@ -85,7 +85,7 @@ ElevationMgr* ElevationMgr::getInstance()
  *
  * @param filePath The file path for the database.
  */
-void ElevationMgr::loadElevationDatabase(QString filePath)
+void ElevationMgr::loadElevationDatabase(const QString& filePath)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
 #ifdef USING_GDAL

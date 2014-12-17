@@ -61,8 +61,8 @@ class Camera : public QThread
 
     //main camera interface methods
     void moveByDiscrete(int movement);
-    void moveByDestinationPoint(GeodeticPosition desiredPosition);
-    void moveByScreen(ScreenCoordinates initialPoint, ScreenCoordinates finalPoint);
+    void moveByDestinationPoint(const GeodeticPosition& desiredPosition);
+    void moveByScreen(const ScreenCoordinates& initialPoint, const ScreenCoordinates& finalPoint);
     void syncMoveByScreen();
     void sync();
 
@@ -70,23 +70,23 @@ class Camera : public QThread
 
     //get methods
     SimpleVector getPosition();
-    GeodeticPosition getGeodeticPosition();
-    SimpleVector getLookAt();
-    SimpleVector getUpVector();
+    const GeodeticPosition& getGeodeticPosition() const;
+    const SimpleVector& getLookAt() const;
+    const SimpleVector& getUpVector() const;
     double getYaw();
     float getLookAtAltitude();
     bool getCameraOrbitMove();
-    ScreenCoordinates getScreenSize();
+    const ScreenCoordinates& getScreenSize() const;
 
     //set methods
-    void setPosition(SimpleVector position);
-    void setGeodeticPosition(GeodeticPosition position);
-    void setLookAt(SimpleVector lookAt);
-    void setUpVector(SimpleVector upVector);
+    void setPosition(const SimpleVector& position);
+    void setGeodeticPosition(const GeodeticPosition& position);
+    void setLookAt(const SimpleVector& lookAt);
+    void setUpVector(const SimpleVector& upVector);
     void setYaw(double angle);
     void setLookAtAltitude(float altitude);
     void setCameraOrbitMove(bool value);
-    void setScreenSize(ScreenCoordinates screenSize);
+    void setScreenSize(const ScreenCoordinates& screenSize);
 
   private:
     Camera();//private due to Singleton implementation

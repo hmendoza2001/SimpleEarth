@@ -110,7 +110,7 @@ void WorldObject::renderMesh()
  * @param filePath Path to icon/image file
  * @return False if loading of icon was unsuccessful
  */
-bool WorldObject::loadIcon(QString filePath)
+bool WorldObject::loadIcon(const QString& filePath)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   //call IconModelMgr to make sure only one instance of the icon is loaded
@@ -141,7 +141,7 @@ bool WorldObject::loadIcon(QString filePath)
  * @param filePath Path to model file
  * @return False if loading of model was unsuccessful
  */
-bool WorldObject::loadModel(QString filePath)
+bool WorldObject::loadModel(const QString& filePath)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   //call IconModelMgr to make sure only one instance of the model is loaded
@@ -192,7 +192,7 @@ void WorldObject::copy(WorldObject* source)
  *
  * @return This object's current position
  */
-SimpleVector WorldObject::getPosition()
+const SimpleVector& WorldObject::getPosition() const
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   return mPosition;
@@ -216,7 +216,7 @@ GeodeticPosition WorldObject::getGeodeticPosition()
  *
  * @return This object's current scale or dimensions
  */
-SimpleVector WorldObject::getScale()
+const SimpleVector& WorldObject::getScale() const
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   return mScale;
@@ -228,7 +228,7 @@ SimpleVector WorldObject::getScale()
  *
  * @return This object's current rotation or orientation
  */
-SimpleVector WorldObject::getRotation()
+const SimpleVector& WorldObject::getRotation() const
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   return mRotation;
@@ -252,7 +252,7 @@ bool WorldObject::getIsVisible()
  *
  * @return This world object's type
  */
-QString WorldObject::getType()
+const QString& WorldObject::getType() const
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   return mType;
@@ -264,7 +264,7 @@ QString WorldObject::getType()
  *
  * @return This object's name
  */
-QString WorldObject::getName()
+const QString& WorldObject::getName() const
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   return mName;
@@ -277,7 +277,7 @@ QString WorldObject::getName()
  *
  * @return This object's label
  */
-QString WorldObject::getLabel()
+const QString& WorldObject::getLabel() const
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   return mLabel;
@@ -289,7 +289,7 @@ QString WorldObject::getLabel()
  *
  * @return This object's current color in floating point RGBA format
  */
-SimpleColor WorldObject::getColor()
+const SimpleColor& WorldObject::getColor() const
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   return mColor;
@@ -405,7 +405,7 @@ float WorldObject::getSpeed()
  *
  * @return SimpleVector structure representing screen location
  */
-SimpleVector WorldObject::getScreenLocation()
+const SimpleVector& WorldObject::getScreenLocation() const
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   return mScreenLocation;
@@ -419,7 +419,7 @@ SimpleVector WorldObject::getScreenLocation()
  *
  * @return String list with custom info
  */
-QStringList WorldObject::getCustomInfo()
+const QStringList& WorldObject::getCustomInfo() const
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   return mCustomInfo;
@@ -488,12 +488,25 @@ void WorldObject::setIsVisible(bool isVisible)
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
+ * Sets the type for this world object. Type is a string that can be used for
+ * introspection purposes.
+ *
+ * @param type New type for this world object
+ */
+void WorldObject::setType(const QString& type)
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+{
+  mType = type;
+}
+
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+/**
  * Sets the name for this world object. The name serves as the unique identifier
  * for world objects in the system.
  *
  * @param name New name for this world object
  */
-void WorldObject::setName(QString name)
+void WorldObject::setName(const QString& name)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   mName = name;
@@ -506,23 +519,10 @@ void WorldObject::setName(QString name)
  *
  * @param label String representing this world object's label
  */
-void WorldObject::setLabel(QString label)
+void WorldObject::setLabel(const QString& label)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   mLabel = label;
-}
-
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-/**
- * Sets the type for this world object. Type is a string that can be used for
- * introspection purposes.
- *
- * @param type New type for this world object
- */
-void WorldObject::setType(QString type)
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-{
-  mType = type;
 }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

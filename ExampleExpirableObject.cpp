@@ -95,8 +95,6 @@ void ExampleExpirableObject::run()
     if (worldObject != NULL && !worldObject->getHasExpired())
     {
       setPositionAndOrientation(worldObject);
-      //since we got an update, remember to reset expiration time
-      worldObject->setExpirationTime(5);
     }
     msleep(2000);
   }
@@ -141,4 +139,7 @@ void ExampleExpirableObject::setPositionAndOrientation(WorldObject* worldObject)
   }
 
   worldObject->setGeodeticPosition(geoPosition);
+
+  //since we got an update, remember to reset expiration time
+  worldObject->setExpirationTime(5);
 }

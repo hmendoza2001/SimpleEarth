@@ -29,9 +29,9 @@
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
- * This class encapsulates utility functions, e.g. coordinate conversion functions.
- * All functions are static, so there is no need to instantiate the class in
- * order to use its functions.
+ * This class encapsulates utility functions, e.g. coordinate conversion
+ * functions. All functions are static, so there is no need to instantiate the
+ * class in order to use its functions.
  *
  * @version 1.0
  * @author Hector Mendoza
@@ -40,16 +40,16 @@ class Utilities
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   public:
-    static GeodeticPosition xyzToGeodetic(SimpleVector xyzPosition);
-    static SimpleVector geodeticToXYZ(GeodeticPosition geodeticPosition);
-    static double dmsToDecimalDegrees(QString dmsString);
+    static GeodeticPosition xyzToGeodetic(const SimpleVector& xyzPosition);
+    static SimpleVector geodeticToXYZ(const GeodeticPosition& geodeticPosition);
+    static double dmsToDecimalDegrees(const QString& dmsString);
     static QString decimalDegreesToDMS(double decimalDegrees, bool isLatitude);
-    static GeodeticPosition ecefToGeodetic(SimpleVector ecefPosition);
-    static GeodeticPosition utmToGeodetic(QString utmString);
-    static bool checkObscure(GeodeticPosition cameraPosition, GeodeticPosition entityPosition);
-    static unsigned int imageToTexture(QImage* image);
-    static SimpleVector screenToWorld(ScreenCoordinates screenPosition);
-    static SimpleVector worldToScreen(SimpleVector worldPosition);
+    static GeodeticPosition ecefToGeodetic(const SimpleVector& ecefPosition);
+    static GeodeticPosition utmToGeodetic(const QString& utmString);
+    static bool checkObscure(const GeodeticPosition& cameraPosition, const GeodeticPosition& entityPosition);
+    static unsigned int imageToTexture(const QImage& image);
+    static SimpleVector screenToWorld(const ScreenCoordinates& screenPosition);
+    static SimpleVector worldToScreen(const SimpleVector& worldPosition);
 };
 
 #endif//UTILITIES_H

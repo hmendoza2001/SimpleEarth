@@ -208,7 +208,7 @@ QToolButton* MainWindow::getToolButton(int toolButton)
  *
  * @param trackName Selected track name
  */
-void MainWindow::displayTrackInfo(QString trackName)
+void MainWindow::displayTrackInfo(const QString& trackName)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   mTrackInfoWindow->initialize();
@@ -222,7 +222,7 @@ void MainWindow::displayTrackInfo(QString trackName)
  *
  * @param entityName Name of volume we are editing
  */
-void MainWindow::displayVolumeEdit(QString volumeName)
+void MainWindow::displayVolumeEdit(const QString& volumeName)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   //toggle volume tool button in order to show volume window

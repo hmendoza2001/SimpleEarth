@@ -54,7 +54,7 @@ FileIO::~FileIO()
  *
  * @param fileName Name of file to be read
  */
-void FileIO::readFile(QString fileName)
+void FileIO::readFile(const QString& fileName)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   QFile file(fileName);
@@ -281,7 +281,7 @@ void FileIO::readFile(QString fileName)
  * @param fileName File name to write data to
  * @param fileType See file type enum in header declaration
  */
-void FileIO::writeFile(QString fileName, int fileType)
+void FileIO::writeFile(const QString& fileName, int fileType)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   QFile file(fileName);

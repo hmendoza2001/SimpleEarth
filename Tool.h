@@ -41,18 +41,18 @@ class Tool
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   public:
-    Tool(QString toolID = "", QToolButton* toolButton = 0, QDialog* dialog = 0);
+    Tool(const QString& toolID = "", QToolButton* toolButton = 0, QDialog* dialog = 0);
     virtual ~Tool();
 
     virtual void render() = 0;//forced override
 
     //get methods
-    QString getToolID();
+    const QString& getToolID() const;
     QToolButton* getToolButton();
     QDialog* getDialog();
 
     //set methods
-    void setToolID(QString toolID);
+    void setToolID(const QString& toolID);
     void setToolButton(QToolButton* toolButton);
     void setDialog(QDialog* dialog);
 

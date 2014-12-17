@@ -81,7 +81,7 @@ void ToolMgr::addTool(Tool* tool)
  * @param toolID String identifying the tool
  * @return Handle to corresponding tool
  */
-Tool* ToolMgr::getTool(QString toolID)
+Tool* ToolMgr::getTool(const QString& toolID)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   Tool* returnValue = NULL;
@@ -106,7 +106,7 @@ Tool* ToolMgr::getTool(QString toolID)
  *
  * @param toolID String identifying tool
  */
-void ToolMgr::selectTool(QString toolID)
+void ToolMgr::selectTool(const QString& toolID)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   mCurrentToolIndex = -1;

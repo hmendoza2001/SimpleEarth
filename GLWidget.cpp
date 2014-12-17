@@ -188,7 +188,7 @@ void GLWidget::initializeGL()
     {
       printf("GlWidget.cpp: Error loading image file.\n");
     }
-    mTextures[i] = Utilities::imageToTexture(&images[i]);
+    mTextures[i] = Utilities::imageToTexture(images[i]);
   }
 
   //provide texture to Earth object

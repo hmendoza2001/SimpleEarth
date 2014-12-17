@@ -30,7 +30,7 @@
  * @param toolButton Handle to corresponding toolbar button
  * @param dialog Handle to corresponding dialog
  */
-Tool::Tool(QString toolID, QToolButton* toolButton, QDialog* dialog)
+Tool::Tool(const QString& toolID, QToolButton* toolButton, QDialog* dialog)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   mToolID = toolID;
@@ -54,7 +54,7 @@ Tool::~Tool()
  *
  * @return String identifying this tool
  */
-QString Tool::getToolID()
+const QString& Tool::getToolID() const
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   return mToolID;
@@ -95,7 +95,7 @@ QDialog* Tool::getDialog()
  *
  * @param toolID String identifying this tool
  */
-void Tool::setToolID(QString toolID)
+void Tool::setToolID(const QString& toolID)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   mToolID = toolID;

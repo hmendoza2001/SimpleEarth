@@ -55,20 +55,20 @@ class WorldObject
     //main methods
     void renderIcon();
     void renderMesh();
-    bool loadIcon(QString filePath);
-    bool loadModel(QString filePath);
+    bool loadIcon(const QString& filePath);
+    bool loadModel(const QString& filePath);
     void copy(WorldObject* source);
 
     //get methods
-    SimpleVector getPosition();
+    const SimpleVector& getPosition() const;
     GeodeticPosition getGeodeticPosition();
-    SimpleVector getScale();
-    SimpleVector getRotation();
+    const SimpleVector& getScale() const;
+    const SimpleVector& getRotation() const;
     bool getIsVisible();
-    QString getType();
-    QString getName();
-    QString getLabel();
-    SimpleColor getColor();
+    const QString& getType() const;
+    const QString& getName() const;
+    const QString& getLabel() const;
+    const SimpleColor& getColor() const;
     IconRenderer* getIconRenderer();
     MeshRenderer* getMeshRenderer();
     bool getIsClickable();
@@ -77,8 +77,8 @@ class WorldObject
     int getExpirationTime();
     int getGroup();
     float getSpeed();
-    SimpleVector getScreenLocation();
-    QStringList getCustomInfo();
+    const SimpleVector& getScreenLocation() const;
+    const QStringList& getCustomInfo() const;
 
     //set methods
     void setPosition(const SimpleVector& position);
@@ -86,9 +86,9 @@ class WorldObject
     void setScale(const SimpleVector& scale);
     void setRotation(const SimpleVector& rotation);
     void setIsVisible(bool isVisible);
-    void setType(QString type);
-    void setName(QString name);
-    void setLabel(QString label);
+    void setType(const QString& type);
+    void setName(const QString& name);
+    void setLabel(const QString& label);
     void setColor(const SimpleColor& color);
     void setIconRenderer(IconRenderer* renderer);
     void setMeshRenderer(MeshRenderer* renderer);

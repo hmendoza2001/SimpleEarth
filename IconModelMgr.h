@@ -62,10 +62,10 @@ class IconModelMgr
     static IconModelMgr* getInstance();
     ~IconModelMgr();
 
-    bool loadIcon(QString filePath);
-    bool loadModel(QString filePath);
-    bool getIcon(QString filePath, int& texture, float& depth);
-    bool getModel(QString filePath, void*& modelData, int& texture);
+    bool loadIcon(const QString& filePath);
+    bool loadModel(const QString& filePath);
+    bool getIcon(const QString& filePath, int& texture, float& depth);
+    bool getModel(const QString& filePath, void*& modelData, int& texture);
 
   private:
     IconModelMgr();//private due to Singleton implementation

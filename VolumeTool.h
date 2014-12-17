@@ -50,12 +50,12 @@ class VolumeTool : public Tool
     void editCurrent(WorldObject* entity);
     void onMouseReleaseEvent(QMouseEvent* event);
 
-    void setName(QString name);
+    void setName(const QString& name);
     void setType(int type);
-    void setPosition(SimpleVector position);
-    void setRotation(SimpleVector rotation);
-    void setScale(SimpleVector scale);
-    void setColor(SimpleColor color);
+    void setPosition(const SimpleVector& position);
+    void setRotation(const SimpleVector& rotation);
+    void setScale(const SimpleVector& scale);
+    void setColor(const SimpleColor& color);
 
   private:
     WorldObject* mWorldObject;

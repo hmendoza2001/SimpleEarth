@@ -54,7 +54,7 @@ class TrackInfoWindow : public QDialog
     ~TrackInfoWindow();
 
     void initialize();
-    void setSelectedName(QString name);
+    void setSelectedName(const QString& name);
 
   public slots:
     void onUpdateTimer();

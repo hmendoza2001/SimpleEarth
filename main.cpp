@@ -74,7 +74,7 @@
  * @param argv Argument vector
  * @return QApplication's exec result
  */
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   QApplication app(argc, argv);
@@ -84,8 +84,8 @@ int main(int argc, char *argv[])
   splash.show();
   app.processEvents();
 
-#ifndef USING_GDAL
 //give time for splash screen to show up
+#ifndef USING_GDAL
 #ifdef WIN32
   CrossPlatformSleep::msleep(1500);
 #else
@@ -96,8 +96,8 @@ int main(int argc, char *argv[])
     app.processEvents();
     CrossPlatformSleep::msleep(1);
   }
-#endif
-#endif
+#endif//WIN32
+#endif//USING_GDAL
 
   //instantiate main GUI window, this will instantiate GLWidget and other sub objects
   MainWindow* mainWindow = MainWindow::getInstance();
@@ -115,13 +115,13 @@ int main(int argc, char *argv[])
 
   //SatelliteImageDownloader downloads sattelite imagery
 #ifdef USING_PROJ4
-  //start image download thread
+  //instantiate object and start image download thread
   SatelliteImageDownloader* satelliteImageDownloader = new SatelliteImageDownloader();
   satelliteImageDownloader->start();
 #ifdef USING_GDAL
   satelliteImageDownloader->setElevationMode(true);
-#endif
-#endif
+#endif//USING_GDAL
+#endif//USING_PROJ4
 
   //++++++++++++++++++++++++++++
   //EXAMPLES

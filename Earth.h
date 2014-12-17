@@ -52,8 +52,9 @@ class Earth
     static Earth* getInstance();
     ~Earth();
 
-    void addMap(GeodeticPosition southWest, GeodeticPosition northEast, float visibleAltitude, int drawPriority, QImage& image);
-    void readMapsFile(QString filename);
+    void addMap(const GeodeticPosition& southWest, const GeodeticPosition& northEast,
+                float visibleAltitude, int drawPriority, const QImage& image);
+    void readMapsFile(const QString& filename);
     void render();
     void setEarthTexture(unsigned int handle);
     void setStarTexture(unsigned int handle);

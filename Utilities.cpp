@@ -43,7 +43,7 @@
  * @param xyzPosition XYZ position
  * @return Geodetic position
  */
-GeodeticPosition Utilities::xyzToGeodetic(SimpleVector xyzPosition)
+GeodeticPosition Utilities::xyzToGeodetic(const SimpleVector& xyzPosition)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   GeodeticPosition geodeticPosition;
@@ -71,7 +71,7 @@ GeodeticPosition Utilities::xyzToGeodetic(SimpleVector xyzPosition)
  * @param geodeticPosition Geodetic position
  * @return XYZ position
  */
-SimpleVector Utilities::geodeticToXYZ(GeodeticPosition geodeticPosition)
+SimpleVector Utilities::geodeticToXYZ(const GeodeticPosition& geodeticPosition)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   SimpleVector xyzPosition;
@@ -95,7 +95,7 @@ SimpleVector Utilities::geodeticToXYZ(GeodeticPosition geodeticPosition)
  * @param dmsString String in the format specified above
  * @return Decimal degrees
  */
-double Utilities::dmsToDecimalDegrees(QString dmsString)
+double Utilities::dmsToDecimalDegrees(const QString& dmsString)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   double decimalDegrees = 0.0;
@@ -196,7 +196,7 @@ QString Utilities::decimalDegreesToDMS(double decimalDegrees, bool isLatitude)
  * @param ecefPosition XYZ vector representing ECEF coordinates
  * @return Geodetic position
  */
-GeodeticPosition Utilities::ecefToGeodetic(SimpleVector ecefPosition)
+GeodeticPosition Utilities::ecefToGeodetic(const SimpleVector& ecefPosition)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   GeodeticPosition geodeticPosition;
@@ -261,7 +261,7 @@ GeodeticPosition Utilities::ecefToGeodetic(SimpleVector ecefPosition)
  * @param utmString String in the format specified above
  * @return Geodetic position
  */
-GeodeticPosition Utilities::utmToGeodetic(QString utmString)
+GeodeticPosition Utilities::utmToGeodetic(const QString& utmString)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   QStringList utmTokens = utmString.split(" ");
@@ -340,7 +340,7 @@ GeodeticPosition Utilities::utmToGeodetic(QString utmString)
  * @param objectPosition Geodetic position of object
  * @return True if earth is obscuring the given object position
  */
-bool Utilities::checkObscure(GeodeticPosition cameraPosition, GeodeticPosition objectPosition)
+bool Utilities::checkObscure(const GeodeticPosition& cameraPosition, const GeodeticPosition& objectPosition)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   bool returnValue = true;
@@ -411,7 +411,7 @@ bool Utilities::checkObscure(GeodeticPosition cameraPosition, GeodeticPosition o
  * @param image Pointer to QImage
  * @return The OpenGL texture ID
  */
-unsigned int Utilities::imageToTexture(QImage* image)
+unsigned int Utilities::imageToTexture(const QImage& image)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
     //QImage image;
@@ -419,7 +419,7 @@ unsigned int Utilities::imageToTexture(QImage* image)
     unsigned int textureID;
 
     //convert to OpenGL format
-    glFormatImage = QGLWidget::convertToGLFormat(*image);
+    glFormatImage = QGLWidget::convertToGLFormat(image);
 
     //create texture
     glGenTextures(1, &textureID);
@@ -444,7 +444,7 @@ unsigned int Utilities::imageToTexture(QImage* image)
  * @param screenPosition Screen coordinates
  * @return World coordinates
  */
-SimpleVector Utilities::screenToWorld(ScreenCoordinates screenPosition)
+SimpleVector Utilities::screenToWorld(const ScreenCoordinates& screenPosition)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   SimpleVector returnValue;
@@ -486,7 +486,7 @@ SimpleVector Utilities::screenToWorld(ScreenCoordinates screenPosition)
  * @return Screen coordiates (z value is used to determine if object lies
  *  behind the camera)
  */
-SimpleVector Utilities::worldToScreen(SimpleVector worldPosition)
+SimpleVector Utilities::worldToScreen(const SimpleVector& worldPosition)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   SimpleVector returnValue;

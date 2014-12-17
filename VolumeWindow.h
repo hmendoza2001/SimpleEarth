@@ -52,8 +52,8 @@ class VolumeWindow : public QDialog
     ~VolumeWindow();
 
     void initialize();
-    void setupEdit(QString entityName);
-    void setPosition(SimpleVector position);
+    void setupEdit(const QString& entityName);
+    void setPosition(const SimpleVector& position);
     void closeEvent(QCloseEvent* event);//OVERRIDE
   
   public slots:

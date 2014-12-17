@@ -91,7 +91,8 @@ Earth* Earth::getInstance()
  *        first
  * @param textureFile File name for the texture
  */
-void Earth::addMap(GeodeticPosition southWest, GeodeticPosition northEast, float visibleAltitude, int drawPriority, QImage& image)
+void Earth::addMap(const GeodeticPosition& southWest, const GeodeticPosition& northEast,
+                   float visibleAltitude, int drawPriority, const QImage& image)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   Map map;
@@ -99,7 +100,7 @@ void Earth::addMap(GeodeticPosition southWest, GeodeticPosition northEast, float
   map.northEast = northEast;
   map.visibleAltitude = visibleAltitude;
   map.drawPriority = drawPriority;
-  map.texture = Utilities::imageToTexture(&image);
+  map.texture = Utilities::imageToTexture(image);
   mMapList.append(map);
 }
 
@@ -111,7 +112,7 @@ void Earth::addMap(GeodeticPosition southWest, GeodeticPosition northEast, float
  *
  * @filename Maps file name
  */
-void Earth::readMapsFile(QString filename)
+void Earth::readMapsFile(const QString& filename)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   QFile file(filename);
@@ -183,7 +184,7 @@ void Earth::readMapsFile(QString filename)
           printf("Earth.cpp: Error loading image in maps file.\n");
           break;
         }
-        map.texture = Utilities::imageToTexture(&image);
+        map.texture = Utilities::imageToTexture(image);
       }
       else if (line.contains("ENDMAP"))
       {

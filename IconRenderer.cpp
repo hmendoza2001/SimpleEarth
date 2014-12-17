@@ -33,7 +33,7 @@
  *
  * @param filePath Path to the icon file
  */
-IconRenderer::IconRenderer(QString filePath)
+IconRenderer::IconRenderer(const QString& filePath)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   mFilePath = filePath;
@@ -81,7 +81,7 @@ QString IconRenderer::getFilePath()
  *
  * @return OpenGL texture handle
  */
-int IconRenderer::getIconTexture()
+int IconRenderer::getTexture()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   return mTexture;
@@ -119,7 +119,7 @@ void IconRenderer::setWorldObject(WorldObject* worldObject)
  *
  * @param filePath File path to icon
  */
-void IconRenderer::setFilePath(QString filePath)
+void IconRenderer::setFilePath(const QString& filePath)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   mFilePath = filePath;
@@ -133,7 +133,7 @@ void IconRenderer::setFilePath(QString filePath)
  *
  * @param index OpenGL handle to texture
  */
-void IconRenderer::setIconTexture(int texture)
+void IconRenderer::setTexture(int texture)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   mTexture = texture;
@@ -161,14 +161,11 @@ void IconRenderer::setDepth(float depth)
 void IconRenderer::render()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
-  //get texture object id
+  //get texture and depth from current file path
   IconModelMgr::getInstance()->getIcon(mFilePath, mTexture, mDepth);
 
-  //draw icon
   if (mTexture >= 0)
   {
-    GeodeticPosition worldObjectGeodetic = mWorldObject->getGeodeticPosition();
-
     glMatrixMode(GL_PROJECTION);
     glPushMatrix();
     glLoadIdentity();
@@ -186,8 +183,8 @@ void IconRenderer::render()
     //only render if world object is not being obscured by the earth
     //and if projection is not negative (behind the camera, which means screenZ
     //is below 1.0)
-    if (!Utilities::checkObscure(Camera::getInstance()->getGeodeticPosition(), worldObjectGeodetic) &&
-       screenLocation.z < 1.0f)
+    if (!Utilities::checkObscure(Camera::getInstance()->getGeodeticPosition(),
+        mWorldObject->getGeodeticPosition()) && screenLocation.z < 1.0)
     {
       //enable png transparency
       glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
@@ -202,16 +199,16 @@ void IconRenderer::render()
       float iconSize = 40.0f;
 
       glTexCoord3f(0.0f, 0.0f, mDepth);
-      glVertex3f(screenLocation.x - (iconSize/2.0), screenLocation.y - (iconSize/2.0), mDepth);
+      glVertex3f(screenLocation.x - (iconSize/2.0f), screenLocation.y - (iconSize/2.0f), mDepth);
 
       glTexCoord3f(1.0f, 0.0f, mDepth);
-      glVertex3f(screenLocation.x + (iconSize/2.0), screenLocation.y - (iconSize/2.0), mDepth);
+      glVertex3f(screenLocation.x + (iconSize/2.0f), screenLocation.y - (iconSize/2.0f), mDepth);
 
       glTexCoord3f(1.0f, 1.0f, mDepth);
-      glVertex3f(screenLocation.x + (iconSize/2.0), screenLocation.y + (iconSize/2.0), mDepth);
+      glVertex3f(screenLocation.x + (iconSize/2.0f), screenLocation.y + (iconSize/2.0f), mDepth);
 
       glTexCoord3f(0.0f, 1.0f, mDepth);
-      glVertex3f(screenLocation.x - (iconSize/2.0), screenLocation.y + (iconSize/2.0), mDepth);
+      glVertex3f(screenLocation.x - (iconSize/2.0f), screenLocation.y + (iconSize/2.0f), mDepth);
 
       glEnd();//GL_QUADS
 

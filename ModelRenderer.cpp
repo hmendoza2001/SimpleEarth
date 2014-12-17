@@ -35,7 +35,7 @@
 /**
  * Constructor. Initializes attributes and calls parent constructor.
  */
-ModelRenderer::ModelRenderer(QString filePath) : MeshRenderer()
+ModelRenderer::ModelRenderer(const QString& filePath) : MeshRenderer()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   mFilePath = filePath;
@@ -103,7 +103,7 @@ void ModelRenderer::render()
  *
  * @return The file path if the model associated with this renderer
  */
-QString ModelRenderer::getFilePath()
+const QString& ModelRenderer::getFilePath() const
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   return mFilePath;
@@ -115,7 +115,7 @@ QString ModelRenderer::getFilePath()
  *
  * @param filePath File path to model
  */
-void ModelRenderer::setFilePath(QString filePath)
+void ModelRenderer::setFilePath(const QString& filePath)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   mFilePath = filePath;

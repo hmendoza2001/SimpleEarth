@@ -116,7 +116,7 @@ WorldObject* WorldObjectMgr::getWorldObject(int index)
  * @param name Name of world object
  * @return Handle to world object
  */
-WorldObject* WorldObjectMgr::getWorldObject(QString name)
+WorldObject* WorldObjectMgr::getWorldObject(const QString& name)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   WorldObject* returnWorldObject = NULL;
@@ -157,7 +157,7 @@ void WorldObjectMgr::removeWorldObject(int index)
 
  * @param name Name of the world object we want to delete
  */
-void WorldObjectMgr::removeWorldObject(QString name)
+void WorldObjectMgr::removeWorldObject(const QString& name)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   mMutex.lock();
@@ -230,7 +230,7 @@ int WorldObjectMgr::getNumberOfObjects()
  * @param name Name of world object
  * @return Index of found entity, -1 otherwise
  */
-int WorldObjectMgr::findWorldObject(QString name)
+int WorldObjectMgr::findWorldObject(const QString& name)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   int index = -1;

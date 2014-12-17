@@ -138,7 +138,7 @@ void VolumeWindow::initialize()
  *
  * @param entityName Name of the entity we are editing.
  */
-void VolumeWindow::setupEdit(QString entityName)
+void VolumeWindow::setupEdit(const QString& entityName)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   //set flag for cleanup at exit
@@ -210,7 +210,7 @@ void VolumeWindow::setupEdit(QString entityName)
  *
  * @param position XYZ position
  */
-void VolumeWindow::setPosition(SimpleVector position)
+void VolumeWindow::setPosition(const SimpleVector& position)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   mPosition = Utilities::xyzToGeodetic(position);
