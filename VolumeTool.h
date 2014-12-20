@@ -47,7 +47,7 @@ class VolumeTool : public Tool
 
     void render();//OVERRIDE
     bool addCurrent();
-    void editCurrent(WorldObject* entity);
+    void editCurrent(WorldObject* worldObject);
     void onMouseReleaseEvent(QMouseEvent* event);
 
     void setName(const QString& name);

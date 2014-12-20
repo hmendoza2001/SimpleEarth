@@ -120,7 +120,7 @@ void PathVolumeWindow::initialize()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
  * Qt SLOT. This item gets called when the user checks or unchecks an item in
- * the tree. It makes the entity visible/invisible.
+ * the tree. It makes the object visible/invisible.
  *
  * @param item Which item in the tree was checked/unchecked
  * @param column Which column in the tree was changed
@@ -190,7 +190,7 @@ void PathVolumeWindow::onContextMenu(QPoint point)
       if (answer == QMessageBox::Ok)
       {
         int index = parent->indexOfChild(mCurrentTreeItem);
-        //remove entity
+        //remove object
         WorldObjectMgr::getInstance()->removeWorldObject(mCurrentTreeItem->text(0));
         //remove tree item
         QTreeWidgetItem* deleteItem = parent->takeChild(index);

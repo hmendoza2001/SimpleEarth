@@ -84,7 +84,7 @@ bool WorldObjectMgr::addWorldObject(WorldObject* object)
 {
   bool returnValue = false;
 
-  //only add entity if it is not already in the list
+  //only add world object if it is not already in the list
   if (findWorldObject(object->getName()) == -1)
   {
     mWorldObjectList.append(object);
@@ -228,7 +228,7 @@ int WorldObjectMgr::getNumberOfObjects()
  * Returns -1 otherwise.
  *
  * @param name Name of world object
- * @return Index of found entity, -1 otherwise
+ * @return Index of found world object, -1 otherwise
  */
 int WorldObjectMgr::findWorldObject(const QString& name)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -276,7 +276,7 @@ void WorldObjectMgr::onExpireTimer()
       else if (expirationTime <= -2)
       {
         removeWorldObject(i);
-        //rewind counter since we just deleted one entity from the list
+        //rewind counter since we just deleted one object from the list
         i--;
       }
     }

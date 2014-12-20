@@ -98,8 +98,8 @@ void PathWindow::onColorSelected()
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
- * Qt SLOT. Gets called when the user clicks the OK button. Calls entity object
- * to attempt to add path, displays warning message if entity name already used.
+ * Qt SLOT. Gets called when the user clicks the OK button. Calls the Path Tool
+ * to attempt to add the path.
  */
 void PathWindow::onAccept()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

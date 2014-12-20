@@ -146,7 +146,7 @@ bool PathTool::addCurrent()
     }
     worldObject->setMeshRenderer(pathRenderer);
 
-    //if entity already exists (cannot add) perform cleanup
+    //if object already exists (cannot add) perform cleanup
     if (!WorldObjectMgr::getInstance()->addWorldObject(worldObject))
     {
       delete worldObject;

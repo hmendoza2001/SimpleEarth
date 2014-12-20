@@ -91,7 +91,7 @@ void TrackInfoWindow::onUpdateTimer()
 {
   if (isVisible())
   {
-    WorldObject* entity = NULL;
+    WorldObject* worldObject = NULL;
     WorldObjectMgr* worldObjectMgr = WorldObjectMgr::getInstance();
 
     //clear both sides (lists)
@@ -103,27 +103,27 @@ void TrackInfoWindow::onUpdateTimer()
     //display all tracks in WorldObject Manager
     for (i=0; i<worldObjectMgr->getNumberOfObjects(); i++)
     {
-      entity = worldObjectMgr->getWorldObject(i);
-      if (entity != NULL && !entity->getHasExpired() && entity->getGroup()==WorldObject::TRACK)
+      worldObject = worldObjectMgr->getWorldObject(i);
+      if (worldObject != NULL && !worldObject->getHasExpired() && worldObject->getGroup()==WorldObject::TRACK)
       {
         //add item to list
-        ui->trackList->addItem(entity->getName());
+        ui->trackList->addItem(worldObject->getName());
 
         //if there is a current selection, then display
         //relevant information on the right hand side
-        if (mSelectedName == entity->getName())
+        if (mSelectedName == worldObject->getName())
         {
-          GeodeticPosition geoPosition = entity->getGeodeticPosition();
+          GeodeticPosition geoPosition = worldObject->getGeodeticPosition();
           QString dmsLatitude = Utilities::decimalDegreesToDMS(geoPosition.latitude, true);
           QString dmsLongitude = Utilities::decimalDegreesToDMS(geoPosition.longitude, false);
-          ui->descriptionList->addItem(entity->getName());
+          ui->descriptionList->addItem(worldObject->getName());
           ui->descriptionList->addItem("Lat: " + dmsLatitude);
           ui->descriptionList->addItem("Lon: " + dmsLongitude);
           ui->descriptionList->addItem("Alt: " + QString::number(geoPosition.altitude*1000.0f) + "m");
-          ui->descriptionList->addItem("Speed: " + QString::number(entity->getSpeed()) + "Km/h");
+          ui->descriptionList->addItem("Speed: " + QString::number(worldObject->getSpeed()) + "Km/h");
 
           //add custom information
-          QStringList customInfo = entity->getCustomInfo();
+          QStringList customInfo = worldObject->getCustomInfo();
           for (j=0; j<customInfo.length(); j++)
           {
             ui->descriptionList->addItem(customInfo[j]);

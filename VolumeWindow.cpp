@@ -133,23 +133,23 @@ void VolumeWindow::initialize()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
  * Sets up this window in volume edit mode. We fetch all the attributes from
- * the given entity and populate the data accordingly. We also set the
- * appropriate rendering parameters.
+ * the given volume name and populate the data accordingly. We also set
+ * the appropriate rendering parameters.
  *
- * @param entityName Name of the entity we are editing.
+ * @param volumeName Name of the volume we are editing.
  */
-void VolumeWindow::setupEdit(const QString& entityName)
+void VolumeWindow::setupEdit(const QString& volumeName)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   //set flag for cleanup at exit
   mInEditMode = true;
 
-  ui->name->setText(entityName);
+  ui->name->setText(volumeName);
   ui->name->setEnabled(false);//disable name fields
   ui->typeComboBox->setEnabled(false);//disable type field
 
-  //get entity
-  mEditWorldObject = WorldObjectMgr::getInstance()->getWorldObject(entityName);
+  //get volume object
+  mEditWorldObject = WorldObjectMgr::getInstance()->getWorldObject(volumeName);
   if (mEditWorldObject != NULL)
   {
     VolumeRenderer* volumeRenderer = (VolumeRenderer*)mEditWorldObject->getMeshRenderer();
@@ -191,10 +191,10 @@ void VolumeWindow::setupEdit(const QString& entityName)
     color.setBlueF(simpleColor.blue);
     ui->color->setColor(color);
 
-    //hide real entity and show VolumeTool's copy
+    //hide real volume and show VolumeTool's copy
     mEditWorldObject->setIsVisible(false);
 
-    //finally copy entity properties to rendering object
+    //finally copy volume's properties to rendering object
     VolumeTool* volumeTool = (VolumeTool*)ToolMgr::getInstance()->getTool("Volume");
     volumeTool->setType(volumeRenderer->getType());
     volumeTool->setColor(simpleColor);
@@ -252,7 +252,7 @@ void VolumeWindow::onTypeChange(int index)
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
- * Qt SLOT. This slot will modify the current entity color to be rendered by the
+ * Qt SLOT. This slot will modify the current volume color to be rendered by the
  * VolumeTool object.
  */
 void VolumeWindow::onColorSelected()
@@ -358,8 +358,8 @@ void VolumeWindow::onScaleSliderMoved(int value)
 /**
  * Qt SLOT. Gets called when the user clicks the OK button. If in edit mode,
  * call aprorpiate method to finalize volume editing. Otherwise, it calls the
- * volume entity object to attempt to add volume, displays warning message if
- * entity name is already used.
+ * volume world object to attempt to add volume, displays warning message if
+ * world object name is already used.
  */
 void VolumeWindow::onAccept()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -422,7 +422,7 @@ void VolumeWindow::closeEvent(QCloseEvent* event)
 
     if (mEditWorldObject != NULL)
     {
-      mEditWorldObject->setIsVisible(true);//set true entity visible again
+      mEditWorldObject->setIsVisible(true);//set true volume visible again
     }
   }
 }

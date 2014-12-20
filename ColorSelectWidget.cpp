@@ -50,7 +50,7 @@ ColorSelectWidget::~ColorSelectWidget()
  *
  * @return Currently selected color
  */
-QColor ColorSelectWidget::getCurrentColor()
+const QColor& ColorSelectWidget::getCurrentColor() const
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   return mColor;
@@ -62,7 +62,7 @@ QColor ColorSelectWidget::getCurrentColor()
  *
  * @param color New color
  */
-void ColorSelectWidget::setColor(QColor color)
+void ColorSelectWidget::setColor(const QColor& color)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   //set current color

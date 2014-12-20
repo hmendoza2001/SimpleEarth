@@ -108,8 +108,8 @@ bool VolumeTool::addCurrent()
   worldObject->setMeshRenderer(volumeRenderer);
 
   //if addWorldObject returns false, then the add failed because
-  //there already was an entity with that name in the list,
-  //so we need to delete the entity we just created
+  //there already was an object with that name in the list,
+  //so we need to delete the object we just created
   if (!WorldObjectMgr::getInstance()->addWorldObject(worldObject))
   {
     delete worldObject;
@@ -123,7 +123,7 @@ bool VolumeTool::addCurrent()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
  * This method is called when the user finishes editing a volume. We copy all
- * attributes of current rendered object into the given entity.
+ * attributes of current rendered object into the given world object.
  *
  * @param worldObject Handle to world object we are editing
  */
@@ -131,7 +131,7 @@ void VolumeTool::editCurrent(WorldObject* worldObject)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   worldObject->copy(mWorldObject);
-  //set entity group since mWorldObject is not part of volume group
+  //set world object group since mWorldObject is not part of volume group
   worldObject->setGroup(WorldObject::VOLUME);
 }
 

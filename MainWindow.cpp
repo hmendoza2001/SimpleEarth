@@ -220,7 +220,7 @@ void MainWindow::displayTrackInfo(const QString& trackName)
 /**
  * Displays the Volume Window in edit mode.
  *
- * @param entityName Name of volume we are editing
+ * @param volumeName Name of volume we are editing
  */
 void MainWindow::displayVolumeEdit(const QString& volumeName)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

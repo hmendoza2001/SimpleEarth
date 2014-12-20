@@ -43,8 +43,8 @@ class ColorSelectWidget : public QLineEdit
     ColorSelectWidget(QWidget *parent = 0);
     ~ColorSelectWidget();
 
-    QColor getCurrentColor();
-    void setColor(QColor color);
+    const QColor& getCurrentColor() const;
+    void setColor(const QColor& color);
     void mouseDoubleClickEvent(QMouseEvent* e);//OVERRIDE
 
   signals:

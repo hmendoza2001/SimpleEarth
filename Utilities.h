@@ -46,7 +46,7 @@ class Utilities
     static QString decimalDegreesToDMS(double decimalDegrees, bool isLatitude);
     static GeodeticPosition ecefToGeodetic(const SimpleVector& ecefPosition);
     static GeodeticPosition utmToGeodetic(const QString& utmString);
-    static bool checkObscure(const GeodeticPosition& cameraPosition, const GeodeticPosition& entityPosition);
+    static bool checkObscure(const GeodeticPosition& cameraPosition, const GeodeticPosition& objectPosition);
     static unsigned int imageToTexture(const QImage& image);
     static SimpleVector screenToWorld(const ScreenCoordinates& screenPosition);
     static SimpleVector worldToScreen(const SimpleVector& worldPosition);
