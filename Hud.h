@@ -53,9 +53,9 @@ class Hud
     Hud();//private due to Singleton implementation
     void renderWorldObjectLabels();
 
+    static Hud* mInstance;
     bool mShowHud;
     bool mShowLabels;
-    static Hud* mInstance;
     QPainter* mPainter;
 };
 

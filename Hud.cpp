@@ -47,6 +47,7 @@ Hud::Hud()
 Hud::~Hud()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
+  mInstance == NULL;
 }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -176,8 +177,7 @@ void Hud::renderHud()
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
- * Renders the labels for all world objects that have the showLabel flag set to
- * true.
+ * Renders the labels for all world objects.
  */
 void Hud::renderWorldObjectLabels()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -195,28 +195,27 @@ void Hud::renderWorldObjectLabels()
     worldObject = worldObjectMgr->getWorldObject(i);
     if (worldObject != NULL && !worldObject->getHasExpired())
     {
-      if (mShowLabels)
+      screenLocation = worldObject->getScreenLocation();
+
+      //only draw the label if world object is not being obscured by the earth
+      //and if projection is not negative (not behind the camera, which means
+      //screenZ is below 1.0)
+      if (screenLocation.z < 1.0f && !Utilities::checkObscure(camera->getGeodeticPosition(),
+          worldObject->getGeodeticPosition()))
       {
-        screenLocation = worldObject->getScreenLocation();
-        screenLocation.y = (float)screenSize.y - screenLocation.y;//reverse Y
+        label = worldObject->getLabel();
 
-        //only draw the label if world object is not being obscured by the earth
-        //and if projection is not negative (behind the camera, which means screenZ
-        //is below 1.0)
-        if (!Utilities::checkObscure(camera->getGeodeticPosition(), worldObject->getGeodeticPosition()) &&
-           screenLocation.z < 1.0f)
-        {
-          label = worldObject->getLabel();
+        //set pen color to world object color
+        SimpleColor color = worldObject->getColor();
+        int red = color.red * 255.0f;
+        int green = color.green * 255.0f;
+        int blue = color.blue * 255.0f;
+        mPainter->setPen(QColor(red, green, blue));
 
-          //set pen color to world object color
-          SimpleColor color = worldObject->getColor();
-          int red = color.red * 255.0f;
-          int green = color.green * 255.0f;
-          int blue = color.blue * 255.0f;
-          mPainter->setPen(QColor(red, green, blue));
+        //reverse Y to screen coordinates
+        screenLocation.y = (float)screenSize.y - screenLocation.y;
 
-          mPainter->drawText((int)(screenLocation.x+20.0), (int)screenLocation.y, label);
-        }
+        mPainter->drawText((int)(screenLocation.x+20.0), (int)screenLocation.y, label);
       }
     }
   }
