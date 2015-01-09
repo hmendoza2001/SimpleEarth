@@ -54,7 +54,7 @@ IconModelMgr::~IconModelMgr()
 
 #ifdef USING_ASSIMP
   //release model data
-  for (int i=0; i<mModelList.size(); i++)
+  for (int i = 0; i < mModelList.size(); i++)
   {
     const struct aiScene* scene = (const struct aiScene*)mModelList[i].modelData;
     aiReleaseImport(scene);
@@ -93,7 +93,7 @@ bool IconModelMgr::loadIcon(const QString& filePath)
   bool iconAlreadyLoaded = false;
 
   //check if image was already loaded
-  for (int i=0; i<mIconList.size(); i++)
+  for (int i = 0; i < mIconList.size(); i++)
   {
     if (mIconList[i].filePath == filePath)
     {
@@ -143,7 +143,7 @@ bool IconModelMgr::loadModel(const QString& filePath)
   bool modelAlreadyLoaded = false;
 
   //check if model was already loaded
-  for (int i=0; i<mModelList.size(); i++)
+  for (int i = 0; i < mModelList.size(); i++)
   {
     if (mModelList[i].filePath == filePath)
     {
@@ -170,7 +170,7 @@ bool IconModelMgr::loadModel(const QString& filePath)
       model.texture = -1;
 
       //load texture as images first
-      for (unsigned int materialIndex=0; materialIndex<scene->mNumMaterials; materialIndex++)
+      for (unsigned int materialIndex = 0; materialIndex < scene->mNumMaterials; materialIndex++)
       {
         const aiMaterial* pMaterial = scene->mMaterials[materialIndex];
         if (pMaterial->GetTextureCount(aiTextureType_DIFFUSE) > 0)
@@ -183,7 +183,7 @@ bool IconModelMgr::loadModel(const QString& filePath)
 
             QString directoryPath = "";
             //to get directory path we just ignore the last element in string list
-            for (int stringListIndex=0; stringListIndex<stringList.length()-1; stringListIndex++)
+            for (int stringListIndex = 0; stringListIndex < stringList.length()-1; stringListIndex++)
             {
               directoryPath += stringList[stringListIndex] + "/";
             }
@@ -228,7 +228,7 @@ bool IconModelMgr::getIcon(const QString& filePath, int& texture, float& depth)
   int returnValue = false;
 
   //find icon
-  for (int i=0; i<mIconList.size(); i++)
+  for (int i = 0; i < mIconList.size(); i++)
   {
     if (mIconList[i].filePath == filePath)
     {
@@ -264,7 +264,7 @@ bool IconModelMgr::getModel(const QString& filePath, void*& modelData, int& text
   int returnValue = false;
 
   //find model
-  for (int i=0; i<mModelList.size(); i++)
+  for (int i = 0; i < mModelList.size(); i++)
   {
     if (mModelList[i].filePath == filePath)
     {

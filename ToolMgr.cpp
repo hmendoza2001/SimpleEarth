@@ -86,7 +86,7 @@ Tool* ToolMgr::getTool(const QString& toolID)
 {
   Tool* returnValue = NULL;
 
-  for (int i=0; i<mToolList.size(); i++)
+  for (int i = 0; i < mToolList.size(); i++)
   {
     if (toolID == mToolList[i]->getToolID())
     {
@@ -111,7 +111,7 @@ void ToolMgr::selectTool(const QString& toolID)
 {
   mCurrentToolIndex = -1;
 
-  for (int i=0; i<mToolList.size(); i++)
+  for (int i = 0; i < mToolList.size(); i++)
   {
     if (toolID == mToolList[i]->getToolID())
     {

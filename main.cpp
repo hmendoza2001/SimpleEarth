@@ -91,7 +91,7 @@ int main(int argc, char* argv[])
 #else
   //in linux we have to do this silly thing, otherwise
   //splash screen won't show up correctly
-  for (int i=0; i<500; i++)
+  for (int i = 0; i < 500; i++)
   {
     app.processEvents();
     CrossPlatformSleep::msleep(1);

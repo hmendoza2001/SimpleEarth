@@ -337,7 +337,7 @@ void MainWindow::onOpen()
   progress.setWindowModality(Qt::WindowModal);
 
   //loop thru all selected files
-  for (int i=0; i<fileList.size(); i++)
+  for (int i = 0; i < fileList.size(); i++)
   {
     progress.setValue(i);
     if (progress.wasCanceled())

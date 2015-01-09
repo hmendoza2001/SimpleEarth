@@ -186,7 +186,7 @@ void WorldObjectMgr::renderObjects()
   SimpleVector screenLocation;
 
   //compute screen location and render all meshes first
-  for (i=0; i<mWorldObjectList.size(); i++)
+  for (i = 0; i < mWorldObjectList.size(); i++)
   {
     if (mWorldObjectList[i]->getIsVisible())
     {
@@ -199,7 +199,7 @@ void WorldObjectMgr::renderObjects()
   }
 
   //render icons last
-  for (i=0; i<mWorldObjectList.size(); i++)
+  for (i = 0; i < mWorldObjectList.size(); i++)
   {
     if (mWorldObjectList[i]->getIsVisible())
     {
@@ -235,7 +235,7 @@ int WorldObjectMgr::findWorldObject(const QString& name)
 {
   int index = -1;
 
-  for (int i=0; i<mWorldObjectList.size(); i++)
+  for (int i = 0; i < mWorldObjectList.size(); i++)
   {
     if (name == mWorldObjectList[i]->getName())
     {
@@ -259,7 +259,7 @@ void WorldObjectMgr::onExpireTimer()
 {
   int expirationTime = 0;
 
-  for (int i=0; i<mWorldObjectList.size(); i++)
+  for (int i = 0; i < mWorldObjectList.size(); i++)
   {
     if (mWorldObjectList[i] != NULL && mWorldObjectList[i]->getIsExpirable())
     {

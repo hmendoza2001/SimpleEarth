@@ -278,7 +278,7 @@ void Camera::run()
   float altitudeStepSize2 = (mDesiredEndPoint.altitude - slingshotAltitude)/((float)numberOfSteps/2.0f);
   GeodeticPosition newPosition;
 
-  for (int i=0; i<numberOfSteps; i++)
+  for (int i = 0; i < numberOfSteps; i++)
   {
     newPosition.latitude = mDesiredPosition.latitude + latitudeStepSize;
     newPosition.longitude = mDesiredPosition.longitude + longitudeStepSize;

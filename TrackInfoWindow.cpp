@@ -101,7 +101,7 @@ void TrackInfoWindow::onUpdateTimer()
     int j = 0;
 
     //display all tracks in WorldObject Manager
-    for (i=0; i<worldObjectMgr->getNumberOfObjects(); i++)
+    for (i = 0; i < worldObjectMgr->getNumberOfObjects(); i++)
     {
       worldObject = worldObjectMgr->getWorldObject(i);
       if (worldObject != NULL && !worldObject->getHasExpired() && worldObject->getGroup()==WorldObject::TRACK)
@@ -124,7 +124,7 @@ void TrackInfoWindow::onUpdateTimer()
 
           //add custom information
           QStringList customInfo = worldObject->getCustomInfo();
-          for (j=0; j<customInfo.length(); j++)
+          for (j = 0; j < customInfo.length(); j++)
           {
             ui->descriptionList->addItem(customInfo[j]);
           }

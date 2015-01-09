@@ -48,7 +48,7 @@ class PathRenderer : public MeshRenderer
     QList<SimpleVector>* getPoints();
 
   private:
-    QList<SimpleVector> mPointList;
+    QList<SimpleVector> mPoints;
 };
 
 #endif//PATH_RENDERER_H

@@ -89,7 +89,7 @@ void ExampleExpirableObject::run()
   //this loop will update the object's position 5 times. After that
   //the object will expire after 5 seconds and disappear from the
   //screen. Memory will be released by the world object manager too
-  for (int i=0; i<5; i++)
+  for (int i = 0; i < 5; i++)
   {
     worldObject = WorldObjectMgr::getInstance()->getWorldObject(name);
     if (worldObject != NULL && !worldObject->getHasExpired())

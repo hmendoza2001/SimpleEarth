@@ -74,23 +74,24 @@ void PathVolumeWindow::initialize()
 
   //remove all items in both lists in order to start with a fresh list
   QList<QTreeWidgetItem*> pathList = pathsTreeItem->takeChildren();
-  for (i=0; i<pathList.size(); i++)
+  for (i = 0; i < pathList.size(); i++)
   {
     delete pathList[i];
   }
   QList<QTreeWidgetItem*> volumeList = volumeTreeItem->takeChildren();
-  for (i=0; i<volumeList.size(); i++)
+  for (i = 0; i < volumeList.size(); i++)
   {
     delete volumeList[i];
   }
 
   mCurrentTreeItem = NULL;
 
-  for (i=0; i<worldObjectMgr->getNumberOfObjects(); i++)
+  for (i = 0; i < worldObjectMgr->getNumberOfObjects(); i++)
   {
     worldObject = worldObjectMgr->getWorldObject(i);
-    if (worldObject!=NULL && !worldObject->getHasExpired() &&
-        (worldObject->getGroup()==WorldObject::PATH || worldObject->getGroup()==WorldObject::VOLUME))
+    if (worldObject != NULL && !worldObject->getHasExpired() &&
+        (worldObject->getGroup() == WorldObject::PATH ||
+         worldObject->getGroup() == WorldObject::VOLUME))
     {
       QTreeWidgetItem* item = new QTreeWidgetItem();
       item->setText(0, worldObject->getName());

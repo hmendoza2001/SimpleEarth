@@ -169,9 +169,9 @@ void ElevationMgr::loadElevationDatabase(const QString& filePath)
   int width = 0;
   int height = 0;
 
-  for (height=0; height<mDatabaseHeight; height++)
+  for (height = 0; height < mDatabaseHeight; height++)
   {
-    for (width=0; width<mDatabaseWidth; width++)
+    for (width = 0; width < mDatabaseWidth; width++)
     {
       GDALRasterIO(hBand, GF_Read, width, height, 1, 1, &mDatabase[(height * mDatabaseWidth) + width], 1, 1, GDT_Float32, 0, 0);
     }

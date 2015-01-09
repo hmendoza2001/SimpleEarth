@@ -140,7 +140,7 @@ void FileIO::readFile(const QString& fileName)
 
           //instantiate path renderer and add points
           PathRenderer* pathRenderer = new PathRenderer();
-          for (int i=0; i<points.size(); i++)
+          for (int i = 0; i < points.size(); i++)
           {
             pathRenderer->addPoint(points[i]);
           }
@@ -301,7 +301,7 @@ void FileIO::writeFile(const QString& fileName, int fileType)
     QList<SimpleVector>* pointList;
     SimpleColor color;
     out << "PATHS" << "\n";
-    for (i=0; i<worldObjectMgr->getNumberOfObjects(); i++)
+    for (i = 0; i < worldObjectMgr->getNumberOfObjects(); i++)
     {
       worldObject = worldObjectMgr->getWorldObject(i);
       if (worldObject!=NULL && !worldObject->getHasExpired() && worldObject->getGroup()==WorldObject::PATH)
@@ -315,7 +315,7 @@ void FileIO::writeFile(const QString& fileName, int fileType)
         PathRenderer* pathRenderer = (PathRenderer*)worldObject->getMeshRenderer();
         pointList = pathRenderer->getPoints();
 
-        for (j=0; j<pointList->size(); j++)
+        for (j = 0; j < pointList->size(); j++)
         {
           out << "PathPointX=" << pointList->at(j).x << "\n";
           out << "PathPointY=" << pointList->at(j).y << "\n";
@@ -331,7 +331,7 @@ void FileIO::writeFile(const QString& fileName, int fileType)
     out << "VOLUMES" << "\n";
     SimpleVector position, rotation, scale;
     SimpleColor color;
-    for (int i=0; i<worldObjectMgr->getNumberOfObjects(); i++)
+    for (int i = 0; i < worldObjectMgr->getNumberOfObjects(); i++)
     {
       worldObject = worldObjectMgr->getWorldObject(i);
       if (worldObject!=NULL && !worldObject->getHasExpired() && worldObject->getGroup()==WorldObject::VOLUME)

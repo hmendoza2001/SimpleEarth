@@ -135,7 +135,7 @@ void ShapefileReader::readFile(QString fileName)
   QTextStream heightDataFileStream(&heightDataFile);
 
   //skip file header (first 100 bytes)
-  for (i=0; i<100; i++)
+  for (i = 0; i < 100; i++)
   {
     shapeFileStream >> dummy8;
   }
@@ -163,7 +163,7 @@ void ShapefileReader::readFile(QString fileName)
     }
 
     //skip bounding box (8*4 bytes)
-    for (i=0; i<4; i++)
+    for (i = 0; i < 4; i++)
     {
       shapeFileStream >> dummy64;
     }
@@ -181,7 +181,7 @@ void ShapefileReader::readFile(QString fileName)
     //We get the second part's index in order to know how
     //many points to include (up to index[1] points, refer
     //to ESRI Shapefile Technical Description)
-    for (i=0; i<numberOfParts; i++)
+    for (i = 0; i < numberOfParts; i++)
     {
       shapeFileStream >> dummy32;
       if (i == 1)
@@ -223,7 +223,7 @@ void ShapefileReader::readFile(QString fileName)
     }
 
     //loop through points
-    for (i=0; i<numberOfPointsTotal; i++)
+    for (i = 0; i < numberOfPointsTotal; i++)
     {
       shapeFileStream >> pointXInt;
       shapeFileStream >> pointYInt;

@@ -47,7 +47,7 @@ Earth::Earth()
   mNumberOfTileSubdivisions = 1;
   camera = Camera::getInstance();
 
-  for (int i=0; i<2; i++)
+  for (int i = 0; i < 2; i++)
   {
     mDisplayLists[i] = 0;
   }
@@ -352,9 +352,9 @@ void Earth::renderMaps()
   GeodeticPosition cameraPosition = camera->getGeodeticPosition();
 
   //draw tiles by priority
-  for (drawPriority=0; drawPriority<11; drawPriority++)
+  for (drawPriority = 0; drawPriority < 11; drawPriority++)
   {
-    for (mapIndex=0; mapIndex<mMapList.size(); mapIndex++)
+    for (mapIndex = 0; mapIndex < mMapList.size(); mapIndex++)
     {
       //make sure tile is only rendered if within the right priority, altitude and area
       if (mMapList[mapIndex].drawPriority == drawPriority &&
@@ -382,9 +382,9 @@ void Earth::renderMaps()
         glBegin(GL_TRIANGLES);
 
         //draw tiles with subdivisions for higher terrain fidelity
-        for (subdivisionY=0; subdivisionY<mNumberOfTileSubdivisions; subdivisionY++)
+        for (subdivisionY = 0; subdivisionY < mNumberOfTileSubdivisions; subdivisionY++)
         {
-          for (subdivisionX=0; subdivisionX<mNumberOfTileSubdivisions; subdivisionX++)
+          for (subdivisionX = 0; subdivisionX < mNumberOfTileSubdivisions; subdivisionX++)
           {
             texturePositionX = (float)subdivisionX*textureWidth;
             texturePositionY = (float)subdivisionY*textureHeight;
@@ -491,7 +491,7 @@ void Earth::createSphereGeometry(double radius)
   //the - 180 in phi comes from the fact that in OpenGL, texture coordinates 0,0 is the
   //lower left corner of the image, in equirectangular projection, that would be equivalent
   //to a longitude of -180
-  for (i=0; i<numberOfMeridians; i++)
+  for (i = 0; i < numberOfMeridians; i++)
   {
     phi1 = (((2.0 * Constants::PI)/(double)numberOfMeridians) * (double)i) - (180.0 * Constants::DEGREES_TO_RADIANS);
     phi2 = (((2.0 * Constants::PI)/(double)numberOfMeridians) * (double)(i+1)) - (180.0 * Constants::DEGREES_TO_RADIANS);
@@ -514,7 +514,7 @@ void Earth::createSphereGeometry(double radius)
   }
 
   //draw south pole (notice how we come back to vertex 0,0,-radius and -z1)
-  for (i=0; i<numberOfMeridians; i++)
+  for (i = 0; i < numberOfMeridians; i++)
   {
     phi1 = (((2.0 * Constants::PI)/(double)numberOfMeridians) * (double)i) - (180.0 * Constants::DEGREES_TO_RADIANS);
     phi2 = (((2.0 * Constants::PI)/(double)numberOfMeridians) * (double)(i+1)) - (180.0 * Constants::DEGREES_TO_RADIANS);
@@ -539,7 +539,7 @@ void Earth::createSphereGeometry(double radius)
   int hemisphereParallels = numberOfParallels/2;
 
   //draw northern hemisphere
-  for (j=0; j<hemisphereParallels-1; j++)
+  for (j = 0; j < hemisphereParallels-1; j++)
   {
     theta1 = (latitudeResolutionDeg * Constants::DEGREES_TO_RADIANS) +
       ( ( (Constants::PI/2.0) / (double)hemisphereParallels) * j );
@@ -548,7 +548,7 @@ void Earth::createSphereGeometry(double radius)
     z1 = radius * cos(theta1);
     z2 = radius * cos(theta2);
 
-    for (i=0; i<numberOfMeridians; i++)
+    for (i = 0; i < numberOfMeridians; i++)
     {
       phi1 = (((2.0 * Constants::PI)/(double)numberOfMeridians) * (double)i) - (180.0 * Constants::DEGREES_TO_RADIANS);
       phi2 = (((2.0 * Constants::PI)/(double)numberOfMeridians) * (double)(i+1)) - (180.0 * Constants::DEGREES_TO_RADIANS);
@@ -577,7 +577,7 @@ void Earth::createSphereGeometry(double radius)
   }
 
   //draw southern hemisphere
-  for (j=0; j<hemisphereParallels-1; j++)
+  for (j = 0; j < hemisphereParallels-1; j++)
   {
     theta1 = (latitudeResolutionDeg * Constants::DEGREES_TO_RADIANS) +
       ( ( (Constants::PI/2.0) / (float)hemisphereParallels) * j );
@@ -586,7 +586,7 @@ void Earth::createSphereGeometry(double radius)
     z1 = radius * cos(theta1);
     z2 = radius * cos(theta2);
 
-    for (i=0; i<numberOfMeridians; i++)
+    for (i = 0; i < numberOfMeridians; i++)
     {
       phi1 = (((2.0 * Constants::PI)/(double)numberOfMeridians) * (double)i) - (180.0 * Constants::DEGREES_TO_RADIANS);
       phi2 = (((2.0 * Constants::PI)/(double)numberOfMeridians) * (double)(i+1)) - (180.0 * Constants::DEGREES_TO_RADIANS);

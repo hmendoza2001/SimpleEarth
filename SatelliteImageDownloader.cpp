@@ -197,7 +197,7 @@ void SatelliteImageDownloader::onNetworkReply(QNetworkReply* networkReply)
 
     //find where to place tile
     int tileIndex = 0;
-    for (tileIndex=0; tileIndex<mTiles.size(); tileIndex++)
+    for (tileIndex = 0; tileIndex < mTiles.size(); tileIndex++)
     {
       if (mTiles[tileIndex].imageFile == fileName)
       {
@@ -307,16 +307,16 @@ void SatelliteImageDownloader::downloadTiles()
     QString fileName;
     QString url;
     bool tileFound = false;
-    for (i=0; i<5; i++)
+    for (i = 0; i < 5; i++)
     {
-      for (j=0; j<5; j++)
+      for (j = 0; j < 5; j++)
       {
         //find the file name
         url = getUrl(column, row, currentZoomLevel, fileName);
 
         //try to find tile in local database
         tileFound = false;
-        for (databaseIndex=0; databaseIndex<mTiles.size(); databaseIndex++)
+        for (databaseIndex = 0; databaseIndex < mTiles.size(); databaseIndex++)
         {
           if (mTiles[databaseIndex].imageFile == fileName)
           {
@@ -561,7 +561,7 @@ void SatelliteImageDownloader::generateInverseLatitudeLookupTable()
     LatitudeInversionElement element;
 
     //get latitude from 0 to 30 every half point
-    for (i=0; i<60; i++)
+    for (i = 0; i < 60; i++)
     {
       transformedLatitude = currentLatitudeDeg * Constants::DEGREES_TO_RADIANS;
 
@@ -579,7 +579,7 @@ void SatelliteImageDownloader::generateInverseLatitudeLookupTable()
     }
 
     //get latitude from 30 to 90 every point
-    for (i=0; i<=60; i++)
+    for (i = 0; i <= 60; i++)
     {
       transformedLatitude = currentLatitudeDeg * Constants::DEGREES_TO_RADIANS;
 
@@ -624,7 +624,7 @@ double SatelliteImageDownloader::findInverseLatitude(double latitudeRad)
     return negativeMultiplier * mLatInversionTable[mLatInversionTable.size()-1].inverseLatitude;
   }
 
-  for (int i=0; i<mLatInversionTable.size()-1; i++)
+  for (int i = 0; i < mLatInversionTable.size()-1; i++)
   {
     if (latitudeDeg == mLatInversionTable[i].currentLatitude)
     {
@@ -698,7 +698,7 @@ QString SatelliteImageDownloader::tileToQuadKey(int column, int row, int zoomLev
   QString quad = "";
   int mask = 0;
   int cell = 0;
-  for (int i=zoomLevel; i>0; i--)
+  for (int i = zoomLevel; i > 0; i--)
   {
     mask = 1 << (i - 1);
     cell = 0;

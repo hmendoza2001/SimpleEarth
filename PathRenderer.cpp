@@ -42,6 +42,7 @@ PathRenderer::PathRenderer() : MeshRenderer()
 PathRenderer::~PathRenderer()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
+  mPoints.clear();
 }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -51,9 +52,9 @@ PathRenderer::~PathRenderer()
 void PathRenderer::render()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
-  if (mPointList.size() > 0)
+  if (mPoints.size() > 0)
   {
-    SimpleVector pointXYZ = mPointList[0];
+    SimpleVector pointXYZ = mPoints[0];
     GeodeticPosition pointGeodetic = Utilities::xyzToGeodetic(pointXYZ);
 
     //only render if first point is not being obscured by the earth
@@ -65,9 +66,9 @@ void PathRenderer::render()
       glDisable(GL_DEPTH_TEST);
       glLineWidth(2.0f);
       glBegin(GL_LINE_STRIP);
-      for (int i=0; i<mPointList.size(); i++)
+      for (int i = 0; i < mPoints.size(); i++)
       {
-        glVertex3f(mPointList[i].x, mPointList[i].y, mPointList[i].z);
+        glVertex3f(mPoints[i].x, mPoints[i].y, mPoints[i].z);
       }
       glEnd();
       glLineWidth(1.0f);
@@ -85,7 +86,7 @@ void PathRenderer::render()
 void PathRenderer::addPoint(SimpleVector point)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
-  mPointList.append(point);
+  mPoints.append(point);
 }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -97,5 +98,5 @@ void PathRenderer::addPoint(SimpleVector point)
 QList<SimpleVector>* PathRenderer::getPoints()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
-  return &mPointList;
+  return &mPoints;
 }

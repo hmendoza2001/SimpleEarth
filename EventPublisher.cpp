@@ -64,7 +64,7 @@ void EventPublisher::removeListener(EventListener* listener)
   mMutex.lock();
 
   //find and delete instance
-  for (int i=0; i<mListeners.size(); i++)
+  for (int i = 0; i < mListeners.size(); i++)
   {
     if (mListeners[i] == listener)
     {
@@ -88,7 +88,7 @@ void EventPublisher::publishEvent(const QStringList& event)
 {
   mMutex.lock();
 
-  for (int i=0; i<mListeners.size(); i++)
+  for (int i = 0; i < mListeners.size(); i++)
   {
     mListeners[i]->onEvent(event);
   }

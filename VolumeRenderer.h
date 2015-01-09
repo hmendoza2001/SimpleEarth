@@ -27,8 +27,7 @@
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
- * This class encapsulates the funcionality to render volumes. This class
- * inherits from MeshRenderer.
+ * Encapsulates the funcionality to render volumes. Inherits from MeshRenderer.
  *
  * @version 1.0
  * @author Hector Mendoza

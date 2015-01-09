@@ -190,7 +190,7 @@ void Hud::renderWorldObjectLabels()
 
   ScreenCoordinates screenSize = Camera::getInstance()->getScreenSize();
 
-  for (int i=0; i<worldObjectMgr->getNumberOfObjects(); i++)
+  for (int i = 0; i < worldObjectMgr->getNumberOfObjects(); i++)
   {
     worldObject = worldObjectMgr->getWorldObject(i);
     if (worldObject != NULL && !worldObject->getHasExpired())

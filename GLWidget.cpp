@@ -76,7 +76,7 @@ GLWidget::GLWidget(QWidget* parent) : QGLWidget(QGLFormat(QGL::SampleBuffers), p
   mRightButtonPressed = false;
   mFramesSinceLastCycle = 0;
   mMouseInputMode = CAMERA_MOVE_MODE;
-  for (int i=0; i<3; i++)
+  for (int i = 0; i < 3; i++)
   {
     mTextures[i] = 0;
   }
@@ -182,7 +182,7 @@ void GLWidget::initializeGL()
   imagePaths[2] = "images/atmosphere.png";
   QImage images[3];
 
-  for (int i=0; i<3; i++)
+  for (int i = 0; i < 3; i++)
   {
     if (!images[i].load(imagePaths[i]))
     {
@@ -445,7 +445,7 @@ void GLWidget::mouseReleaseEvent(QMouseEvent* event)
       WorldObject* worldObject;
       SimpleVector screenLocation;
       ScreenCoordinates screenSize;
-      for (int i=0; i<worldObjectMgr->getNumberOfObjects(); i++)
+      for (int i = 0; i < worldObjectMgr->getNumberOfObjects(); i++)
       {
         worldObject = worldObjectMgr->getWorldObject(i);
         if (worldObject!=NULL && !worldObject->getHasExpired() && worldObject->getIsClickable())

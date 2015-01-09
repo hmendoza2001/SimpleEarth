@@ -155,7 +155,7 @@ void ShapeRenderer::createVertices()
     //extruded polygon, for loop is in reverse order to draw counterclock wise
     //(for OpenGL requirements)
     glBegin(GL_POLYGON);
-    for (int i=mGroundPointList.size()-1; i>=0; i--)
+    for (int i = mGroundPointList.size()-1; i >= 0; i--)
     {
       if (mHasHeight)
       {
@@ -172,7 +172,7 @@ void ShapeRenderer::createVertices()
     if (mHasHeight)
     {
       //draw shape walls through extrusion
-      for (int i=0; i<mHeightPointList.size()-1; i++)
+      for (int i = 0; i < mHeightPointList.size()-1; i++)
       {
         glBegin(GL_QUADS);
 

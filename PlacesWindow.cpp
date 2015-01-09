@@ -135,7 +135,7 @@ void PlacesWindow::savePlaces()
   out.setRealNumberNotation(QTextStream::FixedNotation);
   out.setRealNumberPrecision(6);
   out << "PLACES" << "\n";
-  for (int i=0; i<mPlacesList.size(); i++)
+  for (int i = 0; i < mPlacesList.size(); i++)
   {
     out << "PlaceName=" << mPlacesList[i].name << "\n";
     out << "PlaceLatitude=" << mPlacesList[i].position.latitude << "\n";

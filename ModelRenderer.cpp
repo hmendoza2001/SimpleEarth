@@ -148,11 +148,11 @@ void ModelRenderer::recursiveRender(void* scene, void* node, int texture)
   glMultMatrixf((float*)&m);
 
   //draw all meshes assigned to this node
-  for (n=0; n<nd->mNumMeshes; ++n)
+  for (n = 0; n < nd->mNumMeshes; ++n)
   {
     const struct aiMesh* mesh = sc->mMeshes[nd->mMeshes[n]];
 
-    for (t=0; t<mesh->mNumFaces; ++t)
+    for (t = 0; t < mesh->mNumFaces; ++t)
     {
       const struct aiFace* face = &mesh->mFaces[t];
       GLenum face_mode;
@@ -173,7 +173,7 @@ void ModelRenderer::recursiveRender(void* scene, void* node, int texture)
       }
 
       glBegin(face_mode);
-      for (i=0; i<face->mNumIndices; i++)
+      for (i = 0; i < face->mNumIndices; i++)
       {
         int index = face->mIndices[i];
 
@@ -198,7 +198,7 @@ void ModelRenderer::recursiveRender(void* scene, void* node, int texture)
   }
 
   //draw children nodes
-  for (n=0; n<nd->mNumChildren; ++n)
+  for (n = 0; n < nd->mNumChildren; ++n)
   {
     recursiveRender(sc, nd->mChildren[n], texture);
   }
