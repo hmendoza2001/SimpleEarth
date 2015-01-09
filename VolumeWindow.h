@@ -57,7 +57,6 @@ class VolumeWindow : public QDialog
     void closeEvent(QCloseEvent* event);//OVERRIDE
   
   public slots:
-    void onNameChange();
     void onTypeChange(int index);
     void onColorSelected();
     void onLatitudeChange();

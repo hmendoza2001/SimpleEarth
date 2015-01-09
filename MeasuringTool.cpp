@@ -22,7 +22,6 @@
 
 #include <QtOpenGL>
 #include "MeasuringTool.h"
-#include "globals.h"
 #include "Utilities.h"
 #include "math.h"
 #include "MainWindow.h"

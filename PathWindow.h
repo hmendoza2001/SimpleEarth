@@ -52,7 +52,6 @@ class PathWindow : public QDialog
     void closeEvent(QCloseEvent* event);//OVERRIDE
 
   public slots:
-    void onNameChange();
     void onColorSelected();
     void onAccept();
     void onReject();

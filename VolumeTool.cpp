@@ -112,8 +112,9 @@ bool VolumeTool::addCurrent()
   //so we need to delete the object we just created
   if (!WorldObjectMgr::getInstance()->addWorldObject(worldObject))
   {
+    //note: the volume renderer that we associated with this world
+    //object will get deleted on the world object's destructor
     delete worldObject;
-    delete volumeRenderer;
     returnValue = false;
   }
 

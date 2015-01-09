@@ -28,7 +28,8 @@
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
- * Constructor. Calls parent constructor with given parameter values.
+ * Constructor. Calls parent constructor with given parameter values and
+ * initializes attributes.
  *
  * @param toolButton Handle to corresponding toolbar button
  * @param dialog Handle to corresponding dialog
@@ -36,7 +37,14 @@
 PathTool::PathTool(QToolButton* toolButton, QDialog* dialog) : Tool("Path", toolButton, dialog)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
-  initialize();
+  mCurrentNumberOfPoints = 0;
+  mClickCordinates.x = 0;
+  mClickCordinates.y = 0;
+  mAddPoint = false;
+  mColor.red = 1.0f;
+  mColor.green = 1.0f;
+  mColor.blue = 1.0f;
+  mColor.alpha = 1.0f;
 }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -55,11 +63,6 @@ PathTool::~PathTool()
 void PathTool::initialize()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
-  mName = "Unique Name";
-  mColor.red = 1.0f;
-  mColor.green = 1.0f;
-  mColor.blue = 1.0f;
-  mColor.alpha = 1.0f;
   mCurrentNumberOfPoints = 0;
   mAddPoint = false;
 }
@@ -73,7 +76,7 @@ void PathTool::render()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   //check if we need a projection computation because we are adding a point
-  if (mAddPoint)
+  if (mAddPoint && mCurrentNumberOfPoints < MAX_NUMBER_OF_POINTS)
   {
     //convert click coordinates and add point to our list
     mPoints[mCurrentNumberOfPoints] = Utilities::screenToWorld(mClickCordinates);
@@ -87,7 +90,7 @@ void PathTool::render()
   glDisable(GL_DEPTH_TEST);
   glLineWidth(2.0f);
   glBegin(GL_LINE_STRIP);
-  for (int i=0; i<mCurrentNumberOfPoints; i++)
+  for (int i = 0; i < mCurrentNumberOfPoints; i++)
   {
     glVertex3f(mPoints[i].x, mPoints[i].y, mPoints[i].z);
   }
@@ -140,7 +143,7 @@ bool PathTool::addCurrent()
 
     //instantiate path renderer and associate it with world object
     PathRenderer* pathRenderer = new PathRenderer();
-    for (int i=0; i<mCurrentNumberOfPoints; i++)
+    for (int i = 0; i < mCurrentNumberOfPoints; i++)
     {
       pathRenderer->addPoint(mPoints[i]);
     }
@@ -149,8 +152,9 @@ bool PathTool::addCurrent()
     //if object already exists (cannot add) perform cleanup
     if (!WorldObjectMgr::getInstance()->addWorldObject(worldObject))
     {
+      //note: the path renderer that we associated with this world
+      //object will get deleted on the world object's destructor
       delete worldObject;
-      delete pathRenderer;
       returnValue = false;
     }
   }

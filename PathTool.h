@@ -39,6 +39,7 @@ class PathTool : public Tool
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   public:
+    static const int MAX_NUMBER_OF_POINTS = 50;
     PathTool(QToolButton* toolButton = 0, QDialog* dialog = 0);
     ~PathTool();
 
@@ -50,7 +51,7 @@ class PathTool : public Tool
     void onMouseReleaseEvent(QMouseEvent* event);
 
   private:
-    SimpleVector mPoints[50];
+    SimpleVector mPoints[MAX_NUMBER_OF_POINTS];
     int mCurrentNumberOfPoints;
     ScreenCoordinates mClickCordinates;
     bool mAddPoint;

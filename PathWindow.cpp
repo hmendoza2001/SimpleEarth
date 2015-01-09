@@ -26,6 +26,7 @@
 #include "MainWindow.h"
 #include "PathTool.h"
 #include "ToolMgr.h"
+#include "WorldObjectMgr.h"
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
@@ -38,7 +39,6 @@ PathWindow::PathWindow(QWidget *parent) : QDialog(parent), ui(new Ui::PathWindow
 {
   ui->setupUi(this);
 
-  connect(ui->name, SIGNAL(editingFinished()), this, SLOT(onNameChange()));
   connect(ui->color, SIGNAL(colorSelected()), this, SLOT(onColorSelected()));
   connect(this, SIGNAL(accepted()), this, SLOT(onAccept()));
   connect(this, SIGNAL(rejected()), this, SLOT(onReject()));
@@ -62,22 +62,25 @@ PathWindow::~PathWindow()
 void PathWindow::initialize()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
-  //initialize path name
-  ui->name->setText("Unique Name");
+  //get number of current paths to append to current name
+  WorldObject* worldObject;
+  WorldObjectMgr* worldObjectMgr = WorldObjectMgr::getInstance();
+  int currentNumberOfPaths = 0;
+  for (int i = 0; i < worldObjectMgr->getNumberOfObjects(); i++)
+  {
+    worldObject = worldObjectMgr->getWorldObject(i);
+    if (worldObject != NULL && !worldObject->getHasExpired() &&
+        worldObject->getGroup() == WorldObject::PATH)
+    {
+      currentNumberOfPaths++;
+    }
+  }
+  QString pathName = "Path" + QString::number(currentNumberOfPaths+1);
+  ui->name->setText(pathName);
+
   //get handle to PathTool
   PathTool* pathTool = (PathTool*)ToolMgr::getInstance()->getTool("Path");
   pathTool->initialize();
-}
-
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-/**
- * Qt SLOT. Sets the current name for the path.
- */
-void PathWindow::onNameChange()
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-{
-  PathTool* pathTool = (PathTool*)ToolMgr::getInstance()->getTool("Path");
-  pathTool->setName(ui->name->text());
 }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -92,6 +95,7 @@ void PathWindow::onColorSelected()
   color.red = qColor.redF();
   color.green = qColor.greenF();
   color.blue = qColor.blueF();
+  color.alpha = 1.0f;
   PathTool* pathTool = (PathTool*)ToolMgr::getInstance()->getTool("Path");
   pathTool->setColor(color);
 }
@@ -105,6 +109,10 @@ void PathWindow::onAccept()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   PathTool* pathTool = (PathTool*)ToolMgr::getInstance()->getTool("Path");
+
+  //set current name
+  pathTool->setName(ui->name->text());
+
   if (!pathTool->addCurrent())
   {
     QMessageBox::warning(this, "Warning", "Name already used. Please choose another name.");

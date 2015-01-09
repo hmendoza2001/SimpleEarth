@@ -54,7 +54,6 @@ VolumeWindow::VolumeWindow(QWidget *parent) : QDialog(parent), ui(new Ui::Volume
   ui->scaleYSlider->setTracking(true);
   ui->scaleZSlider->setTracking(true);
 
-  connect(ui->name, SIGNAL(editingFinished()), this, SLOT(onNameChange()));
   connect(ui->typeComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(onTypeChange(int)));
   connect(ui->color, SIGNAL(colorSelected()), this, SLOT(onColorSelected()));
   connect(ui->latitude, SIGNAL(editingFinished()), this, SLOT(onLatitudeChange()));
@@ -88,11 +87,24 @@ VolumeWindow::~VolumeWindow()
 void VolumeWindow::initialize()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
-  //initialize volume name
-  ui->name->setText("Unique Name");
+  //get number of current volumes to append to current name
+  WorldObject* worldObject;
+  WorldObjectMgr* worldObjectMgr = WorldObjectMgr::getInstance();
+  int currentNumberOfVolumes = 0;
+  for (int i = 0; i < worldObjectMgr->getNumberOfObjects(); i++)
+  {
+    worldObject = worldObjectMgr->getWorldObject(i);
+    if (worldObject != NULL && !worldObject->getHasExpired() &&
+        worldObject->getGroup() == WorldObject::VOLUME)
+    {
+      currentNumberOfVolumes++;
+    }
+  }
+  QString volumeName = "Volume" + QString::number(currentNumberOfVolumes+1);
+  ui->name->setText(volumeName);
+
   //get handle to VolumeTool
   VolumeTool* volumeTool = (VolumeTool*)ToolMgr::getInstance()->getTool("Volume");
-  volumeTool->setName("Unique Name");
 
   //we emplace the current volume right below the camera, so we need
   //to get the camera position, we also populate the position fields
@@ -223,17 +235,6 @@ void VolumeWindow::setPosition(const SimpleVector& position)
 
   QString strAltitude = QString::number(mPosition.altitude);
   ui->altitude->setText(strAltitude);
-}
-
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-/**
- * Qt SLOT. Sets the name for the current volume.
- */
-void VolumeWindow::onNameChange()
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-{
-  VolumeTool* volumeTool = (VolumeTool*)ToolMgr::getInstance()->getTool("Volume");
-  volumeTool->setName(ui->name->text());
 }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -375,6 +376,9 @@ void VolumeWindow::onAccept()
   }
   else
   {
+    //set current name
+    volumeTool->setName(ui->name->text());
+
     if (!volumeTool->addCurrent())
     {
       QMessageBox::warning(this, "Warning", "Name already used. Please choose another name.");
