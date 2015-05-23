@@ -101,6 +101,9 @@ GLWidget::GLWidget(QWidget* parent) : QGLWidget(QGLFormat(QGL::SampleBuffers), p
 GLWidget::~GLWidget()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
+  delete mRenderTimer;
+  delete mFrameRateTimer;
+  delete atmosphere;
 }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

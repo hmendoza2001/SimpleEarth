@@ -42,6 +42,13 @@ ToolMgr::ToolMgr()
 ToolMgr::~ToolMgr()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
+  //release all data
+  for (int i = 0; i < mToolList.size(); i++)
+  {
+    delete mToolList[i];
+  }
+  mToolList.clear();
+
   mInstance = NULL;
 }
 

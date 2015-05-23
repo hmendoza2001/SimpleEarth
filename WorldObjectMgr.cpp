@@ -49,6 +49,14 @@ WorldObjectMgr::WorldObjectMgr()
 WorldObjectMgr::~WorldObjectMgr()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
+  //release all object data
+  for (int i = 0; i < mWorldObjectList.size(); i++)
+  {
+    delete mWorldObjectList[i];
+  }
+  mWorldObjectList.clear();
+  delete mExpireTimer;
+
   mInstance = NULL;
 }
 

@@ -51,14 +51,23 @@ IconModelMgr::~IconModelMgr()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   mInstance = NULL;
+  int i = 0;
+
+  //release icon/image data
+  for (i = 0; i < mIconList.size(); i++)
+  {
+    delete mIconList[i].image;
+  }
+  mIconList.clear();
 
 #ifdef USING_ASSIMP
   //release model data
-  for (int i = 0; i < mModelList.size(); i++)
+  for (i = 0; i < mModelList.size(); i++)
   {
     const struct aiScene* scene = (const struct aiScene*)mModelList[i].modelData;
     aiReleaseImport(scene);
   }
+  mModelList.clear();
 #endif
 }
 

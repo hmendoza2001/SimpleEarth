@@ -87,7 +87,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
   VolumeTool* volumeTool = new VolumeTool(mVolumeToolButton, mVolumeWindow);
   MeasuringTool* measuringTool = new MeasuringTool(mMeasuringToolButton, mMeasuringWindow);
 
-
   toolMgr->addTool(pathTool);
   toolMgr->addTool(volumeTool);
   toolMgr->addTool(measuringTool);
@@ -122,12 +121,27 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
- * Destructor.
+ * Destructor. Releases allocated memory.
  */
 MainWindow::~MainWindow()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   delete ui;
+  delete mPathWindow;
+  delete mVolumeWindow;
+  delete mMeasuringWindow;
+  delete mPlacesWindow;
+  delete mTrackInfoWindow;
+  delete mPathVolumeWindow;
+  delete mAboutWindow;
+  delete mFileIO;
+  delete mShapefileReader;
+
+  delete mViewModeToolButton;
+  delete mPathToolButton;
+  delete mVolumeToolButton;
+  delete mMeasuringToolButton;
+
   mInstance = NULL;
 }
 

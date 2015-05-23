@@ -50,6 +50,7 @@ VolumeTool::VolumeTool(QToolButton* toolButton, QDialog* dialog) : Tool("Volume"
 VolumeTool::~VolumeTool()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
+  delete mWorldObject;
 }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
