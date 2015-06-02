@@ -25,8 +25,8 @@
 #include "ui_PathWindow.h"
 #include "MainWindow.h"
 #include "PathTool.h"
-#include "ToolMgr.h"
-#include "WorldObjectMgr.h"
+#include "ToolManager.h"
+#include "WorldObjectManager.h"
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
@@ -64,11 +64,11 @@ void PathWindow::initialize()
 {
   //get number of current paths to append to current name
   WorldObject* worldObject;
-  WorldObjectMgr* worldObjectMgr = WorldObjectMgr::getInstance();
+  WorldObjectManager* worldObjectManager = WorldObjectManager::getInstance();
   int currentNumberOfPaths = 0;
-  for (int i = 0; i < worldObjectMgr->getNumberOfObjects(); i++)
+  for (int i = 0; i < worldObjectManager->getNumberOfObjects(); i++)
   {
-    worldObject = worldObjectMgr->getWorldObject(i);
+    worldObject = worldObjectManager->getWorldObject(i);
     if (worldObject != NULL && !worldObject->getHasExpired() &&
         worldObject->getGroup() == WorldObject::PATH)
     {
@@ -79,7 +79,7 @@ void PathWindow::initialize()
   ui->name->setText(pathName);
 
   //get handle to PathTool
-  PathTool* pathTool = (PathTool*)ToolMgr::getInstance()->getTool("Path");
+  PathTool* pathTool = (PathTool*)ToolManager::getInstance()->getTool("Path");
   pathTool->initialize();
 }
 
@@ -96,7 +96,7 @@ void PathWindow::onColorSelected()
   color.green = qColor.greenF();
   color.blue = qColor.blueF();
   color.alpha = 1.0f;
-  PathTool* pathTool = (PathTool*)ToolMgr::getInstance()->getTool("Path");
+  PathTool* pathTool = (PathTool*)ToolManager::getInstance()->getTool("Path");
   pathTool->setColor(color);
 }
 
@@ -108,7 +108,7 @@ void PathWindow::onColorSelected()
 void PathWindow::onAccept()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
-  PathTool* pathTool = (PathTool*)ToolMgr::getInstance()->getTool("Path");
+  PathTool* pathTool = (PathTool*)ToolManager::getInstance()->getTool("Path");
 
   //set current name
   pathTool->setName(ui->name->text());

@@ -22,7 +22,7 @@
 
 #include <QtOpenGL>
 #include "ModelRenderer.h"
-#include "IconModelMgr.h"
+#include "IconModelManager.h"
 #include "WorldObject.h"
 
 #ifdef USING_ASSIMP
@@ -84,7 +84,7 @@ void ModelRenderer::render()
   void* modelData = NULL;
   int texture = -1;
 
-  bool modelLoaded = IconModelMgr::getInstance()->getModel(mFilePath, modelData, texture);
+  bool modelLoaded = IconModelManager::getInstance()->getModel(mFilePath, modelData, texture);
   if (modelLoaded)
   {
 #ifdef USING_ASSIMP

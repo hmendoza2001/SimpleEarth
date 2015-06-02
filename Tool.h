@@ -32,7 +32,7 @@
  * Abstract class for Tool objects. A tool can be described as an object whose
  * functionality is related to a tool button on the main window. A tool object
  * contains handles to its corresponding tool button and dialog. Tool objects
- * are managed by the Tool Manager (refer to ToolMgr.h).
+ * are managed by the Tool Manager (refer to ToolManager.h).
  *
  * @version 1.0
  * @author Hector Mendoza

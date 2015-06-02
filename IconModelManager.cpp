@@ -23,7 +23,7 @@
 #include <QFile>
 #include <QTextStream>
 #include <QStringList>
-#include "IconModelMgr.h"
+#include "IconModelManager.h"
 #include "Utilities.h"
 
 #ifdef USING_ASSIMP
@@ -32,13 +32,13 @@
 #include <assimp/postprocess.h>
 #endif
 
-IconModelMgr* IconModelMgr::mInstance = NULL;//Singleton implementation
+IconModelManager* IconModelManager::mInstance = NULL;//Singleton implementation
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
  * Constructor.
  */
-IconModelMgr::IconModelMgr()
+IconModelManager::IconModelManager()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
 }
@@ -47,7 +47,7 @@ IconModelMgr::IconModelMgr()
 /**
  * Destructor. Releases model data if necessary.
  */
-IconModelMgr::~IconModelMgr()
+IconModelManager::~IconModelManager()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   mInstance = NULL;
@@ -77,12 +77,12 @@ IconModelMgr::~IconModelMgr()
  *
  * @return The single instance of this class
  */
-IconModelMgr* IconModelMgr::getInstance()
+IconModelManager* IconModelManager::getInstance()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   if (mInstance == NULL)
   {
-    mInstance = new IconModelMgr();
+    mInstance = new IconModelManager();
   }
 
   return mInstance;
@@ -95,7 +95,7 @@ IconModelMgr* IconModelMgr::getInstance()
  * @param filePath Path to icon/image file
  * @return True if image was loaded successfully
  */
-bool IconModelMgr::loadIcon(const QString& filePath)
+bool IconModelManager::loadIcon(const QString& filePath)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   bool returnValue = false;
@@ -129,7 +129,7 @@ bool IconModelMgr::loadIcon(const QString& filePath)
     }
     else
     {
-      printf("IconModelMgr.cpp: Error loading image file.\n");
+      printf("IconModelManager.cpp: Error loading image file.\n");
       delete image;
     }
   }
@@ -145,7 +145,7 @@ bool IconModelMgr::loadIcon(const QString& filePath)
  * @param filePath Path to model file
  * @return True if model was loaded successfully
  */
-bool IconModelMgr::loadModel(const QString& filePath)
+bool IconModelManager::loadModel(const QString& filePath)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   bool returnValue = false;
@@ -201,7 +201,7 @@ bool IconModelMgr::loadModel(const QString& filePath)
             QImage* image = new QImage();
             if (!image->load(fullPath))
             {
-              printf("IconModelMgr.cpp: Error loading texture for model.\n");
+              printf("IconModelManager.cpp: Error loading texture for model.\n");
               delete image;
             }
             model.image = image;
@@ -213,7 +213,7 @@ bool IconModelMgr::loadModel(const QString& filePath)
     }//end of if (scene != NULL)
     else
     {
-      printf("IconModelMgr.cpp: Error loading model data.\n");
+      printf("IconModelManager.cpp: Error loading model data.\n");
     }
 #endif
   }// end of if (!modelAlreadyLoaded)
@@ -231,7 +231,7 @@ bool IconModelMgr::loadModel(const QString& filePath)
  * @param depth Depth value returned
  * @return True if texture was found
  */
-bool IconModelMgr::getIcon(const QString& filePath, int& texture, float& depth)
+bool IconModelManager::getIcon(const QString& filePath, int& texture, float& depth)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   int returnValue = false;
@@ -267,7 +267,7 @@ bool IconModelMgr::getIcon(const QString& filePath, int& texture, float& depth)
  * @param texture Texture index value returned
  * @return True if model was found
  */
-bool IconModelMgr::getModel(const QString& filePath, void*& modelData, int& texture)
+bool IconModelManager::getModel(const QString& filePath, void*& modelData, int& texture)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   int returnValue = false;

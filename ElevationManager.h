@@ -37,20 +37,20 @@
  * @version 1.0
  * @author Hector Mendoza
  */
-class ElevationMgr
+class ElevationManager
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   public:
-    static ElevationMgr* getInstance();
-    ~ElevationMgr();
+    static ElevationManager* getInstance();
+    ~ElevationManager();
 
     void loadElevationDatabase(const QString& filePath);
     float getElevation(double latitude, double longitude);
 
   private:
-    ElevationMgr();//private due to Singleton implementation
+    ElevationManager();//private due to Singleton implementation
 
-    static ElevationMgr* mInstance;
+    static ElevationManager* mInstance;
     float* mDatabase;
     bool mDatabaseIsLoaded;
     GeodeticPosition mDatabaseOrigin;

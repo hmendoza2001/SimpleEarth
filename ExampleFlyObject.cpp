@@ -21,7 +21,7 @@
  */
 
 #include "ExampleFlyObject.h"
-#include "WorldObjectMgr.h"
+#include "WorldObjectManager.h"
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
@@ -80,7 +80,7 @@ void ExampleFlyObject::run()
   worldObject->setRotation(rotation);
 
   //add object to manager so that it gets rendered
-  WorldObjectMgr::getInstance()->addWorldObject(worldObject);
+  WorldObjectManager::getInstance()->addWorldObject(worldObject);
 
   //update position in a 10 times per second loop
   while (true)

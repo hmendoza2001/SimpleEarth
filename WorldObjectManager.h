@@ -44,14 +44,14 @@
  * @version 1.0
  * @author Hector Mendoza
  */
-class WorldObjectMgr : public QWidget
+class WorldObjectManager : public QWidget
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   Q_OBJECT
 
   public:
-    static WorldObjectMgr* getInstance();
-    ~WorldObjectMgr();
+    static WorldObjectManager* getInstance();
+    ~WorldObjectManager();
 
     bool addWorldObject(WorldObject* object);
     WorldObject* getWorldObject(int index);
@@ -66,9 +66,9 @@ class WorldObjectMgr : public QWidget
     void onExpireTimer();
 
   private:
-    WorldObjectMgr();//private due to Singleton implementation
+    WorldObjectManager();//private due to Singleton implementation
 
-    static WorldObjectMgr* mInstance;
+    static WorldObjectManager* mInstance;
     QList<WorldObject*> mWorldObjectList;
     QTimer* mExpireTimer;
     QMutex mMutex;

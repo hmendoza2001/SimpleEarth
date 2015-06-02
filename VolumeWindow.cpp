@@ -24,9 +24,9 @@
 #include "VolumeWindow.h"
 #include "ui_VolumeWindow.h"
 #include "MainWindow.h"
-#include "WorldObjectMgr.h"
+#include "WorldObjectManager.h"
 #include "VolumeTool.h"
-#include "ToolMgr.h"
+#include "ToolManager.h"
 #include "Camera.h"
 #include "Utilities.h"
 #include "VolumeRenderer.h"
@@ -89,11 +89,11 @@ void VolumeWindow::initialize()
 {
   //get number of current volumes to append to current name
   WorldObject* worldObject;
-  WorldObjectMgr* worldObjectMgr = WorldObjectMgr::getInstance();
+  WorldObjectManager* worldObjectManager = WorldObjectManager::getInstance();
   int currentNumberOfVolumes = 0;
-  for (int i = 0; i < worldObjectMgr->getNumberOfObjects(); i++)
+  for (int i = 0; i < worldObjectManager->getNumberOfObjects(); i++)
   {
-    worldObject = worldObjectMgr->getWorldObject(i);
+    worldObject = worldObjectManager->getWorldObject(i);
     if (worldObject != NULL && !worldObject->getHasExpired() &&
         worldObject->getGroup() == WorldObject::VOLUME)
     {
@@ -104,7 +104,7 @@ void VolumeWindow::initialize()
   ui->name->setText(volumeName);
 
   //get handle to VolumeTool
-  VolumeTool* volumeTool = (VolumeTool*)ToolMgr::getInstance()->getTool("Volume");
+  VolumeTool* volumeTool = (VolumeTool*)ToolManager::getInstance()->getTool("Volume");
 
   //we emplace the current volume right below the camera, so we need
   //to get the camera position, we also populate the position fields
@@ -161,7 +161,7 @@ void VolumeWindow::setupEdit(const QString& volumeName)
   ui->typeComboBox->setEnabled(false);//disable type field
 
   //get volume object
-  mEditWorldObject = WorldObjectMgr::getInstance()->getWorldObject(volumeName);
+  mEditWorldObject = WorldObjectManager::getInstance()->getWorldObject(volumeName);
   if (mEditWorldObject != NULL)
   {
     VolumeRenderer* volumeRenderer = (VolumeRenderer*)mEditWorldObject->getMeshRenderer();
@@ -207,7 +207,7 @@ void VolumeWindow::setupEdit(const QString& volumeName)
     mEditWorldObject->setIsVisible(false);
 
     //finally copy volume's properties to rendering object
-    VolumeTool* volumeTool = (VolumeTool*)ToolMgr::getInstance()->getTool("Volume");
+    VolumeTool* volumeTool = (VolumeTool*)ToolManager::getInstance()->getTool("Volume");
     volumeTool->setType(volumeRenderer->getType());
     volumeTool->setColor(simpleColor);
     volumeTool->setPosition(mEditWorldObject->getPosition());
@@ -247,7 +247,7 @@ void VolumeWindow::setPosition(const SimpleVector& position)
 void VolumeWindow::onTypeChange(int index)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
-  VolumeTool* volumeTool = (VolumeTool*)ToolMgr::getInstance()->getTool("Volume");
+  VolumeTool* volumeTool = (VolumeTool*)ToolManager::getInstance()->getTool("Volume");
   volumeTool->setType(index);
 }
 
@@ -265,7 +265,7 @@ void VolumeWindow::onColorSelected()
   color.green = qColor.greenF();
   color.blue = qColor.blueF();
 
-  VolumeTool* volumeTool = (VolumeTool*)ToolMgr::getInstance()->getTool("Volume");
+  VolumeTool* volumeTool = (VolumeTool*)ToolManager::getInstance()->getTool("Volume");
   volumeTool->setColor(color);
 }
 
@@ -280,7 +280,7 @@ void VolumeWindow::onLatitudeChange()
   mPosition.latitude = Utilities::dmsToDecimalDegrees(latitudeStr);
   SimpleVector xyzPosition = Utilities::geodeticToXYZ(mPosition);
 
-  VolumeTool* volumeTool = (VolumeTool*)ToolMgr::getInstance()->getTool("Volume");
+  VolumeTool* volumeTool = (VolumeTool*)ToolManager::getInstance()->getTool("Volume");
   volumeTool->setPosition(xyzPosition);
 }
 
@@ -295,7 +295,7 @@ void VolumeWindow::onLongitudeChange()
   mPosition.longitude = Utilities::dmsToDecimalDegrees(longitudeStr);
   SimpleVector xyzPosition = Utilities::geodeticToXYZ(mPosition);
 
-  VolumeTool* volumeTool = (VolumeTool*)ToolMgr::getInstance()->getTool("Volume");
+  VolumeTool* volumeTool = (VolumeTool*)ToolManager::getInstance()->getTool("Volume");
   volumeTool->setPosition(xyzPosition);
 }
 
@@ -310,7 +310,7 @@ void VolumeWindow::onAltitudeChange()
   mPosition.altitude = altitudeStr.toFloat();
   SimpleVector xyzPosition = Utilities::geodeticToXYZ(mPosition);
 
-  VolumeTool* volumeTool = (VolumeTool*)ToolMgr::getInstance()->getTool("Volume");
+  VolumeTool* volumeTool = (VolumeTool*)ToolManager::getInstance()->getTool("Volume");
   volumeTool->setPosition(xyzPosition);
 }
 
@@ -328,7 +328,7 @@ void VolumeWindow::onRotationSliderMoved(int)
   rotation.y = ui->rotationYSlider->value();
   rotation.z = ui->rotationZSlider->value();
 
-  VolumeTool* volumeTool = (VolumeTool*)ToolMgr::getInstance()->getTool("Volume");
+  VolumeTool* volumeTool = (VolumeTool*)ToolManager::getInstance()->getTool("Volume");
   volumeTool->setRotation(rotation);
 }
 
@@ -351,7 +351,7 @@ void VolumeWindow::onScaleSliderMoved(int)
   scale.y = scale.y/10.0f;
   scale.z = scale.z/10.0f;
 
-  VolumeTool* volumeTool = (VolumeTool*)ToolMgr::getInstance()->getTool("Volume");
+  VolumeTool* volumeTool = (VolumeTool*)ToolManager::getInstance()->getTool("Volume");
   volumeTool->setScale(scale);
 }
 
@@ -365,7 +365,7 @@ void VolumeWindow::onScaleSliderMoved(int)
 void VolumeWindow::onAccept()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
-  VolumeTool* volumeTool = (VolumeTool*)ToolMgr::getInstance()->getTool("Volume");
+  VolumeTool* volumeTool = (VolumeTool*)ToolManager::getInstance()->getTool("Volume");
   if (mInEditMode)
   {
     if (mEditWorldObject != NULL)

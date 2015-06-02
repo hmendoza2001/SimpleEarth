@@ -29,7 +29,7 @@
 #include "Constants.h"
 #include "Camera.h"
 #include "Utilities.h"
-#include "ElevationMgr.h"
+#include "ElevationManager.h"
 
 Earth* Earth::mInstance = NULL;//Singleton implementation
 static Camera* camera = NULL;
@@ -348,7 +348,7 @@ void Earth::renderMaps()
   float textureHeight = 1.0f/(float)mNumberOfTileSubdivisions;
   float texturePositionX = 0.0f;
   float texturePositionY = 0.0f;
-  ElevationMgr* elevationMgr = ElevationMgr::getInstance();
+  ElevationManager* elevationManager = ElevationManager::getInstance();
   GeodeticPosition cameraPosition = camera->getGeodeticPosition();
 
   //draw tiles by priority
@@ -371,7 +371,7 @@ void Earth::renderMaps()
           mMapList[mapIndex].southWest.latitude) / (double)mNumberOfTileSubdivisions;
 
         geoPosition[0] = mMapList[mapIndex].southWest;
-        geoPosition[0].altitude = elevationMgr->getElevation(geoPosition[0].latitude, geoPosition[0].longitude);
+        geoPosition[0].altitude = elevationManager->getElevation(geoPosition[0].latitude, geoPosition[0].longitude);
 
         texturePositionX = 0.0f;
         texturePositionY = 0.0f;
@@ -391,15 +391,15 @@ void Earth::renderMaps()
 
             geoPosition[1].latitude = geoPosition[0].latitude;
             geoPosition[1].longitude = geoPosition[0].longitude + subdivisionWidth;
-            geoPosition[1].altitude = elevationMgr->getElevation(geoPosition[1].latitude, geoPosition[1].longitude);
+            geoPosition[1].altitude = elevationManager->getElevation(geoPosition[1].latitude, geoPosition[1].longitude);
 
             geoPosition[2].latitude = geoPosition[0].latitude + subdivisionHeight;
             geoPosition[2].longitude = geoPosition[0].longitude + subdivisionWidth;
-            geoPosition[2].altitude = elevationMgr->getElevation(geoPosition[2].latitude, geoPosition[2].longitude);
+            geoPosition[2].altitude = elevationManager->getElevation(geoPosition[2].latitude, geoPosition[2].longitude);
 
             geoPosition[3].latitude = geoPosition[0].latitude + subdivisionHeight;
             geoPosition[3].longitude = geoPosition[0].longitude;
-            geoPosition[3].altitude = elevationMgr->getElevation(geoPosition[3].latitude, geoPosition[3].longitude);
+            geoPosition[3].altitude = elevationManager->getElevation(geoPosition[3].latitude, geoPosition[3].longitude);
 
             xyzPosition[0] = Utilities::geodeticToXYZ(geoPosition[0]);
             xyzPosition[1] = Utilities::geodeticToXYZ(geoPosition[1]);
@@ -434,13 +434,13 @@ void Earth::renderMaps()
 
             //advance SW origin in X
             geoPosition[0].longitude += subdivisionWidth;
-            geoPosition[0].altitude = elevationMgr->getElevation(geoPosition[0].latitude, geoPosition[0].longitude);
+            geoPosition[0].altitude = elevationManager->getElevation(geoPosition[0].latitude, geoPosition[0].longitude);
           }
 
           //advance SW origin in Y and reset X
           geoPosition[0].latitude += subdivisionHeight;
           geoPosition[0].longitude = mMapList[mapIndex].southWest.longitude;
-          geoPosition[0].altitude = elevationMgr->getElevation(geoPosition[0].latitude, geoPosition[0].longitude);
+          geoPosition[0].altitude = elevationManager->getElevation(geoPosition[0].latitude, geoPosition[0].longitude);
         }
 
         glEnd();

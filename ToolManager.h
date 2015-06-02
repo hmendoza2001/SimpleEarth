@@ -30,18 +30,18 @@
 /**
  * This class implements the facade and singleton patterns. The Tool Manager
  * handles all Tool objects (refer to Tool.h). When a tool is selected by the
- * user, the ToolMgr shows/hides the appropriate dialogs and
+ * user, the ToolManager shows/hides the appropriate dialogs and
  * activates/deactivates their corresponding tool buttons.
  *
  * @version 1.0
  * @author Hector Mendoza
  */
-class ToolMgr
+class ToolManager
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   public:
-    static ToolMgr* getInstance();
-    ~ToolMgr();
+    static ToolManager* getInstance();
+    ~ToolManager();
 
     void addTool(Tool* tool);
     Tool* getTool(const QString& toolID);
@@ -49,9 +49,9 @@ class ToolMgr
     void renderSelectedTool();
 
   private:
-    ToolMgr();//private due to Singleton implementation
+    ToolManager();//private due to Singleton implementation
 
-    static ToolMgr* mInstance;
+    static ToolManager* mInstance;
     QList<Tool*> mToolList;
     int mCurrentToolIndex;
 };

@@ -21,7 +21,7 @@
  */
 
 #include "ExampleHelloWorld.h"
-#include "WorldObjectMgr.h"
+#include "WorldObjectManager.h"
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
@@ -62,5 +62,5 @@ void ExampleHelloWorld::helloWorld()
   worldObject->setGeodeticPosition(position);
 
   //add world object to manager so that it gets rendered
-  WorldObjectMgr::getInstance()->addWorldObject(worldObject);
+  WorldObjectManager::getInstance()->addWorldObject(worldObject);
 }

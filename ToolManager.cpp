@@ -20,16 +20,16 @@
  *  <http://www.gnu.org/licenses/>.
  */
 
-#include "ToolMgr.h"
+#include "ToolManager.h"
 
 //Singleton implementation
-ToolMgr* ToolMgr::mInstance = NULL;
+ToolManager* ToolManager::mInstance = NULL;
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
  * Constructor. Initializes attributes.
  */
-ToolMgr::ToolMgr()
+ToolManager::ToolManager()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   mCurrentToolIndex = -1;
@@ -39,7 +39,7 @@ ToolMgr::ToolMgr()
 /**
  * Destructor.
  */
-ToolMgr::~ToolMgr()
+ToolManager::~ToolManager()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   //release all data
@@ -58,12 +58,12 @@ ToolMgr::~ToolMgr()
  *
  * @return The single instance of this object.
  */
-ToolMgr* ToolMgr::getInstance()
+ToolManager* ToolManager::getInstance()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   if (mInstance == NULL)
   {
-    mInstance = new ToolMgr();
+    mInstance = new ToolManager();
   }
 
   return mInstance;
@@ -75,7 +75,7 @@ ToolMgr* ToolMgr::getInstance()
  *
  * @param tool New tool to add to the list
  */
-void ToolMgr::addTool(Tool* tool)
+void ToolManager::addTool(Tool* tool)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   mToolList.append(tool);
@@ -88,7 +88,7 @@ void ToolMgr::addTool(Tool* tool)
  * @param toolID String identifying the tool
  * @return Handle to corresponding tool
  */
-Tool* ToolMgr::getTool(const QString& toolID)
+Tool* ToolManager::getTool(const QString& toolID)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   Tool* returnValue = NULL;
@@ -113,7 +113,7 @@ Tool* ToolMgr::getTool(const QString& toolID)
  *
  * @param toolID String identifying tool
  */
-void ToolMgr::selectTool(const QString& toolID)
+void ToolManager::selectTool(const QString& toolID)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   mCurrentToolIndex = -1;
@@ -143,7 +143,7 @@ void ToolMgr::selectTool(const QString& toolID)
 /**
  * Calls the render method for the currently selected tool.
  */
-void ToolMgr::renderSelectedTool()
+void ToolManager::renderSelectedTool()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   if (mCurrentToolIndex >= 0 && mCurrentToolIndex < mToolList.size())

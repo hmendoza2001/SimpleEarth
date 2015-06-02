@@ -27,7 +27,7 @@
 #include <QtEndian>
 #include "ShapefileReader.h"
 #include "Utilities.h"
-#include "WorldObjectMgr.h"
+#include "WorldObjectManager.h"
 #include "ShapeRenderer.h"
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -274,7 +274,7 @@ void ShapefileReader::readFile(QString fileName)
       {
         worldObject->setName("Shape" + QString::number(mNumberOfReadShapes));
         worldObject->setMeshRenderer(shapeRenderer);
-        WorldObjectMgr::getInstance()->addWorldObject(worldObject);
+        WorldObjectManager::getInstance()->addWorldObject(worldObject);
         mNumberOfReadShapes++;
       }
     }
@@ -282,7 +282,7 @@ void ShapefileReader::readFile(QString fileName)
     {
       worldObject->setName("Shape" + QString::number(mNumberOfReadShapes));
       worldObject->setMeshRenderer(shapeRenderer);
-      WorldObjectMgr::getInstance()->addWorldObject(worldObject);
+      WorldObjectManager::getInstance()->addWorldObject(worldObject);
       mNumberOfReadShapes++;
     }
   }//end of while (!in.atEnd())

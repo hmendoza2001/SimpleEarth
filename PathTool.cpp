@@ -23,7 +23,7 @@
 #include <QtOpenGL>
 #include "PathTool.h"
 #include "PathRenderer.h"
-#include "WorldObjectMgr.h"
+#include "WorldObjectManager.h"
 #include "Utilities.h"
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -125,7 +125,7 @@ void PathTool::setColor(const SimpleColor& color)
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
- * Adds current path to WorldObjectMgr's list. Note how we copy all the local
+ * Adds current path to WorldObjectManager's list. Note how we copy all the local
  * to a new instance of a path world object.
  */
 bool PathTool::addCurrent()
@@ -150,7 +150,7 @@ bool PathTool::addCurrent()
     worldObject->setMeshRenderer(pathRenderer);
 
     //if object already exists (cannot add) perform cleanup
-    if (!WorldObjectMgr::getInstance()->addWorldObject(worldObject))
+    if (!WorldObjectManager::getInstance()->addWorldObject(worldObject))
     {
       //note: the path renderer that we associated with this world
       //object will get deleted on the world object's destructor

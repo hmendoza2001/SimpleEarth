@@ -39,7 +39,7 @@
  * @version 1.0
  * @author Hector Mendoza
  */
-class IconModelMgr
+class IconModelManager
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   public:
@@ -59,8 +59,8 @@ class IconModelMgr
       int texture;
     };
 
-    static IconModelMgr* getInstance();
-    ~IconModelMgr();
+    static IconModelManager* getInstance();
+    ~IconModelManager();
 
     bool loadIcon(const QString& filePath);
     bool loadModel(const QString& filePath);
@@ -68,9 +68,9 @@ class IconModelMgr
     bool getModel(const QString& filePath, void*& modelData, int& texture);
 
   private:
-    IconModelMgr();//private due to Singleton implementation
+    IconModelManager();//private due to Singleton implementation
 
-    static IconModelMgr* mInstance;
+    static IconModelManager* mInstance;
     QList<Icon> mIconList;
     QList<Model> mModelList;
 };

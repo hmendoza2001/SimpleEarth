@@ -24,7 +24,7 @@
 #include "IconRenderer.h"
 #include "Camera.h"
 #include "Utilities.h"
-#include "IconModelMgr.h"
+#include "IconModelManager.h"
 #include "WorldObject.h"
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -127,7 +127,7 @@ void IconRenderer::setFilePath(const QString& filePath)
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
- * WARNING: This method is provided for convenience. However the IconModelMgr
+ * WARNING: This method is provided for convenience. However the IconModelManager
  * is automatically invoked inside the render method to make sure an icon only
  * gets loaded once. Sets OpenGL handle to icon texture.
  *
@@ -162,7 +162,7 @@ void IconRenderer::render()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   //get texture and depth from current file path
-  IconModelMgr::getInstance()->getIcon(mFilePath, mTexture, mDepth);
+  IconModelManager::getInstance()->getIcon(mFilePath, mTexture, mDepth);
 
   if (mTexture >= 0)
   {

@@ -22,7 +22,7 @@
 
 #include <QtOpenGL>
 #include "VolumeTool.h"
-#include "WorldObjectMgr.h"
+#include "WorldObjectManager.h"
 #include "Utilities.h"
 #include "MainWindow.h"
 
@@ -85,7 +85,7 @@ void VolumeTool::render()
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
- * Adds current volume to WorldObjectMgr's list. Note how we copy all the data
+ * Adds current volume to WorldObjectManager's list. Note how we copy all the data
  * from temporary volume.
  *
  * @return true if add was a success, false if there is a naming conflict (a
@@ -111,7 +111,7 @@ bool VolumeTool::addCurrent()
   //if addWorldObject returns false, then the add failed because
   //there already was an object with that name in the list,
   //so we need to delete the object we just created
-  if (!WorldObjectMgr::getInstance()->addWorldObject(worldObject))
+  if (!WorldObjectManager::getInstance()->addWorldObject(worldObject))
   {
     //note: the volume renderer that we associated with this world
     //object will get deleted on the world object's destructor

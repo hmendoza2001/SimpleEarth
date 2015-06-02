@@ -24,7 +24,7 @@
 #include <QSplashScreen>
 #include "MainWindow.h"
 #include "CrossPlatformSleep.h"
-#include "ElevationMgr.h"
+#include "ElevationManager.h"
 #include "SatelliteImageDownloader.h"
 #include "ExampleHelloWorld.h"
 #include "ExampleFlyObject.h"
@@ -40,7 +40,7 @@
  * visualization sandbox.
  *
  * To start understanding the code and API, look at WorldObject and
- * WorldObjectMgr classes and the globals.h header file. The hello world
+ * WorldObjectManager classes and the globals.h header file. The hello world
  * example emplaces a label in the world with the following code:
  *
  * //instantiate world object and set label<br>
@@ -55,7 +55,7 @@
  * worldObject->setGeodeticPosition(position);<br>
  *
  * //add world object to manager so that it gets rendered<br>
- * WorldObjectMgr::getInstance()->addWorldObject(worldObject);
+ * WorldObjectManager::getInstance()->addWorldObject(worldObject);
  *
  * We hope you find this code useful and contribute to further developing it.
  */
@@ -104,13 +104,13 @@ int main(int argc, char* argv[])
 
   //instantiate "plugin" objects
   //NOTE: DEFINITIONS FOR USING_GDAL AND USING_PROJ4 ARE LOCATED IN globals.h
-  //ElevationMgr loads elevation databases
+  //ElevationManager loads elevation databases
 #ifdef USING_GDAL
   //load elevation database at startup
   splash.showMessage("Loading elevation database...", Qt::AlignLeft | Qt::AlignBottom, Qt::white);
   app.processEvents();
-  ElevationMgr* elevationMgr = ElevationMgr::getInstance();
-  elevationMgr->loadElevationDatabase("elevation/imgn32w107_1.img");//load example elevation database
+  ElevationManager* elevationManager = ElevationManager::getInstance();
+  elevationManager->loadElevationDatabase("elevation/imgn32w107_1.img");//load example elevation database
 #endif
 
   //SatelliteImageDownloader downloads sattelite imagery

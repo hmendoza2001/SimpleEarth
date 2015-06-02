@@ -27,7 +27,7 @@
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
 #include "Hud.h"
-#include "ToolMgr.h"
+#include "ToolManager.h"
 #include "PathTool.h"
 #include "VolumeTool.h"
 #include "MeasuringTool.h"
@@ -35,7 +35,7 @@
 #include "Camera.h"
 
 MainWindow* MainWindow::mInstance = NULL;//Singleton implementation
-static ToolMgr* toolMgr = NULL;
+static ToolManager* toolManager = NULL;
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
@@ -81,15 +81,15 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
   mMeasuringToolButton->setToolTip("Measuring Tool");
 
   //instantiate tool mgr and add tools
-  toolMgr = ToolMgr::getInstance();
+  toolManager = ToolManager::getInstance();
 
   PathTool* pathTool = new PathTool(mPathToolButton, mPathWindow);
   VolumeTool* volumeTool = new VolumeTool(mVolumeToolButton, mVolumeWindow);
   MeasuringTool* measuringTool = new MeasuringTool(mMeasuringToolButton, mMeasuringWindow);
 
-  toolMgr->addTool(pathTool);
-  toolMgr->addTool(volumeTool);
-  toolMgr->addTool(measuringTool);
+  toolManager->addTool(pathTool);
+  toolManager->addTool(volumeTool);
+  toolManager->addTool(measuringTool);
 
   //load places
   mPlacesWindow->loadPlaces();
@@ -360,12 +360,12 @@ void MainWindow::onPathTool()
   if (mPathToolButton->isChecked())
   {
     mPathWindow->initialize();
-    toolMgr->selectTool("Path");
+    toolManager->selectTool("Path");
     ui->glWidget->setMouseInputMode(GLWidget::PATH_MODE);
   }
   else
   {
-    toolMgr->selectTool("");
+    toolManager->selectTool("");
     ui->glWidget->setMouseInputMode(GLWidget::CAMERA_MOVE_MODE);
   }
 }
@@ -381,12 +381,12 @@ void MainWindow::onVolumeTool()
   if (mVolumeToolButton->isChecked())
   {
     mVolumeWindow->initialize();
-    toolMgr->selectTool("Volume");
+    toolManager->selectTool("Volume");
     ui->glWidget->setMouseInputMode(GLWidget::VOLUME_MODE);
   }
   else
   {
-    toolMgr->selectTool("");
+    toolManager->selectTool("");
     ui->glWidget->setMouseInputMode(GLWidget::CAMERA_MOVE_MODE);
   }
 }
@@ -401,12 +401,12 @@ void MainWindow::onMeasuringTool()
 {
   if (mMeasuringToolButton->isChecked())
   {
-    toolMgr->selectTool("Measuring");
+    toolManager->selectTool("Measuring");
     ui->glWidget->setMouseInputMode(GLWidget::MEASURING_MODE);
   }
   else
   {
-    toolMgr->selectTool("");
+    toolManager->selectTool("");
     ui->glWidget->setMouseInputMode(GLWidget::CAMERA_MOVE_MODE);
   }
 }

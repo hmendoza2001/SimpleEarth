@@ -22,7 +22,7 @@
 
 #include "WorldObject.h"
 #include "Utilities.h"
-#include "IconModelMgr.h"
+#include "IconModelManager.h"
 #include "ModelRenderer.h"
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -104,8 +104,8 @@ void WorldObject::renderMesh()
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
- * Calls IconModelMgr to make sure only one instance of this icon is loaded into
- * memory and creates and/or configures the icon renderer.
+ * Calls IconModelManager to make sure only one instance of this icon is loaded
+ * into memory and creates and/or configures the icon renderer.
  *
  * @param filePath Path to icon/image file
  * @return False if loading of icon was unsuccessful
@@ -113,8 +113,8 @@ void WorldObject::renderMesh()
 bool WorldObject::loadIcon(const QString& filePath)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
-  //call IconModelMgr to make sure only one instance of the icon is loaded
-  bool returnValue = IconModelMgr::getInstance()->loadIcon(filePath);
+  //call IconModelManager to make sure only one instance of the icon is loaded
+  bool returnValue = IconModelManager::getInstance()->loadIcon(filePath);
 
   if (returnValue)
   {
@@ -135,8 +135,8 @@ bool WorldObject::loadIcon(const QString& filePath)
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
- * Calls IconModelMgr to make sure only one instance of this model is loaded into
- * memory and creates and/or configures the mesh renderer.
+ * Calls IconModelManager to make sure only one instance of this model is loaded
+ * into memory and creates and/or configures the mesh renderer.
  *
  * @param filePath Path to model file
  * @return False if loading of model was unsuccessful
@@ -144,8 +144,8 @@ bool WorldObject::loadIcon(const QString& filePath)
 bool WorldObject::loadModel(const QString& filePath)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
-  //call IconModelMgr to make sure only one instance of the model is loaded
-  bool returnValue = IconModelMgr::getInstance()->loadModel(filePath);
+  //call IconModelManager to make sure only one instance of the model is loaded
+  bool returnValue = IconModelManager::getInstance()->loadModel(filePath);
 
   if (returnValue)
   {

@@ -22,7 +22,7 @@
 
 #include "Hud.h"
 #include "globals.h"
-#include "WorldObjectMgr.h"
+#include "WorldObjectManager.h"
 #include "Utilities.h"
 #include "Camera.h"
 
@@ -182,7 +182,7 @@ void Hud::renderHud()
 void Hud::renderWorldObjectLabels()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
-  WorldObjectMgr* worldObjectMgr = WorldObjectMgr::getInstance();
+  WorldObjectManager* worldObjectManager = WorldObjectManager::getInstance();
   Camera* camera = Camera::getInstance();
   WorldObject* worldObject = NULL;
   SimpleVector screenLocation;
@@ -190,9 +190,9 @@ void Hud::renderWorldObjectLabels()
 
   ScreenCoordinates screenSize = Camera::getInstance()->getScreenSize();
 
-  for (int i = 0; i < worldObjectMgr->getNumberOfObjects(); i++)
+  for (int i = 0; i < worldObjectManager->getNumberOfObjects(); i++)
   {
-    worldObject = worldObjectMgr->getWorldObject(i);
+    worldObject = worldObjectManager->getWorldObject(i);
     if (worldObject != NULL && !worldObject->getHasExpired())
     {
       screenLocation = worldObject->getScreenLocation();

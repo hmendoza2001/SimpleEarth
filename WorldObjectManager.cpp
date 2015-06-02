@@ -21,19 +21,19 @@
  */
 
 #include "WorldObject.h"
-#include "WorldObjectMgr.h"
+#include "WorldObjectManager.h"
 #include "PathTool.h"
 #include "MeasuringTool.h"
 #include "Utilities.h"
 
 //Singleton implementation
-WorldObjectMgr* WorldObjectMgr::mInstance = NULL;
+WorldObjectManager* WorldObjectManager::mInstance = NULL;
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
  * Constructor. Initializes attributes. Connects signals and slots.
  */
-WorldObjectMgr::WorldObjectMgr()
+WorldObjectManager::WorldObjectManager()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   //set timer to check for expired tracks
@@ -46,7 +46,7 @@ WorldObjectMgr::WorldObjectMgr()
 /**
  * Destructor.
  */
-WorldObjectMgr::~WorldObjectMgr()
+WorldObjectManager::~WorldObjectManager()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   //release all object data
@@ -66,12 +66,12 @@ WorldObjectMgr::~WorldObjectMgr()
  *
  * @return The single instance of this class
  */
-WorldObjectMgr* WorldObjectMgr::getInstance()
+WorldObjectManager* WorldObjectManager::getInstance()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   if (mInstance == NULL)
   {
-    mInstance = new WorldObjectMgr();
+    mInstance = new WorldObjectManager();
   }
 
   return mInstance;
@@ -79,7 +79,7 @@ WorldObjectMgr* WorldObjectMgr::getInstance()
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
- * Adds a world object to the list. WorldObjectMgr keeps track of objects by
+ * Adds a world object to the list. WorldObjectManager keeps track of objects by
  * unique name, therefore this method checks if the given world object's name is
  * already on the list before adding it.
  *
@@ -87,7 +87,7 @@ WorldObjectMgr* WorldObjectMgr::getInstance()
  * @return True if world object got added to the list, false if object was
  * already in the list
  */
-bool WorldObjectMgr::addWorldObject(WorldObject* object)
+bool WorldObjectManager::addWorldObject(WorldObject* object)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   bool returnValue = false;
@@ -110,7 +110,7 @@ bool WorldObjectMgr::addWorldObject(WorldObject* object)
  * @param index Index of world object we want to get
  * @return Handle to world object
  */
-WorldObject* WorldObjectMgr::getWorldObject(int index)
+WorldObject* WorldObjectManager::getWorldObject(int index)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   return mWorldObjectList[index];
@@ -124,7 +124,7 @@ WorldObject* WorldObjectMgr::getWorldObject(int index)
  * @param name Name of world object
  * @return Handle to world object
  */
-WorldObject* WorldObjectMgr::getWorldObject(const QString& name)
+WorldObject* WorldObjectManager::getWorldObject(const QString& name)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   WorldObject* returnWorldObject = NULL;
@@ -144,7 +144,7 @@ WorldObject* WorldObjectMgr::getWorldObject(const QString& name)
  *
  * @param index Index of the world object we want to delete
  */
-void WorldObjectMgr::removeWorldObject(int index)
+void WorldObjectManager::removeWorldObject(int index)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   mMutex.lock();
@@ -165,7 +165,7 @@ void WorldObjectMgr::removeWorldObject(int index)
 
  * @param name Name of the world object we want to delete
  */
-void WorldObjectMgr::removeWorldObject(const QString& name)
+void WorldObjectManager::removeWorldObject(const QString& name)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   mMutex.lock();
@@ -185,7 +185,7 @@ void WorldObjectMgr::removeWorldObject(const QString& name)
  * Calls the render method on all entities on the list if they have the
  * isVisible flag set to true. This method is thread-safe.
  */
-void WorldObjectMgr::renderObjects()
+void WorldObjectManager::renderObjects()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   mMutex.lock();
@@ -224,7 +224,7 @@ void WorldObjectMgr::renderObjects()
  *
  * @return Number of world objects in the list
  */
-int WorldObjectMgr::getNumberOfObjects()
+int WorldObjectManager::getNumberOfObjects()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   return mWorldObjectList.size();
@@ -238,7 +238,7 @@ int WorldObjectMgr::getNumberOfObjects()
  * @param name Name of world object
  * @return Index of found world object, -1 otherwise
  */
-int WorldObjectMgr::findWorldObject(const QString& name)
+int WorldObjectManager::findWorldObject(const QString& name)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   int index = -1;
@@ -262,7 +262,7 @@ int WorldObjectMgr::findWorldObject(const QString& name)
  * hasExpired flag for the object (serves as a warning that this object should
  * no longer be used). It deletes any entities that have reached a timer of -2.
  */
-void WorldObjectMgr::onExpireTimer()
+void WorldObjectManager::onExpireTimer()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   int expirationTime = 0;

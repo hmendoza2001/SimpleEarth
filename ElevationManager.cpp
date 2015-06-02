@@ -20,7 +20,7 @@
  *  <http://www.gnu.org/licenses/>.
  */
 
-#include "ElevationMgr.h"
+#include "ElevationManager.h"
 #include "math.h"
 
 #ifdef USING_GDAL
@@ -29,13 +29,13 @@
 #endif
 
 //Singleton implementation
-ElevationMgr* ElevationMgr::mInstance = NULL;
+ElevationManager* ElevationManager::mInstance = NULL;
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
  * Constructor. Initializes attributes.
  */
-ElevationMgr::ElevationMgr()
+ElevationManager::ElevationManager()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   mDatabase = NULL;
@@ -52,7 +52,7 @@ ElevationMgr::ElevationMgr()
 /**
  * Destructor.
  */
-ElevationMgr::~ElevationMgr()
+ElevationManager::~ElevationManager()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   delete [] mDatabase;
@@ -66,12 +66,12 @@ ElevationMgr::~ElevationMgr()
  *
  * @return The single instance of this object.
  */
-ElevationMgr* ElevationMgr::getInstance()
+ElevationManager* ElevationManager::getInstance()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   if (mInstance == 0)
   {
-    mInstance = new ElevationMgr();
+    mInstance = new ElevationManager();
   }
 
   return mInstance;
@@ -85,7 +85,7 @@ ElevationMgr* ElevationMgr::getInstance()
  *
  * @param filePath The file path for the database.
  */
-void ElevationMgr::loadElevationDatabase(const QString& filePath)
+void ElevationManager::loadElevationDatabase(const QString& filePath)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
 #ifndef USING_GDAL
@@ -192,7 +192,7 @@ void ElevationMgr::loadElevationDatabase(const QString& filePath)
  * @param longitude Longitude in decimal degrees
  * @return Elevation of the given geodetic point in Km
  */
-float ElevationMgr::getElevation(double latitude, double longitude)
+float ElevationManager::getElevation(double latitude, double longitude)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   //return 0 if no database loaded

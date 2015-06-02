@@ -28,7 +28,7 @@
 #include "math.h"
 #include "Camera.h"
 #include "Earth.h"
-#include "ElevationMgr.h"
+#include "ElevationManager.h"
 #include "Constants.h"
 
 #ifdef USING_PROJ4
@@ -261,7 +261,7 @@ void SatelliteImageDownloader::downloadTiles()
 
   //then we calculate height above terrain for the camera
   double heightAboveTerrain = cameraPosition.altitude -
-    ElevationMgr::getInstance()->getElevation(cameraPosition.latitude, cameraPosition.longitude);
+    ElevationManager::getInstance()->getElevation(cameraPosition.latitude, cameraPosition.longitude);
 
   //we calculate the zoom level for this height
   int currentZoomLevel = findZoomLevelFromHAT(heightAboveTerrain);
@@ -534,7 +534,7 @@ void SatelliteImageDownloader::findVisibleAltitudeAndDrawPriority(int zoomLevel,
   //the visible altitude value must include terrain elevation
   //in order to show terrain at appropriate altitude
   GeodeticPosition cameraPosition = Camera::getInstance()->getGeodeticPosition();
-  double terrainHeight = ElevationMgr::getInstance()->getElevation(cameraPosition.latitude, cameraPosition.longitude);
+  double terrainHeight = ElevationManager::getInstance()->getElevation(cameraPosition.latitude, cameraPosition.longitude);
   visibleAltitude += terrainHeight;
 }
 

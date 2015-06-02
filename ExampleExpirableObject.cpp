@@ -21,7 +21,7 @@
  */
 
 #include "ExampleExpirableObject.h"
-#include "WorldObjectMgr.h"
+#include "WorldObjectManager.h"
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
@@ -47,13 +47,13 @@ ExampleExpirableObject::~ExampleExpirableObject()
  * scenario, you would probably receive object updates by polling a GPS device
  * or from the network. Therefore, you might want objects to disappear from the
  * screen once you stop receiving updates for them, let's say after 5 seconds of
- * not hearing from them for example. It turns out WorldObjectMgr makes it easy
+ * not hearing from them for example. It turns out WorldObjectManager makes it easy
  * to accomplish this with expirable objects.
  *
  * Additionally, on the ExampleFlyObject example, we were actually taking some
  * shortcuts that we probably shouldn't have. For example, we were directly
  * updating the object's position without fetching the object from
- * WorldObjectMgr which is a bad idea since memory is managed by the manager and
+ * WorldObjectManager which is a bad idea since memory is managed by the manager and
  * the object could be null or expired. This example takes things one step
  * further and is more realistic in the way we update the object's position and
  * orientation simulating an "external" source.
@@ -62,7 +62,7 @@ void ExampleExpirableObject::run()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   //instantiate world object
-  //note: object's memory space is managed by WorldObjectMgr
+  //note: object's memory space is managed by WorldObjectManager
   WorldObject* worldObject = new WorldObject();
 
   //the World Object Manager keeps track of World Objects by unique name,
@@ -84,14 +84,14 @@ void ExampleExpirableObject::run()
   worldObject->setExpirationTime(5);//in seconds
 
   //add object to manager so that it gets rendered
-  WorldObjectMgr::getInstance()->addWorldObject(worldObject);
+  WorldObjectManager::getInstance()->addWorldObject(worldObject);
 
   //this loop will update the object's position 5 times. After that
   //the object will expire after 5 seconds and disappear from the
   //screen. Memory will be released by the world object manager too
   for (int i = 0; i < 5; i++)
   {
-    worldObject = WorldObjectMgr::getInstance()->getWorldObject(name);
+    worldObject = WorldObjectManager::getInstance()->getWorldObject(name);
     if (worldObject != NULL && !worldObject->getHasExpired())
     {
       setPositionAndOrientation(worldObject);

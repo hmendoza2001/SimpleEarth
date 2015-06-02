@@ -24,7 +24,7 @@
 #include "Camera.h"
 #include "math.h"
 #include "Utilities.h"
-#include "ElevationMgr.h"
+#include "ElevationManager.h"
 
 //Singleton implementation
 Camera* Camera::mInstance = NULL;
@@ -98,7 +98,7 @@ void Camera::moveByDiscrete(int movement)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   double overShoot;
-  float groundElevation = ElevationMgr::getInstance()->getElevation(mDesiredPosition.latitude, mDesiredPosition.longitude);
+  float groundElevation = ElevationManager::getInstance()->getElevation(mDesiredPosition.latitude, mDesiredPosition.longitude);
 
   //compute radius increment step based on
   //distance from the surface of the Earth

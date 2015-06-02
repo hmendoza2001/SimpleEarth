@@ -22,7 +22,7 @@
 
 #include "TrackInfoWindow.h"
 #include "ui_TrackInfoWindow.h"
-#include "WorldObjectMgr.h"
+#include "WorldObjectManager.h"
 #include "Utilities.h"
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -83,7 +83,7 @@ void TrackInfoWindow::setSelectedName(const QString& name)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
  * Qt SLOT. Gets called every second to update this window if displayed. It
- * clears both sides(lists). It gathers the relevant entities from WorldObjectMgr
+ * clears both sides(lists). It gathers the relevant entities from WorldObjectManager
  * and populates the track list. If there is a selected track, it populates the
  * right hand side with relevant information.
  */
@@ -93,7 +93,7 @@ void TrackInfoWindow::onUpdateTimer()
   if (isVisible())
   {
     WorldObject* worldObject = NULL;
-    WorldObjectMgr* worldObjectMgr = WorldObjectMgr::getInstance();
+    WorldObjectManager* worldObjectManager = WorldObjectManager::getInstance();
 
     //clear both sides (lists)
     ui->trackList->clear();
@@ -102,9 +102,9 @@ void TrackInfoWindow::onUpdateTimer()
     int j = 0;
 
     //display all tracks in WorldObject Manager
-    for (i = 0; i < worldObjectMgr->getNumberOfObjects(); i++)
+    for (i = 0; i < worldObjectManager->getNumberOfObjects(); i++)
     {
-      worldObject = worldObjectMgr->getWorldObject(i);
+      worldObject = worldObjectManager->getWorldObject(i);
       if (worldObject != NULL && !worldObject->getHasExpired() && worldObject->getGroup()==WorldObject::TRACK)
       {
         //add item to list

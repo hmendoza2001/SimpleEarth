@@ -24,7 +24,7 @@
 #include <GL/glu.h>
 #include "GLWidget.h"
 #include "MainWindow.h"
-#include "WorldObjectMgr.h"
+#include "WorldObjectManager.h"
 #include "Camera.h"
 #include "Earth.h"
 #include "Atmosphere.h"
@@ -33,18 +33,18 @@
 #include "VolumeTool.h"
 #include "MeasuringTool.h"
 #include "Utilities.h"
-#include "ToolMgr.h"
+#include "ToolManager.h"
 
 #ifndef GL_MULTISAMPLE
 #define GL_MULTISAMPLE  0x809D
 #endif
 
 static Camera* camera = NULL;
-static WorldObjectMgr* worldObjectMgr = NULL;
+static WorldObjectManager* worldObjectManager = NULL;
 static Earth* earth = NULL;
 static Atmosphere* atmosphere = NULL;
 static Hud* hud = NULL;
-static ToolMgr* toolMgr = NULL;
+static ToolManager* toolManager = NULL;
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
@@ -57,9 +57,9 @@ GLWidget::GLWidget(QWidget* parent) : QGLWidget(QGLFormat(QGL::SampleBuffers), p
 {
   //get handles for local variables
   camera = Camera::getInstance();
-  worldObjectMgr = WorldObjectMgr::getInstance();
+  worldObjectManager = WorldObjectManager::getInstance();
   hud = Hud::getInstance();
-  toolMgr = ToolMgr::getInstance();
+  toolManager = ToolManager::getInstance();
 
   //there are two "special" world objects, the Earth and the Atmosphere,
   //Earth gets "special treatment" because it gets rendered at the
@@ -258,10 +258,10 @@ void GLWidget::paintEvent(QPaintEvent*)
   camera->syncMoveByScreen();
 
   //render tools
-  toolMgr->renderSelectedTool();
+  toolManager->renderSelectedTool();
 
   //render all other entities
-  worldObjectMgr->renderObjects();
+  worldObjectManager->renderObjects();
 
   //render the atmosphere last to include all objects in transparency
   //as well as to not interfere with mouse picking
@@ -416,7 +416,7 @@ void GLWidget::mousePressEvent(QMouseEvent* event)
     mRightButtonPressed = true;
     if (mMouseInputMode == MEASURING_MODE)
     {
-      MeasuringTool* measuringTool = (MeasuringTool*)ToolMgr::getInstance()->getTool("Measuring");
+      MeasuringTool* measuringTool = (MeasuringTool*)ToolManager::getInstance()->getTool("Measuring");
       measuringTool->onMousePressEvent(event);
     }
   }
@@ -448,9 +448,9 @@ void GLWidget::mouseReleaseEvent(QMouseEvent* event)
       WorldObject* worldObject;
       SimpleVector screenLocation;
       ScreenCoordinates screenSize;
-      for (int i = 0; i < worldObjectMgr->getNumberOfObjects(); i++)
+      for (int i = 0; i < worldObjectManager->getNumberOfObjects(); i++)
       {
-        worldObject = worldObjectMgr->getWorldObject(i);
+        worldObject = worldObjectManager->getWorldObject(i);
         if (worldObject!=NULL && !worldObject->getHasExpired() && worldObject->getIsClickable())
         {
           screenSize = camera->getScreenSize();
@@ -479,17 +479,17 @@ void GLWidget::mouseReleaseEvent(QMouseEvent* event)
     }
     else if (mMouseInputMode == PATH_MODE)
     {
-      PathTool* pathTool = (PathTool*)ToolMgr::getInstance()->getTool("Path");
+      PathTool* pathTool = (PathTool*)ToolManager::getInstance()->getTool("Path");
       pathTool->onMouseReleaseEvent(event);
     }
     else if (mMouseInputMode == VOLUME_MODE)
     {
-      VolumeTool* volumeTool = (VolumeTool*)ToolMgr::getInstance()->getTool("Volume");
+      VolumeTool* volumeTool = (VolumeTool*)ToolManager::getInstance()->getTool("Volume");
       volumeTool->onMouseReleaseEvent(event);
     }
     else if (mMouseInputMode == MEASURING_MODE)
     {
-      MeasuringTool* measuringTool = (MeasuringTool*)ToolMgr::getInstance()->getTool("Measuring");
+      MeasuringTool* measuringTool = (MeasuringTool*)ToolManager::getInstance()->getTool("Measuring");
       measuringTool->onMouseReleaseEvent(event);
     }
   }
@@ -535,7 +535,7 @@ void GLWidget::mouseMoveEvent(QMouseEvent* event)
   {
     if (mMouseInputMode == MEASURING_MODE)
     {
-      MeasuringTool* measuringTool = (MeasuringTool*)ToolMgr::getInstance()->getTool("Measuring");
+      MeasuringTool* measuringTool = (MeasuringTool*)ToolManager::getInstance()->getTool("Measuring");
       measuringTool->onMouseMoveEvent(event);
     }
   }

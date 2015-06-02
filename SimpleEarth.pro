@@ -55,7 +55,7 @@ HEADERS += AboutWindow.h \
     Constants.h \
     CrossPlatformSleep.h \
     Earth.h \
-    ElevationMgr.h \
+    ElevationManager.h \
     EventListener.h \
     EventPublisher.h \
     ExampleExpirableObject.h \
@@ -65,7 +65,7 @@ HEADERS += AboutWindow.h \
     globals.h \
     GLWidget.h \
     Hud.h \
-    IconModelMgr.h \
+    IconModelManager.h \
     IconRenderer.h \
     MainWindow.h \
     MeasuringTool.h \
@@ -82,14 +82,14 @@ HEADERS += AboutWindow.h \
     ShapefileReader.h \
     ShapeRenderer.h \
     Tool.h \
-    ToolMgr.h \
+    ToolManager.h \
     TrackInfoWindow.h \
     Utilities.h \
     VolumeRenderer.h \
     VolumeTool.h \
     VolumeWindow.h \
     WorldObject.h \
-    WorldObjectMgr.h
+    WorldObjectManager.h
 
 
 SOURCES += AboutWindow.cpp \
@@ -98,7 +98,7 @@ SOURCES += AboutWindow.cpp \
     ColorSelectWidget.cpp \
     CrossPlatformSleep.cpp \
     Earth.cpp \
-    ElevationMgr.cpp \
+    ElevationManager.cpp \
     EventPublisher.cpp \
     ExampleExpirableObject.cpp \
     ExampleFlyObject.cpp \
@@ -106,7 +106,7 @@ SOURCES += AboutWindow.cpp \
     FileIO.cpp \
     GLWidget.cpp \
     Hud.cpp \
-    IconModelMgr.cpp \
+    IconModelManager.cpp \
     IconRenderer.cpp \
     main.cpp \
     MainWindow.cpp \
@@ -124,14 +124,14 @@ SOURCES += AboutWindow.cpp \
     ShapefileReader.cpp \
     ShapeRenderer.cpp \
     Tool.cpp \
-    ToolMgr.cpp \
+    ToolManager.cpp \
     TrackInfoWindow.cpp \
     Utilities.cpp \
     VolumeRenderer.cpp \
     VolumeTool.cpp \
     VolumeWindow.cpp \
     WorldObject.cpp \
-    WorldObjectMgr.cpp
+    WorldObjectManager.cpp
 
 
 FORMS += AboutWindow.ui \

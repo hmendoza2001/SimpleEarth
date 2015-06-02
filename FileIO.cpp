@@ -25,7 +25,7 @@
 #include <QStringList>
 #include <QMessageBox>
 #include "FileIO.h"
-#include "WorldObjectMgr.h"
+#include "WorldObjectManager.h"
 #include "PathRenderer.h"
 #include "VolumeRenderer.h"
 
@@ -50,7 +50,7 @@ FileIO::~FileIO()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
  * Reads a path or volume data file. It instantiates the appropriate entities
- * and adds them to WorldObjectMgr.
+ * and adds them to WorldObjectManager.
  *
  * @param fileName Name of file to be read
  */
@@ -149,7 +149,7 @@ void FileIO::readFile(const QString& fileName)
           worldObject->setMeshRenderer(pathRenderer);
 
           //add world object to manager's list
-          WorldObjectMgr::getInstance()->addWorldObject(worldObject);
+          WorldObjectManager::getInstance()->addWorldObject(worldObject);
         }
       }
     }
@@ -265,7 +265,7 @@ void FileIO::readFile(const QString& fileName)
           worldObject->setMeshRenderer(volumeRenderer);
 
           //add world object to manager's list
-          WorldObjectMgr::getInstance()->addWorldObject(worldObject);
+          WorldObjectManager::getInstance()->addWorldObject(worldObject);
 
         }//else if (line.contains("END_VOLUME"))
       }//while (in.atEnd())
@@ -292,7 +292,7 @@ void FileIO::writeFile(const QString& fileName, int fileType)
   }
 
   QTextStream out(&file);
-  WorldObjectMgr* worldObjectMgr = WorldObjectMgr::getInstance();
+  WorldObjectManager* worldObjectManager = WorldObjectManager::getInstance();
   WorldObject* worldObject = NULL;
 
   if (fileType == PATHS_FILE)
@@ -301,9 +301,9 @@ void FileIO::writeFile(const QString& fileName, int fileType)
     QList<SimpleVector>* pointList;
     SimpleColor color;
     out << "PATHS" << "\n";
-    for (i = 0; i < worldObjectMgr->getNumberOfObjects(); i++)
+    for (i = 0; i < worldObjectManager->getNumberOfObjects(); i++)
     {
-      worldObject = worldObjectMgr->getWorldObject(i);
+      worldObject = worldObjectManager->getWorldObject(i);
       if (worldObject!=NULL && !worldObject->getHasExpired() && worldObject->getGroup()==WorldObject::PATH)
       {
         out << "PathName=" << worldObject->getName() << "\n";
@@ -331,9 +331,9 @@ void FileIO::writeFile(const QString& fileName, int fileType)
     out << "VOLUMES" << "\n";
     SimpleVector position, rotation, scale;
     SimpleColor color;
-    for (int i = 0; i < worldObjectMgr->getNumberOfObjects(); i++)
+    for (int i = 0; i < worldObjectManager->getNumberOfObjects(); i++)
     {
-      worldObject = worldObjectMgr->getWorldObject(i);
+      worldObject = worldObjectManager->getWorldObject(i);
       if (worldObject!=NULL && !worldObject->getHasExpired() && worldObject->getGroup()==WorldObject::VOLUME)
       {
         out << "Name=" << worldObject->getName() << "\n";

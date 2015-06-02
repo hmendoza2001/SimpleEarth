@@ -25,7 +25,7 @@
 #include <QMessageBox>
 #include "PathVolumeWindow.h"
 #include "ui_PathVolumeWindow.h"
-#include "WorldObjectMgr.h"
+#include "WorldObjectManager.h"
 #include "MainWindow.h"
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -60,14 +60,14 @@ PathVolumeWindow::~PathVolumeWindow()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
  * This function gets called when the user selects the menu option to display
- * this window. It gathers the relevant entities from WorldObjectMgr and populates
- * the different trees.
+ * this window. It gathers the relevant entities from WorldObjectManager and
+ * populates the different trees.
  */
 void PathVolumeWindow::initialize()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   WorldObject* worldObject = NULL;
-  WorldObjectMgr* worldObjectMgr = WorldObjectMgr::getInstance();
+  WorldObjectManager* worldObjectManager = WorldObjectManager::getInstance();
   QTreeWidgetItem* pathsTreeItem = ui->treeWidget->topLevelItem(0);
   QTreeWidgetItem* volumeTreeItem = ui->treeWidget->topLevelItem(1);
   int i=0;
@@ -86,9 +86,9 @@ void PathVolumeWindow::initialize()
 
   mCurrentTreeItem = NULL;
 
-  for (i = 0; i < worldObjectMgr->getNumberOfObjects(); i++)
+  for (i = 0; i < worldObjectManager->getNumberOfObjects(); i++)
   {
-    worldObject = worldObjectMgr->getWorldObject(i);
+    worldObject = worldObjectManager->getWorldObject(i);
     if (worldObject != NULL && !worldObject->getHasExpired() &&
         (worldObject->getGroup() == WorldObject::PATH ||
          worldObject->getGroup() == WorldObject::VOLUME))
@@ -129,7 +129,7 @@ void PathVolumeWindow::initialize()
 void PathVolumeWindow::onItemChanged(QTreeWidgetItem* item, int column)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
-  WorldObject* worldObject = WorldObjectMgr::getInstance()->getWorldObject(item->text(column));
+  WorldObject* worldObject = WorldObjectManager::getInstance()->getWorldObject(item->text(column));
   if (worldObject != NULL && !worldObject->getHasExpired())
   {
     if (item->checkState(column) == Qt::Checked)
@@ -192,7 +192,7 @@ void PathVolumeWindow::onContextMenu(QPoint point)
       {
         int index = parent->indexOfChild(mCurrentTreeItem);
         //remove object
-        WorldObjectMgr::getInstance()->removeWorldObject(mCurrentTreeItem->text(0));
+        WorldObjectManager::getInstance()->removeWorldObject(mCurrentTreeItem->text(0));
         //remove tree item
         QTreeWidgetItem* deleteItem = parent->takeChild(index);
         delete deleteItem;
