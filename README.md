@@ -51,7 +51,7 @@ position.altitude = 1.0;  //in Km<br>
 worldObject->setGeodeticPosition(position);<br>
 
 //add world object to manager so that it gets rendered<br>
-WorldObjectMgr::getInstance()->addWorldObject(worldObject);<br>
+WorldObjectManager::getInstance()->addWorldObject(worldObject);<br>
 
 
 Contact us
