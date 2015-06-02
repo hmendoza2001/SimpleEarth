@@ -126,23 +126,100 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 MainWindow::~MainWindow()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
-  delete ui;
-  delete mPathWindow;
-  delete mVolumeWindow;
-  delete mMeasuringWindow;
-  delete mPlacesWindow;
-  delete mTrackInfoWindow;
-  delete mPathVolumeWindow;
-  delete mAboutWindow;
-  delete mFileIO;
-  delete mShapefileReader;
-
-  delete mViewModeToolButton;
-  delete mPathToolButton;
-  delete mVolumeToolButton;
-  delete mMeasuringToolButton;
-
+  cleanup();
   mInstance = NULL;
+}
+
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+/**
+ * Releases all memory and resets pointers if necessary.
+ */
+void MainWindow::cleanup()
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+{
+  if (ui != NULL)
+  {
+    delete ui;
+    ui = NULL;
+  }
+
+  if (mPathWindow != NULL)
+  {
+    delete mPathWindow;
+    mPathWindow = NULL;
+  }
+
+  if (mVolumeWindow != NULL)
+  {
+    delete mVolumeWindow;
+    mVolumeWindow = NULL;
+  }
+
+  if (mMeasuringWindow != NULL)
+  {
+    delete mMeasuringWindow;
+    mMeasuringWindow = NULL;
+  }
+
+  if (mPlacesWindow != NULL)
+  {
+    delete mPlacesWindow;
+    mPlacesWindow = NULL;
+  }
+
+  if (mTrackInfoWindow != NULL)
+  {
+    delete mTrackInfoWindow;
+    mTrackInfoWindow = NULL;
+  }
+
+  if (mPathVolumeWindow != NULL)
+  {
+    delete mPathVolumeWindow;
+    mPathVolumeWindow = NULL;
+  }
+
+  if (mAboutWindow != NULL)
+  {
+    delete mAboutWindow;
+    mAboutWindow = NULL;
+  }
+
+  if (mFileIO != NULL)
+  {
+    delete mFileIO;
+    mFileIO = NULL;
+  }
+
+  if (mShapefileReader != NULL)
+  {
+    delete mShapefileReader;
+    mShapefileReader = NULL;
+  }
+
+  if (mViewModeToolButton != NULL)
+  {
+    delete mViewModeToolButton;
+    mViewModeToolButton = NULL;
+  }
+
+  if (mPathToolButton != NULL)
+  {
+    delete mPathToolButton;
+    mPathToolButton = NULL;
+  }
+
+  if (mVolumeToolButton != NULL)
+  {
+    delete mVolumeToolButton;
+    mVolumeToolButton = NULL;
+  }
+
+  if (mMeasuringToolButton != NULL)
+  {
+    delete mMeasuringToolButton;
+    mMeasuringToolButton = NULL;
+  }
 }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -526,8 +603,9 @@ void MainWindow::onExit()
  *
  * @param event Qt's close event (not used but necessary for override)
  */
-void MainWindow::closeEvent(QCloseEvent* event)
+void MainWindow::closeEvent(QCloseEvent*)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   mPlacesWindow->savePlaces();
+  cleanup();
 }

@@ -98,6 +98,7 @@ class MainWindow : public QMainWindow, public EventPublisher
 
   private:
     MainWindow(QWidget* parent = 0);//private due to Singleton implementation
+    void cleanup();
 
     Ui::MainWindow* ui;
     static MainWindow* mInstance;

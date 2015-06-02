@@ -186,7 +186,7 @@ void PlacesWindow::onDeleteButton()
  *
  * @param item Handle to double clicked item
  */
-void PlacesWindow::onItemDoubleClicked(QListWidgetItem* item)
+void PlacesWindow::onItemDoubleClicked(QListWidgetItem*)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   //first set camera in orbit mode before navigation

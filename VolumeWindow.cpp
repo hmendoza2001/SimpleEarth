@@ -320,7 +320,7 @@ void VolumeWindow::onAltitudeChange()
  *
  * @param value Current slider value (not used but necessary for override)
  */
-void VolumeWindow::onRotationSliderMoved(int value)
+void VolumeWindow::onRotationSliderMoved(int)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   SimpleVector rotation;
@@ -338,7 +338,7 @@ void VolumeWindow::onRotationSliderMoved(int value)
  *
  * @param value Current slider value (not used but necessary for override)
  */
-void VolumeWindow::onScaleSliderMoved(int value)
+void VolumeWindow::onScaleSliderMoved(int)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   SimpleVector scale;
@@ -410,7 +410,7 @@ void VolumeWindow::onReject()
  *
  * @param event Qt's close event (not used but necessary for override)
  */
-void VolumeWindow::closeEvent(QCloseEvent* event)
+void VolumeWindow::closeEvent(QCloseEvent*)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   MainWindow* mainWindow = MainWindow::getInstance();

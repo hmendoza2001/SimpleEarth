@@ -81,7 +81,7 @@ void ColorSelectWidget::setColor(const QColor& color)
  *
  * @param e Qt's mouse event handle (not used but necessary for override)
  */
-void ColorSelectWidget::mouseDoubleClickEvent(QMouseEvent* event)
+void ColorSelectWidget::mouseDoubleClickEvent(QMouseEvent*)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   QColor color;

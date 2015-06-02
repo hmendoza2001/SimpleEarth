@@ -88,7 +88,9 @@ ElevationMgr* ElevationMgr::getInstance()
 void ElevationMgr::loadElevationDatabase(const QString& filePath)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
-#ifdef USING_GDAL
+#ifndef USING_GDAL
+  Q_UNUSED(filePath);
+#else
 
   //clear previous database in case one was already loaded
   if (mDatabase != NULL)

@@ -99,7 +99,7 @@ void MeasuringWindow::onComboBoxChange(int index)
  *
  * @param event Qt's close event (not used but necessary for override)
  */
-void MeasuringWindow::closeEvent(QCloseEvent* event)
+void MeasuringWindow::closeEvent(QCloseEvent*)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   MainWindow* mainWindow = MainWindow::getInstance();

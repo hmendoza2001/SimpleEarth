@@ -210,7 +210,7 @@ void GLWidget::initializeGL()
  *
  * @param event Handle to QPaintEvent (not used but necessary for override)
  */
-void GLWidget::paintEvent(QPaintEvent *event)
+void GLWidget::paintEvent(QPaintEvent*)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   makeCurrent();

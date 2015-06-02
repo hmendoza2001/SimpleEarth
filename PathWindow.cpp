@@ -143,7 +143,7 @@ void PathWindow::onReject()
  *
  * @param event Qt's close event (not used but necessary for override)
  */
-void PathWindow::closeEvent(QCloseEvent* event)
+void PathWindow::closeEvent(QCloseEvent*)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   MainWindow* mainWindow = MainWindow::getInstance();
