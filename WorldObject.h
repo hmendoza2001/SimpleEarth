@@ -120,6 +120,11 @@ class WorldObject
     float mSpeed;
     SimpleVector mScreenLocation;
     QStringList mCustomInfo;
+
+  private:
+    WorldObject(const WorldObject&);//disallow default copying
+    WorldObject& operator=(const WorldObject&);//disallow default copying
+
 };
 
 #endif//WORLD_OBJECT_H
