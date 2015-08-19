@@ -37,7 +37,7 @@ Runtime Requirements
 Hello World
 -----------
 
-To start understanding the code and API, look at WorldObject and WorldObjectMgr classes and the globals.h header file. The hello world example emplaces a label in the world with the following code:
+To start understanding the code and API, look at WorldObject and WorldObjectManager classes and the globals.h header file. The hello world example emplaces a label in the world with the following code:
 
 //instantiate world object and set label<br>
 WorldObject* worldObject = new WorldObject();<br>
