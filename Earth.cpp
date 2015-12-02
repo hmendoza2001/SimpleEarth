@@ -46,8 +46,9 @@ Earth::Earth()
   mElevationMode = false;
   mNumberOfTileSubdivisions = 1;
   camera = Camera::getInstance();
+  mRenderLatLonGrid = false;
 
-  for (int i = 0; i < 2; i++)
+  for (int i = 0; i < NUMBER_OF_DISPLAY_LISTS; i++)
   {
     mDisplayLists[i] = 0;
   }
@@ -205,6 +206,11 @@ void Earth::render()
   renderStars();
   renderEarth();
   renderMaps();
+
+  if (mRenderLatLonGrid)
+  {
+    renderLatLonGrid();
+  }
 }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -257,6 +263,18 @@ void Earth::setElevationMode(bool value)
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
+ * Sets the value of flag that determines if the Lat/Lon grid will be rendered.
+ *
+ * @param value New value for render lat/lon grid flag
+ */
+void Earth::setRenderLatLonGrid(bool value)
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+{
+  mRenderLatLonGrid = value;
+}
+
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+/**
  * Renders the stars dome around the camera.
  */
 void Earth::renderStars()
@@ -270,10 +288,10 @@ void Earth::renderStars()
   SimpleVector cameraPosition = camera->getPosition();
   glTranslatef(cameraPosition.x, cameraPosition.y, cameraPosition.z);
 
-  if (mDisplayLists[0] == 0)
+  if (mDisplayLists[STARS_LIST] == 0)
   {
-    mDisplayLists[0] = glGenLists(1);
-    glNewList(mDisplayLists[0], GL_COMPILE);
+    mDisplayLists[STARS_LIST] = glGenLists(1);
+    glNewList(mDisplayLists[STARS_LIST], GL_COMPILE);
 
     glEnable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, mStarTextureHandle);
@@ -284,7 +302,7 @@ void Earth::renderStars()
   }
   else
   {
-    glCallList(mDisplayLists[0]);
+    glCallList(mDisplayLists[STARS_LIST]);
   }
 
   glPopMatrix();
@@ -299,10 +317,10 @@ void Earth::renderStars()
 void Earth::renderEarth()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
-  if (mDisplayLists[1] == 0)
+  if (mDisplayLists[EARTH_LIST] == 0)
   {
-    mDisplayLists[1] = glGenLists(1);
-    glNewList(mDisplayLists[1], GL_COMPILE);
+    mDisplayLists[EARTH_LIST] = glGenLists(1);
+    glNewList(mDisplayLists[EARTH_LIST], GL_COMPILE);
 
     //set color to draw earth just in case texture was not found
     glColor3f(0.0f,0.5f,1.0f);
@@ -316,7 +334,7 @@ void Earth::renderEarth()
   }
   else
   {
-    glCallList(mDisplayLists[1]);
+    glCallList(mDisplayLists[EARTH_LIST]);
   }
 }
 
@@ -457,6 +475,64 @@ void Earth::renderMaps()
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
+ * Renders the latitude longitude grid.
+ */
+void Earth::renderLatLonGrid()
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+{
+  int i;
+
+  //*****
+  //render main parallels and meridians
+  glColor4f(1.0f, 1.0f, 0.0f, 1.0f);
+
+  renderLongitudeLine(0.0);//prime meridian
+  renderLongitudeLine(180.0);//anti-meridian
+
+  renderLatitudeLine(Utilities::dmsToDecimalDegrees("66:33:46.0N"));//artic circle
+  renderLatitudeLine(Utilities::dmsToDecimalDegrees("23:26:14.0N"));//tropic of cancer
+  renderLatitudeLine(0.0);//equator
+  renderLatitudeLine(Utilities::dmsToDecimalDegrees("23:26:14.0S"));//tropic of capricorn
+  renderLatitudeLine(Utilities::dmsToDecimalDegrees("66:33:46.0S"));//antartic circle
+  //*****
+
+  glColor4f(1.0f, 0.0f, 0.0f, 1.0f);
+
+  //render northern hemisphere parallels
+  double latitude = 10.0;
+  for (i = 0; i < 8; i++)
+  {
+    renderLatitudeLine(latitude);
+    latitude += 10.0;
+  }
+
+  //render southern hemisphere parallels
+  latitude = -10.0;
+  for (i = 0; i < 8; i++)
+  {
+    renderLatitudeLine(latitude);
+    latitude -= 10.0;
+  }
+
+  //render eastern hemisphere meridians
+  double longitude = 10.0;
+  for (i = 0; i < 17; i++)
+  {
+    renderLongitudeLine(longitude);
+    longitude += 10.0;
+  }
+
+  //render western hemisphere meridians
+  longitude = -10.0;
+  for (i = 0; i < 17; i++)
+  {
+    renderLongitudeLine(longitude);
+    longitude -= 10.0;
+  }
+}
+
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+/**
  * Creates the spherical geometry used to render the Earth and star dome. See
  * en.wikipedia.org/wiki/Spherical_coordinates for a reference in spherical
  * coordinates.
@@ -479,7 +555,7 @@ void Earth::createSphereGeometry(double radius)
 
   glBegin(GL_QUADS);
 
-  //in mathematics, coordinates on the surface of a sphere
+  //in geometry, coordinates on the surface of a sphere
   //are calculated as follows:
   //x = r sin(theta) cos(phi)
   //y = r sin(theta) sin(phi)
@@ -612,6 +688,88 @@ void Earth::createSphereGeometry(double radius)
       glTexCoord2f((float)(i+1)/(float)numberOfMeridians, float(j+2)/(float)numberOfParallels);
       glVertex3f(x4, y4, -z2);
     }
+  }
+
+  glEnd();
+}
+
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+/**
+ * Renders a latitude grid line (parallel) in the given latitude.
+ *
+ * @param latitude The latitude at which the line will be rendered
+ */
+void Earth::renderLatitudeLine(double latitude)
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+{
+  int numberOfMeridians = 36;
+  //theta is the angle between positive Z-axis and azimuth, similar to latitude
+  //but latitude angle is between x-y plane and azimuth
+  double theta;
+  //phi is analogous to longitude
+  double phi;
+  double x, y, z;
+  double longitudeResolutionDeg = 360.0/(double)numberOfMeridians;
+
+  //in geometry, coordinates on the surface of a sphere
+  //are calculated as follows:
+  //x = r sin(theta) cos(phi)
+  //y = r sin(theta) sin(phi)
+  //z = r cos(theta)
+  theta = (90.0 - latitude) * Constants::DEGREES_TO_RADIANS;
+  z = (Constants::EARTH_MEAN_RADIUS) * cos(theta);
+
+  glBegin(GL_LINE_STRIP);
+
+  for (int i = 0; i < numberOfMeridians + 1; i++)
+  {
+    phi = (longitudeResolutionDeg * Constants::DEGREES_TO_RADIANS) * (double)i;
+    x = (Constants::EARTH_MEAN_RADIUS) * sin(theta) * cos(phi);
+    y = (Constants::EARTH_MEAN_RADIUS) * sin(theta) * sin(phi);
+
+    glVertex3f(x, y, z);
+  }
+
+  glEnd();
+}
+
+
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+/**
+ * Renders a longitude grid line (meridian) in the given longitude.
+ *
+ * @param longitude The longitude at which the line will be rendered
+ */
+void Earth::renderLongitudeLine(double longitude)
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+{
+  int numberOfParallels = 18;
+  //theta is the angle between positive Z-axis and azimuth, similar to latitude
+  //but latitude angle is between x-y plane and azimuth
+  double theta;
+  //phi is analogous to longitude
+  double phi;
+  double x, y, z;
+  double latitudeResolutionDeg = 180.0/(double)numberOfParallels;
+
+  //in geometry, coordinates on the surface of a sphere
+  //are calculated as follows:
+  //x = r sin(theta) cos(phi)
+  //y = r sin(theta) sin(phi)
+  //z = r cos(theta)
+  phi = longitude * Constants::DEGREES_TO_RADIANS;
+
+  glBegin(GL_LINE_STRIP);
+
+  for (int i = 0; i < numberOfParallels + 1; i++)
+  {
+    theta = (latitudeResolutionDeg * Constants::DEGREES_TO_RADIANS) * (double)i;
+
+    x = Constants::EARTH_MEAN_RADIUS * sin(theta) * cos(phi);
+    y = Constants::EARTH_MEAN_RADIUS * sin(theta) * sin(phi);
+    z = Constants::EARTH_MEAN_RADIUS * cos(theta);
+
+    glVertex3f(x, y, z);
   }
 
   glEnd();

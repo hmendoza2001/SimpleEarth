@@ -49,8 +49,8 @@ class Earth
       unsigned int texture;
     };
 
-    static Earth* getInstance();
     ~Earth();
+    static Earth* getInstance();
 
     void addMap(const GeodeticPosition& southWest, const GeodeticPosition& northEast,
                 float visibleAltitude, int drawPriority, const QImage& image);
@@ -59,20 +59,32 @@ class Earth
     void setEarthTexture(unsigned int handle);
     void setStarTexture(unsigned int handle);
     void setElevationMode(bool value);
+    void setRenderLatLonGrid(bool value);
 
   private:
+    enum
+    {
+      STARS_LIST,
+      EARTH_LIST,
+      NUMBER_OF_DISPLAY_LISTS
+    };
+
     Earth();//private due to Singleton implementation
     void renderStars();
     void renderEarth();
     void renderMaps();
+    void renderLatLonGrid();
     void createSphereGeometry(double radius);
+    void renderLatitudeLine(double latitude);
+    void renderLongitudeLine(double longitude);
 
     static Earth* mInstance;
-    int mDisplayLists[2];
+    int mDisplayLists[NUMBER_OF_DISPLAY_LISTS];
+    QList<Map> mMapList;//list of maps
     unsigned int mEarthTextureHandle;
     unsigned int mStarTextureHandle;
-    QList<Map> mMapList;//list of maps
     bool mElevationMode;
+    bool mRenderLatLonGrid;
     int mNumberOfTileSubdivisions;
 };
 

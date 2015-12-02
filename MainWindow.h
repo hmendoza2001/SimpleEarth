@@ -89,6 +89,7 @@ class MainWindow : public QMainWindow, public EventPublisher
     void onHud();
     void onLabels();
     void onToolbar();
+    void onLatLonGrid();
     void onPlaces();
     void onTrackInfo();
     void onPathVolume();

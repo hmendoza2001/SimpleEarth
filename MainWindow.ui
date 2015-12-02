@@ -67,6 +67,7 @@
     <addaction name="actionHud"/>
     <addaction name="actionLabels"/>
     <addaction name="actionToolbar"/>
+    <addaction name="actionLatLonGrid"/>
    </widget>
    <widget class="QMenu" name="menuWindow">
     <property name="title">
@@ -178,6 +179,14 @@
    </property>
    <property name="text">
     <string>Hud</string>
+   </property>
+  </action>
+  <action name="actionLatLonGrid">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Lat/Lon Grid</string>
    </property>
   </action>
  </widget>

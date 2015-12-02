@@ -33,6 +33,7 @@
 #include "MeasuringTool.h"
 #include "CrossPlatformSleep.h"
 #include "Camera.h"
+#include "Earth.h"
 
 MainWindow* MainWindow::mInstance = NULL;//Singleton implementation
 static ToolManager* toolManager = NULL;
@@ -111,6 +112,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
   connect(ui->actionHud, SIGNAL(triggered()), this, SLOT(onHud()));
   connect(ui->actionLabels, SIGNAL(triggered()), this, SLOT(onLabels()));
   connect(ui->actionToolbar, SIGNAL(triggered()), this, SLOT(onToolbar()));
+  connect(ui->actionLatLonGrid, SIGNAL(triggered()), this, SLOT(onLatLonGrid()));
   connect(ui->actionPlaces, SIGNAL(triggered()), this, SLOT(onPlaces()));
   connect(ui->actionTrackInfo, SIGNAL(triggered()), this, SLOT(onTrackInfo()));
   connect(ui->actionPathVolume, SIGNAL(triggered()), this, SLOT(onPathVolume()));
@@ -529,6 +531,17 @@ void MainWindow::onToolbar()
   {
     ui->toolBar->hide();
   }
+}
+
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+/**
+ * Qt SLOT. Gets called when the Lat/Lon Grid item is selected under the View
+ * menu. Shows/Hides the Latitude-Longitude grid.
+ */
+void MainWindow::onLatLonGrid()
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+{
+  Earth::getInstance()->setRenderLatLonGrid(ui->actionLatLonGrid->isChecked());
 }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
