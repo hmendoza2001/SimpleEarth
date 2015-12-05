@@ -179,11 +179,9 @@ void PathVolumeWindow::onContextMenu(QPoint point)
       actions.append(new QAction("Properties", this));
     }
 
-    //move point to absolute screen coordinates to display
-    //menu at the right place
-    point.setX(this->x() + point.x());
-    point.setY(this->y() + point.y() + 40);
-    QAction* action = QMenu::exec(actions, point);
+    //map point to global coordinates to display menu at the right place
+    QPoint newPoint = this->mapToGlobal(point);
+    QAction* action = QMenu::exec(actions, newPoint);
 
     if (action == actions[0])//delete action
     {
