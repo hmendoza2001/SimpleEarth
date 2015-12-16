@@ -20,8 +20,6 @@
  *  <http://www.gnu.org/licenses/>.
  */
 
-#include <QFile>
-#include <QTextStream>
 #include <QStringList>
 #include "IconModelManager.h"
 #include "Utilities.h"
