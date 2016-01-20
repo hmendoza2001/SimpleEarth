@@ -1,6 +1,6 @@
 /*
  *  The Simple Earth Project
- *  Copyright (C) 2014 HueSoft LLC
+ *  Copyright (C) 2016 HueSoft LLC
  *  Author: Hector Mendoza, hector.mendoza@huesoftllc.com
  *
  *  This file is part of the Simple Earth Project.
@@ -41,7 +41,7 @@ namespace Ui
  * right hand side, it displays information about the selected track like
  * position and speed.
  *
- * @version 1.0
+ * @version 1.1
  * @author Hector Mendoza
  */
 class TrackInfoWindow : public QDialog

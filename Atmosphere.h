@@ -1,6 +1,6 @@
 /*
  *  The Simple Earth Project
- *  Copyright (C) 2014 HueSoft LLC
+ *  Copyright (C) 2016 HueSoft LLC
  *  Author: Hector Mendoza, hector.mendoza@huesoftllc.com
  *
  *  This file is part of the Simple Earth Project.
@@ -33,7 +33,7 @@
  * objects are included in the texture transparency as well as to not interfere
  * with mouse picking of any other objects.
  *
- * @version 1.0
+ * @version 1.1
  * @author Hector Mendoza
  */
 class Atmosphere

@@ -1,6 +1,6 @@
 /*
  *  The Simple Earth Project
- *  Copyright (C) 2014 HueSoft LLC
+ *  Copyright (C) 2016 HueSoft LLC
  *  Author: Hector Mendoza, hector.mendoza@huesoftllc.com
  *
  *  This file is part of the Simple Earth Project.
@@ -29,7 +29,7 @@
  * if defined by third party code used in conjunction with SimpleEarth. This
  * class acts as a namespace for these constants.
  *
- * @version 1.0
+ * @version 1.1
  * @author Hector Mendoza
  */
 class Constants

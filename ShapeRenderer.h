@@ -1,6 +1,6 @@
 /*
  *  The Simple Earth Project
- *  Copyright (C) 2014 HueSoft LLC
+ *  Copyright (C) 2016 HueSoft LLC
  *  Author: Hector Mendoza, hector.mendoza@huesoftllc.com
  *
  *  This file is part of the Simple Earth Project.
@@ -34,7 +34,7 @@
  * (height points). If the shape does have height data associated with it, the
  * 3D volume is achieved by extruding the original shape.
  *
- * @version 1.0
+ * @version 1.1
  * @author Hector Mendoza
  */
 class ShapeRenderer : public MeshRenderer

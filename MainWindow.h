@@ -1,6 +1,6 @@
 /*
  *  The Simple Earth Project
- *  Copyright (C) 2014 HueSoft LLC
+ *  Copyright (C) 2016 HueSoft LLC
  *  Author: Hector Mendoza, hector.mendoza@huesoftllc.com
  *
  *  This file is part of the Simple Earth Project.
@@ -50,7 +50,7 @@ namespace Ui
  * instantiated, bear in mind that GLWidget is contained by the MainWindow widget
  * (refer to MainWindow.ui) and instantiated automatically by Qt.
  *
- * @version 1.0
+ * @version 1.1
  * @author Hector Mendoza
  */
 class MainWindow : public QMainWindow, public EventPublisher

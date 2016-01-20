@@ -1,6 +1,6 @@
 /*
  *  The Simple Earth Project
- *  Copyright (C) 2014 HueSoft LLC
+ *  Copyright (C) 2016 HueSoft LLC
  *  Author: Hector Mendoza, hector.mendoza@huesoftllc.com
  *
  *  This file is part of the Simple Earth Project.
@@ -41,7 +41,7 @@ namespace Ui
  * names. This window shows a list of places the user has enetered. The current
  * list gets saved on exit and gets loaded at startup.
  *
- * @version 1.0
+ * @version 1.1
  * @author Hector Mendoza
  */
 class PlacesWindow : public QDialog

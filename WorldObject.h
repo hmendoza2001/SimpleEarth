@@ -1,6 +1,6 @@
 /*
  *  The Simple Earth Project
- *  Copyright (C) 2014 HueSoft LLC
+ *  Copyright (C) 2016 HueSoft LLC
  *  Author: Hector Mendoza, hector.mendoza@huesoftllc.com
  *
  *  This file is part of the Simple Earth Project.
@@ -34,7 +34,7 @@
  * object in the system. A world object has attributes like position,
  * orientation and scale but it also has renderers associated to it.
  *
- * @version 1.0
+ * @version 1.1
  * @author Hector Mendoza
  */
 class WorldObject

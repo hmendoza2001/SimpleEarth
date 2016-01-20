@@ -1,6 +1,6 @@
 /*
  *  The Simple Earth Project
- *  Copyright (C) 2014 HueSoft LLC
+ *  Copyright (C) 2016 HueSoft LLC
  *  Author: Hector Mendoza, hector.mendoza@huesoftllc.com
  *
  *  This file is part of the Simple Earth Project.
@@ -35,7 +35,7 @@
  * a real source (e.g. GPS). This class is better suited to serve as a template
  * for your own SimpleEarth application.
  *
- * @version 1.0
+ * @version 1.1
  * @author Hector Mendoza
  */
 class ExampleExpirableObject : public QThread

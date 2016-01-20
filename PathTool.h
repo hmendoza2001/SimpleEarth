@@ -1,6 +1,6 @@
 /*
  *  The Simple Earth Project
- *  Copyright (C) 2014 HueSoft LLC
+ *  Copyright (C) 2016 HueSoft LLC
  *  Author: Hector Mendoza, hector.mendoza@huesoftllc.com
  *
  *  This file is part of the Simple Earth Project.
@@ -32,7 +32,7 @@
  * This class encapsulates the functionality behind path tool rendering. This
  * class inherits from Tool.
  *
- * @version 1.0
+ * @version 1.1
  * @author Hector Mendoza
  */
 class PathTool : public Tool

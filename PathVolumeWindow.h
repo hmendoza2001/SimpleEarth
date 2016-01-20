@@ -1,6 +1,6 @@
 /*
  *  The Simple Earth Project
- *  Copyright (C) 2014 HueSoft LLC
+ *  Copyright (C) 2016 HueSoft LLC
  *  Author: Hector Mendoza, hector.mendoza@huesoftllc.com
  *
  *  This file is part of the Simple Earth Project.
@@ -40,7 +40,7 @@ namespace Ui
  * and volumes. The user is able to hide/show, delete and bring up object
  * properties from this window.
  *
- * @version 1.0
+ * @version 1.1
  * @author Hector Mendoza
  */
 class PathVolumeWindow : public QDialog

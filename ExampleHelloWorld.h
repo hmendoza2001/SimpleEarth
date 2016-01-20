@@ -1,6 +1,6 @@
 /*
  *  The Simple Earth Project
- *  Copyright (C) 2014 HueSoft LLC
+ *  Copyright (C) 2016 HueSoft LLC
  *  Author: Hector Mendoza, hector.mendoza@huesoftllc.com
  *
  *  This file is part of the Simple Earth Project.
@@ -30,7 +30,7 @@
  * emplace a "hello world" in the world :-). When you run this example, make
  * sure you enable "Labels" from the View menu in order to see the text.
  *
- * @version 1.0
+ * @version 1.1
  * @author Hector Mendoza
  */
 class ExampleHelloWorld

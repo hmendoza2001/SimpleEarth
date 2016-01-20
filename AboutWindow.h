@@ -1,6 +1,6 @@
 /*
  *  The Simple Earth Project
- *  Copyright (C) 2014 HueSoft LLC
+ *  Copyright (C) 2016 HueSoft LLC
  *  Author: Hector Mendoza, hector.mendoza@huesoftllc.com
  *
  *  This file is part of the Simple Earth Project.
@@ -36,7 +36,7 @@ namespace Ui
  * About window. Refer to AboutWindow.ui for a description of the GUI layout and
  * widget variable names.
  *
- * @version 1.0
+ * @version 1.1
  * @author Hector Mendoza
  */
 class AboutWindow : public QDialog

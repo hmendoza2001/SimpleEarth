@@ -1,6 +1,6 @@
 /*
  *  The Simple Earth Project
- *  Copyright (C) 2014 HueSoft LLC
+ *  Copyright (C) 2016 HueSoft LLC
  *  Author: Hector Mendoza, hector.mendoza@huesoftllc.com
  *
  *  This file is part of the Simple Earth Project.
@@ -33,7 +33,7 @@ class WorldObject;
  * This class encapsulates the functionality to render an icon (wich is just
  * a 2D image representation of an object).
  *
- * @version 1.0
+ * @version 1.1
  * @author Hector Mendoza
  */
 class IconRenderer
