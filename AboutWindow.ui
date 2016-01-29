@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>409</width>
+    <width>410</width>
     <height>180</height>
    </rect>
   </property>
@@ -43,7 +43,7 @@
       </font>
      </property>
      <property name="text">
-      <string>Version: 1.0</string>
+      <string>Version: 1.1</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -59,7 +59,7 @@
       </font>
      </property>
      <property name="text">
-      <string>Copyright 2014 HueSoft LLC. All rights reserved.</string>
+      <string>Copyright 2016 HueSoft LLC. All rights reserved.</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>

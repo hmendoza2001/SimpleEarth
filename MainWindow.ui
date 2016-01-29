@@ -14,7 +14,7 @@
    <enum>Qt::NoContextMenu</enum>
   </property>
   <property name="windowTitle">
-   <string>Simple Earth v1.0</string>
+   <string>Simple Earth v1.1</string>
   </property>
   <property name="windowIcon">
    <iconset>
