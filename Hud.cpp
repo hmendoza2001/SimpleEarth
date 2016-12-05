@@ -132,7 +132,7 @@ void Hud::setPainter(QPainter* painter)
 /**
  * Renders the Heads Up Display (HUD). Currently, the HUD renders the camera's
  * position on the upper left corner of the screen and also renders all the
- * track labels.
+ * world object labels.
  */
 void Hud::renderHud()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -200,8 +200,9 @@ void Hud::renderWorldObjectLabels()
       //only draw the label if world object is not being obscured by the earth
       //and if projection is not negative (not behind the camera, which means
       //screenZ is below 1.0)
-      if (screenLocation.z < 1.0f && !Utilities::checkObscure(camera->getGeodeticPosition(),
-          worldObject->getGeodeticPosition()))
+      if (screenLocation.z < 1.0f &&
+          !Utilities::checkObscure(camera->getGeodeticPosition(),worldObject->getGeodeticPosition()) &&
+          worldObject->getIsVisible())
       {
         label = worldObject->getLabel();
 

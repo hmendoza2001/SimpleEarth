@@ -21,12 +21,13 @@
  */
 
 #include <QtOpenGL>
+
 #include "MeasuringTool.h"
 #include "Utilities.h"
 #include "math.h"
-#include "MainWindow.h"
 #include "Constants.h"
 #include "Camera.h"
+#include "MeasuringWindow.h"
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
@@ -91,11 +92,12 @@ void MeasuringTool::render()
       sin(startPointGeo.latitude * Constants::DEGREES_TO_RADIANS) *
       sin(endPointGeo.latitude * Constants::DEGREES_TO_RADIANS) +
       (cos(startPointGeo.latitude * Constants::DEGREES_TO_RADIANS) *
-      cos(endPointGeo.latitude * Constants::DEGREES_TO_RADIANS) *
-      cos(fabs((startPointGeo.longitude * Constants::DEGREES_TO_RADIANS) -
-      (endPointGeo.longitude * Constants::DEGREES_TO_RADIANS)))));
+       cos(endPointGeo.latitude * Constants::DEGREES_TO_RADIANS) *
+       cos(fabs((startPointGeo.longitude * Constants::DEGREES_TO_RADIANS) -
+       (endPointGeo.longitude * Constants::DEGREES_TO_RADIANS)))));
 
-    MainWindow::getInstance()->getMeasuringWindow()->setMeasurement(greatCircleDistance);
+    MeasuringWindow* measuringWindow = (MeasuringWindow*)mDialog;
+    measuringWindow->setMeasurement(greatCircleDistance);
   }
 
   //only render if start point is not being obscured by the earth

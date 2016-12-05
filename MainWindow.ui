@@ -48,8 +48,9 @@
      <property name="title">
       <string>Save</string>
      </property>
-     <addaction name="actionPaths"/>
-     <addaction name="actionVolumes"/>
+     <addaction name="actionSaveLabels"/>
+     <addaction name="actionSavePaths"/>
+     <addaction name="actionSaveVolumes"/>
     </widget>
     <addaction name="actionOpen"/>
     <addaction name="menuSave"/>
@@ -129,12 +130,12 @@
     <string>Exit</string>
    </property>
   </action>
-  <action name="actionPaths">
+  <action name="actionSavePaths">
    <property name="text">
     <string>Paths</string>
    </property>
   </action>
-  <action name="actionVolumes">
+  <action name="actionSaveVolumes">
    <property name="text">
     <string>Volumes</string>
    </property>
@@ -190,6 +191,11 @@
    </property>
    <property name="text">
     <string>Lat/Lon Grid</string>
+   </property>
+  </action>
+  <action name="actionSaveLabels">
+   <property name="text">
+    <string>Labels</string>
    </property>
   </action>
  </widget>

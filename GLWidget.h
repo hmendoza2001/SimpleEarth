@@ -24,6 +24,7 @@
 #define GL_WIDGET_H
 
 #include <QGLWidget>
+
 #include "globals.h"
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -44,6 +45,7 @@ class GLWidget : public QGLWidget
     enum MouseInputMode
     {
       CAMERA_MOVE_MODE,
+      LABEL_MODE,
       PATH_MODE,
       VOLUME_MODE,
       MEASURING_MODE

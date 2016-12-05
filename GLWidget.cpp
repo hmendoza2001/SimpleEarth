@@ -22,6 +22,7 @@
 
 #include <QtOpenGL>
 #include <GL/glu.h>
+
 #include "GLWidget.h"
 #include "MainWindow.h"
 #include "WorldObjectManager.h"
@@ -29,11 +30,12 @@
 #include "Earth.h"
 #include "Atmosphere.h"
 #include "Hud.h"
+#include "ToolManager.h"
+#include "LabelTool.h"
 #include "PathTool.h"
 #include "VolumeTool.h"
 #include "MeasuringTool.h"
 #include "Utilities.h"
-#include "ToolManager.h"
 
 #ifndef GL_MULTISAMPLE
 #define GL_MULTISAMPLE  0x809D
@@ -81,7 +83,7 @@ GLWidget::GLWidget(QWidget* parent) : QGLWidget(QGLFormat(QGL::SampleBuffers), p
     mTextures[i] = 0;
   }
 
-  //setup timers
+  //setup and start timers
   mRenderTimer = new QTimer(this);
   connect(mRenderTimer, SIGNAL(timeout()), this, SLOT(onRenderTimer()));
   mRenderTimer->start(17);
@@ -149,9 +151,9 @@ void GLWidget::setMouseInputMode(int mode)
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
- * Qt SLOT. This is the timout function for the render timer. This function gets
- * called approx 60 times per second. It calls update which will trigger a call
- * to paintEvent;
+ * Qt SLOT. This is the timeout function for the render timer. This function
+ * gets called approx 60 times per second. It calls update which will trigger a
+ * call to paintEvent;
  */
 void GLWidget::onRenderTimer()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -161,8 +163,8 @@ void GLWidget::onRenderTimer()
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
- * Qt SLOT. This is the timout function for the render timer. This function gets
- * called once per second.
+ * Qt SLOT. This is the timeout function for the frame rate timer. This function
+ * gets called once per second and it updates the FPS label in the status bar.
  */
 void GLWidget::onFrameRateTimer()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -178,35 +180,35 @@ void GLWidget::onFrameRateTimer()
 void GLWidget::initializeGL()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
-  //load images
   QString imagePaths[3];
   imagePaths[0] = "images/blueMarble.jpg";
   imagePaths[1] = "images/stars.jpg";
   imagePaths[2] = "images/atmosphere.png";
   QImage images[3];
 
+  //load earth, stars and atmosphere textures
   for (int i = 0; i < 3; i++)
   {
     if (!images[i].load(imagePaths[i]))
     {
-      printf("GlWidget.cpp: Error loading image file.\n");
+      printf("GlWidget.cpp: Error loading image file %s.\n", imagePaths[i].toStdString().c_str());
     }
     mTextures[i] = Utilities::imageToTexture(images[i]);
   }
 
-  //provide texture to Earth object
+  //provide textures to earth and atmosphere object
   earth->setEarthTexture(mTextures[0]);
   earth->setStarTexture(mTextures[1]);
   atmosphere->setTexture(mTextures[2]);
 
-  //read any custom maps defined in Maps.txt
+  //now read any custom maps defined in Maps.txt
   earth->readMapsFile("Maps.txt");
 }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
- * OVERRIDE FOR QGLWidget. Callback method to flush OpenGL buffers. Do not
- * call this method directly, call updateGL instead.
+ * OVERRIDE FOR QGLWidget. Callback method to flush OpenGL buffers.
+ * WARNING:DO NOT call this method directly, call updateGL instead.
  *
  * @param event Handle to QPaintEvent (not used but necessary for override)
  */
@@ -248,8 +250,8 @@ void GLWidget::paintEvent(QPaintEvent*)
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
   gluLookAt(cameraPosition.x, cameraPosition.y, cameraPosition.z,
-           cameraLookAt.x, cameraLookAt.y, cameraLookAt.z,
-           cameraUpVector.x, cameraUpVector.y, cameraUpVector.z);
+            cameraLookAt.x, cameraLookAt.y, cameraLookAt.z,
+            cameraUpVector.x, cameraUpVector.y, cameraUpVector.z);
 
   //render our planet first
   earth->render();
@@ -277,6 +279,7 @@ void GLWidget::paintEvent(QPaintEvent*)
   QPainter painter(this);
   hud->setPainter(&painter);
   hud->renderHud();
+
   painter.end();
 }
 
@@ -292,7 +295,7 @@ void GLWidget::resizeGL(int width, int height)
 {
   setupViewport(width, height);
 
-  //privide the camera object with the latest screen coordinates so that
+  //privide the camera object with the latest screen size so that
   //other objects have access to this data
   ScreenCoordinates screenSize;
   screenSize.x = width;
@@ -476,6 +479,11 @@ void GLWidget::mouseReleaseEvent(QMouseEvent* event)
           }
         }
       }
+    }
+    else if (mMouseInputMode == LABEL_MODE)
+    {
+      LabelTool* labelTool = (LabelTool*)ToolManager::getInstance()->getTool("Label");
+      labelTool->onMouseReleaseEvent(event);
     }
     else if (mMouseInputMode == PATH_MODE)
     {

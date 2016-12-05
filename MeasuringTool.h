@@ -24,6 +24,7 @@
 #define MEASURING_TOOL_H
 
 #include <QMouseEvent>
+
 #include "Tool.h"
 #include "globals.h"
 

@@ -21,10 +21,11 @@
  */
 
 #include <QtOpenGL>
+
 #include "VolumeTool.h"
 #include "WorldObjectManager.h"
 #include "Utilities.h"
-#include "MainWindow.h"
+#include "VolumeWindow.h"
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
@@ -55,9 +56,12 @@ VolumeTool::~VolumeTool()
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
- * OVERRIDE FOR Tool. Builds the geometry to render a temporary volume. After
- * the user is done editting this volume, the system will call the addCurrent
- * method.
+ * OVERRIDE FOR Tool. Given that we need to calculate click(pick) position on
+ * OpenGL render thread the this mCalculateClickPosition flag is set to true on
+ * the onMouseReleaseEvent method. When calculation is done, this method updates
+ * the volume tool window with the selected(picked) coordinates. After the user
+ * is done editting this label and hits the OK button, the system will call the
+ * addCurrent method.
  */
 void VolumeTool::render()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -76,7 +80,8 @@ void VolumeTool::render()
     setPosition(worldCoordinate);
 
     //update volume window
-    MainWindow::getInstance()->getVolumeWindow()->setPosition(worldCoordinate);
+    VolumeWindow* volumeWindow = (VolumeWindow*)mDialog;
+    volumeWindow->setPosition(worldCoordinate);
   }
 
   //render temporary volume
@@ -85,10 +90,10 @@ void VolumeTool::render()
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
- * Adds current volume to WorldObjectManager's list. Note how we copy all the data
- * from temporary volume.
+ * Adds current volume to WorldObjectManager's list. Note how we copy all the
+ * data from temporary volume.
  *
- * @return true if add was a success, false if there is a naming conflict (a
+ * @return True if add was a success, false if there is a naming conflict (a
  * world object with that name already exists)
  */
 bool VolumeTool::addCurrent()
@@ -96,7 +101,7 @@ bool VolumeTool::addCurrent()
 {
   bool returnValue = true;
 
-  WorldObject* worldObject = new WorldObject;
+  WorldObject* worldObject = new WorldObject();
   VolumeRenderer* volumeRenderer = new VolumeRenderer();
   volumeRenderer->setType(mVolumeRenderer->getType());
 

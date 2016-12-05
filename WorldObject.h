@@ -44,6 +44,7 @@ class WorldObject
     enum Groups
     {
       NO_GROUP,
+      LABEL,
       PATH,
       VOLUME,
       TRACK

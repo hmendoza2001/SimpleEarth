@@ -21,6 +21,7 @@
  */
 
 #include <QMessageBox>
+
 #include "PathWindow.h"
 #include "ui_PathWindow.h"
 #include "MainWindow.h"
@@ -137,7 +138,7 @@ void PathWindow::onReject()
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
- * OVERRIDE FOR Qdialog. Gets callled whenever we close this dialog. This
+ * OVERRIDE FOR Qdialog. Gets called whenever we close this dialog. This
  * mimics the functionality as if the user had clicked (deselect) the path tool
  * button.
  *

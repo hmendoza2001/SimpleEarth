@@ -13,9 +13,9 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 #CONFIG += using_assimp
 
 win32 {
-LIBS += -lopengl32
+  LIBS += -lopengl32
 } else {
-LIBS += -lGLU
+  LIBS += -lGLU
 }
 
 CONFIG(using_gdal) {
@@ -67,6 +67,8 @@ HEADERS += AboutWindow.h \
     Hud.h \
     IconModelManager.h \
     IconRenderer.h \
+    LabelTool.h \
+    LabelWindow.h \
     MainWindow.h \
     MeasuringTool.h \
     MeasuringWindow.h \
@@ -108,6 +110,8 @@ SOURCES += AboutWindow.cpp \
     Hud.cpp \
     IconModelManager.cpp \
     IconRenderer.cpp \
+    LabelTool.cpp \
+    LabelWindow.cpp \
     main.cpp \
     MainWindow.cpp \
     MeasuringTool.cpp \
@@ -135,6 +139,7 @@ SOURCES += AboutWindow.cpp \
 
 
 FORMS += AboutWindow.ui \
+    LabelWindow.ui \
     MainWindow.ui \
     MeasuringWindow.ui \
     NewPlaceDialog.ui \

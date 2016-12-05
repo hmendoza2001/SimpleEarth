@@ -24,15 +24,15 @@
 #include <QProgressDialog>
 #include <QDesktopServices>
 #include <QUrl>
+
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
 #include "Hud.h"
 #include "ToolManager.h"
+#include "LabelTool.h"
 #include "PathTool.h"
 #include "VolumeTool.h"
 #include "MeasuringTool.h"
-#include "CrossPlatformSleep.h"
-#include "Camera.h"
 #include "Earth.h"
 
 MainWindow* MainWindow::mInstance = NULL;//Singleton implementation
@@ -50,6 +50,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 {
   ui->setupUi(this);
 
+  mLabelWindow = new LabelWindow(this);
   mPathWindow = new PathWindow(this);
   mVolumeWindow = new VolumeWindow(this);
   mMeasuringWindow = new MeasuringWindow(this);
@@ -65,6 +66,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
   mViewModeToolButton->setIcon(QIcon("images/viewMode.png"));
   mViewModeToolButton->setCheckable(true);
   mViewModeToolButton->setToolTip("Perspective View");
+
+  mLabelToolButton = new QToolButton();
+  mLabelToolButton->setIcon(QIcon("images/label.png"));
+  mLabelToolButton->setCheckable(true);
+  mLabelToolButton->setToolTip("Label Tool");
 
   mPathToolButton = new QToolButton();
   mPathToolButton->setIcon(QIcon("images/path.png"));
@@ -84,10 +90,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
   //instantiate tool mgr and add tools
   toolManager = ToolManager::getInstance();
 
+  LabelTool* labelTool = new LabelTool(mLabelToolButton, mLabelWindow);
   PathTool* pathTool = new PathTool(mPathToolButton, mPathWindow);
   VolumeTool* volumeTool = new VolumeTool(mVolumeToolButton, mVolumeWindow);
   MeasuringTool* measuringTool = new MeasuringTool(mMeasuringToolButton, mMeasuringWindow);
 
+  toolManager->addTool(labelTool);
   toolManager->addTool(pathTool);
   toolManager->addTool(volumeTool);
   toolManager->addTool(measuringTool);
@@ -98,17 +106,21 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
   //create tool bar
   ui->toolBar->addWidget(mViewModeToolButton);
   ui->toolBar->addSeparator();
+  ui->toolBar->addWidget(mLabelToolButton);
   ui->toolBar->addWidget(mPathToolButton);
   ui->toolBar->addWidget(mVolumeToolButton);
   ui->toolBar->addWidget(mMeasuringToolButton);
 
+  //connect signals and slots
   connect(mViewModeToolButton, SIGNAL(clicked()), this, SLOT(onViewModeTool()));
+  connect(mLabelToolButton, SIGNAL(clicked()), this, SLOT(onLabelTool()));
   connect(mPathToolButton, SIGNAL(clicked()), this, SLOT(onPathTool()));
   connect(mVolumeToolButton, SIGNAL(clicked()), this, SLOT(onVolumeTool()));
   connect(mMeasuringToolButton, SIGNAL(clicked()), this, SLOT(onMeasuringTool()));
   connect(ui->actionOpen, SIGNAL(triggered()), this, SLOT(onOpen()));
-  connect(ui->actionPaths, SIGNAL(triggered()), this, SLOT(onPathSave()));
-  connect(ui->actionVolumes, SIGNAL(triggered()), this, SLOT(onVolumeSave()));
+  connect(ui->actionSaveLabels, SIGNAL(triggered()), this, SLOT(onSaveLabels()));
+  connect(ui->actionSavePaths, SIGNAL(triggered()), this, SLOT(onSavePaths()));
+  connect(ui->actionSaveVolumes, SIGNAL(triggered()), this, SLOT(onSaveVolumes()));
   connect(ui->actionHud, SIGNAL(triggered()), this, SLOT(onHud()));
   connect(ui->actionLabels, SIGNAL(triggered()), this, SLOT(onLabels()));
   connect(ui->actionToolbar, SIGNAL(triggered()), this, SLOT(onToolbar()));
@@ -243,30 +255,6 @@ MainWindow* MainWindow::getInstance()
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
- * Returns a handle to the volume window object.
- *
- * @return Returns handle to volume window
- */
-VolumeWindow* MainWindow::getVolumeWindow()
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-{
-  return mVolumeWindow;
-}
-
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-/**
- * Returns a handle to the measuring window object.
- *
- * @return Returns handle to measuring window
- */
-MeasuringWindow* MainWindow::getMeasuringWindow()
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-{
-  return mMeasuringWindow;
-}
-
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-/**
  * Returns handle to the appropriate tool button depending on the given index.
  *
  * @param toolButton Index for tool button
@@ -278,6 +266,10 @@ QToolButton* MainWindow::getToolButton(int toolButton)
   if (toolButton == VIEW_MODE_TOOL_BUTTON)
   {
     return mViewModeToolButton;
+  }
+  else if (toolButton == LABEL_TOOL_BUTTON)
+  {
+    return mLabelToolButton;
   }
   else if (toolButton == PATH_TOOL_BUTTON)
   {
@@ -342,13 +334,35 @@ void MainWindow::setNavigationModeToOrbit()
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
- * This method gets called when the user presses the View Mode toolbar button.
- * It toggles the camera mode between Earth orbit navigation and persdpective.
+ * QT SLOT. This method gets called when the user presses the View Mode toolbar
+ * button. It toggles the camera mode between Earth orbit navigation and
+ * perspective.
  */
 void MainWindow::onViewModeTool()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   ui->glWidget->setCameraInOrbitMode(!ui->glWidget->getCameraInOrbitMode());
+}
+
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+/**
+ * Qt SLOT. Gets called when the label tool is selected. Brings up label tool
+ * window and sets mouse input on label tool mode.
+ */
+void MainWindow::onLabelTool()
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+{
+  if (mLabelToolButton->isChecked())
+  {
+    mLabelWindow->initialize();
+    toolManager->selectTool("Label");
+    ui->glWidget->setMouseInputMode(GLWidget::LABEL_MODE);
+  }
+  else
+  {
+    toolManager->selectTool("");
+    ui->glWidget->setMouseInputMode(GLWidget::CAMERA_MOVE_MODE);
+  }
 }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -415,14 +429,16 @@ void MainWindow::onMeasuringTool()
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
- * Qt SLOT. Gets called when the Open menu item is selected. Displays
- * open dialog and calls the appropriate reader class to read the file.
+ * Qt SLOT. Gets called when the Open menu item is selected. Displays open
+ * dialog and calls the appropriate reader class to read the file.
  */
 void MainWindow::onOpen()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   QString currentPath = QDir::currentPath();
-  QStringList fileList = QFileDialog::getOpenFileNames(this, "Open File", currentPath, "Simple Earth File (*.sef);;Shape File (*.shp);;All Files (*.*)");
+  QStringList fileList = QFileDialog::getOpenFileNames(this, "Open File", currentPath,
+      "Simple Earth File (*.sef);;Shape File (*.shp);;All Files (*.*)");
+
   QString fileName;
 
   int numFiles = fileList.size();
@@ -463,14 +479,32 @@ void MainWindow::onOpen()
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
- * Qt SLOT. Gets called when the Save->Paths menu item is selected. Displays
- * save dialog and calls FileIO class to save paths.
+ * Qt SLOT. Gets called when the Save->Labels menu item is selected. Displays
+ * save dialog and calls FileIO class to save labels.
  */
-void MainWindow::onPathSave()
+void MainWindow::onSaveLabels()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   QString currentPath = QDir::currentPath();
-  QString filename = QFileDialog::getSaveFileName(this, "Save File", currentPath + "/untitled.sef", "Simple Earth File (*.sef);;All Files (*.*)");
+  QString filename = QFileDialog::getSaveFileName(this, "Save File",
+    currentPath + "/untitled.sef", "Simple Earth File (*.sef);;All Files (*.*)");
+  if (!filename.isEmpty())
+  {
+    mFileIO->writeFile(filename, FileIO::LABELS_FILE);
+  }
+}
+
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+/**
+ * Qt SLOT. Gets called when the Save->Paths menu item is selected. Displays
+ * save dialog and calls FileIO class to save paths.
+ */
+void MainWindow::onSavePaths()
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+{
+  QString currentPath = QDir::currentPath();
+  QString filename = QFileDialog::getSaveFileName(this, "Save File",
+    currentPath + "/untitled.sef", "Simple Earth File (*.sef);;All Files (*.*)");
   if (!filename.isEmpty())
   {
     mFileIO->writeFile(filename, FileIO::PATHS_FILE);
@@ -482,11 +516,12 @@ void MainWindow::onPathSave()
  * Qt SLOT. Gets called when the Save->Volumes menu item is selected.
  * Displays save dialog and calls FileIO class to save volumes.
  */
-void MainWindow::onVolumeSave()
+void MainWindow::onSaveVolumes()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   QString currentPath = QDir::currentPath();
-  QString filename = QFileDialog::getSaveFileName(this, "Save File", currentPath + "/untitled.sef", "Simple Earth File (*.sef);;All Files (*.*)");
+  QString filename = QFileDialog::getSaveFileName(this, "Save File",
+    currentPath + "/untitled.sef", "Simple Earth File (*.sef);;All Files (*.*)");
   if (!filename.isEmpty())
   {
     mFileIO->writeFile(filename, FileIO::VOLUMES_FILE);

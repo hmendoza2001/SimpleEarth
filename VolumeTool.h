@@ -25,6 +25,7 @@
 
 #include <QMouseEvent>
 #include <QString>
+
 #include "globals.h"
 #include "Tool.h"
 #include "WorldObject.h"

@@ -25,7 +25,9 @@
 
 #include <QMainWindow>
 #include <QToolButton>
+
 #include "EventPublisher.h"
+#include "LabelWindow.h"
 #include "PathWindow.h"
 #include "VolumeWindow.h"
 #include "MeasuringWindow.h"
@@ -62,6 +64,7 @@ class MainWindow : public QMainWindow, public EventPublisher
     enum ToolButtons
     {
       VIEW_MODE_TOOL_BUTTON,
+      LABEL_TOOL_BUTTON,
       PATH_TOOL_BUTTON,
       VOLUME_TOOL_BUTTON,
       MEASURING_TOOL_BUTTON
@@ -70,8 +73,6 @@ class MainWindow : public QMainWindow, public EventPublisher
     static MainWindow* getInstance();
     ~MainWindow();
 
-    VolumeWindow* getVolumeWindow();
-    MeasuringWindow* getMeasuringWindow();
     QToolButton* getToolButton(int toolButton);
     void displayTrackInfo(const QString& trackName);
     void displayVolumeEdit(const QString& volumeName);
@@ -80,12 +81,14 @@ class MainWindow : public QMainWindow, public EventPublisher
 
   public slots:
     void onViewModeTool();
+    void onLabelTool();
     void onPathTool();
     void onVolumeTool();
     void onMeasuringTool();
     void onOpen();
-    void onPathSave();
-    void onVolumeSave();
+    void onSaveLabels();
+    void onSavePaths();
+    void onSaveVolumes();
     void onHud();
     void onLabels();
     void onToolbar();
@@ -104,9 +107,11 @@ class MainWindow : public QMainWindow, public EventPublisher
     Ui::MainWindow* ui;
     static MainWindow* mInstance;
     QToolButton* mViewModeToolButton;
+    QToolButton* mLabelToolButton;
     QToolButton* mPathToolButton;
     QToolButton* mVolumeToolButton;
     QToolButton* mMeasuringToolButton;
+    LabelWindow* mLabelWindow;
     PathWindow* mPathWindow;
     MeasuringWindow* mMeasuringWindow;
     VolumeWindow* mVolumeWindow;

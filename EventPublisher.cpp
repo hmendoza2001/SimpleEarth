@@ -54,7 +54,8 @@ void EventPublisher::addListener(EventListener* listener)
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
- * Removes the given listener instance from our list of listeners.
+ * Removes the given listener instance from our list of listeners. Code is
+ * mutexed as to prevent removing a listener in the middle of a publish event.
  *
  * @param listener Handle to Event Listener object
  */
@@ -69,7 +70,7 @@ void EventPublisher::removeListener(EventListener* listener)
     if (mListeners[i] == listener)
     {
       EventListener* temp = mListeners.takeAt(i);//remove from list
-      delete temp;
+      delete temp;//release memory
       break;
     }
   }
@@ -79,7 +80,9 @@ void EventPublisher::removeListener(EventListener* listener)
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
- * Publishes generic event. The first string in the list denotes event type.
+ * Publishes generic event. The first string in the list denotes unique event
+ * type. Code is mutexed as to prevent removing a listener in the middle of a
+ * publish event.
  *
  * @param event String list representing event type and arguments
  */
