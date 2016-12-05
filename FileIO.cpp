@@ -24,6 +24,7 @@
 #include <QTextStream>
 #include <QStringList>
 #include <QMessageBox>
+
 #include "FileIO.h"
 #include "WorldObjectManager.h"
 #include "PathRenderer.h"
@@ -49,234 +50,300 @@ FileIO::~FileIO()
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
- * Reads a path or volume data file. It instantiates the appropriate entities
- * and adds them to WorldObjectManager.
+ * Reads a label, path or volume data file. It instantiates the appropriate
+ * entities and adds them to WorldObjectManager.
  *
  * @param fileName Name of file to be read
  */
 void FileIO::readFile(const QString& fileName)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
+  //attempt to open file for reading
   QFile file(fileName);
   if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
   {
-    QMessageBox::critical(NULL, "Error", "Error opening file.");
+    QMessageBox::critical(NULL, "Error", "Error opening file for reading.");
+    return;
   }
-  else
+
+  QStringList split;
+  int fileType = -1;
+  QTextStream in(&file);
+  QString line;
+
+  //read first line to determine which type of file it is
+  line = in.readLine();
+  if (line.contains("LABELS"))
   {
-    QStringList split;
-    int fileType = -1;
-    QTextStream in(&file);
-    QString line;
+    fileType = LABELS_FILE;
+  }
+  else if (line.contains("PATHS"))
+  {
+    fileType = PATHS_FILE;
+  }
+  else if (line.contains("VOLUMES"))
+  {
+    fileType = VOLUMES_FILE;
+  }
 
-    //read first line to determine which type of file it is
-    line = in.readLine();
-    if (line.contains("PATHS"))
-    {
-      fileType = PATHS_FILE;
-    }
-    else if (line.contains("VOLUMES"))
-    {
-      fileType = VOLUMES_FILE;
-    }
+  if (fileType == LABELS_FILE)
+  {
+    QString labelText;
+    SimpleColor color;
+    SimpleVector position;
 
-    if (fileType == PATHS_FILE)
+    while (!in.atEnd())
     {
-      QString name;
-      SimpleColor color;
-      SimpleVector point;
-      QList<SimpleVector> points;
+      line = in.readLine();
 
-      while (!in.atEnd())
+      if (line.contains("LabelText="))
       {
-        line = in.readLine();
+        split = line.split("=");
+        labelText = split[1];
+      }
+      else if (line.contains("PositionX="))
+      {
+        split = line.split("=");
+        position.x = split[1].toFloat();
+      }
+      else if (line.contains("PositionY="))
+      {
+        split = line.split("=");
+        position.y = split[1].toFloat();
+      }
+      else if (line.contains("PositionZ="))
+      {
+        split = line.split("=");
+        position.z = split[1].toFloat();
+      }
+      else if (line.contains("ColorR="))
+      {
+        split = line.split("=");
+        color.red = split[1].toFloat();
+      }
+      else if (line.contains("ColorG="))
+      {
+        split = line.split("=");
+        color.green = split[1].toFloat();
+      }
+      else if (line.contains("ColorB="))
+      {
+        split = line.split("=");
+        color.blue = split[1].toFloat();
+      }
+      else if (line.contains("END_LABEL"))
+      {
+        WorldObject* worldObject = new WorldObject();
+        worldObject->setName(labelText);
+        worldObject->setLabel(labelText);
+        worldObject->setPosition(position);
+        worldObject->setColor(color);
+        worldObject->setGroup(WorldObject::LABEL);
 
-        if (line.contains("PathName="))
-        {
-          split = line.split("=");
-          name = split[1];
-        }
-        else if (line.contains("PathColorR="))
-        {
-          split = line.split("=");
-          color.red = split[1].toFloat();
-        }
-        else if (line.contains("PathColorG="))
-        {
-          split = line.split("=");
-          color.green = split[1].toFloat();
-        }
-        else if (line.contains("PathColorB="))
-        {
-          split = line.split("=");
-          color.blue = split[1].toFloat();
-        }
-        else if (line.contains("PathPointX="))
-        {
-          split = line.split("=");
-          point.x = split[1].toFloat();
-        }
-        else if (line.contains("PathPointY="))
-        {
-          split = line.split("=");
-          point.y = split[1].toFloat();
-        }
-        else if (line.contains("PathPointZ="))
-        {
-          split = line.split("=");
-          point.z = split[1].toFloat();
-        }
-        else if (line.contains("ENDPOINT"))
-        {
-          points.append(point);
-        }
-        else if (line.contains("ENDPATH"))
-        {
-          //instantiate path world object
-          WorldObject* worldObject = new WorldObject();
-          worldObject->setName(name);
-          worldObject->setColor(color);
-          worldObject->setGroup(WorldObject::PATH);
-
-          //instantiate path renderer and add points
-          PathRenderer* pathRenderer = new PathRenderer();
-          for (int i = 0; i < points.size(); i++)
-          {
-            pathRenderer->addPoint(points[i]);
-          }
-
-          //add renderer to world object
-          worldObject->setMeshRenderer(pathRenderer);
-
-          //add world object to manager's list
-          WorldObjectManager::getInstance()->addWorldObject(worldObject);
-        }
+        //add world object to manager's list
+        WorldObjectManager::getInstance()->addWorldObject(worldObject);
       }
     }
-    else if (fileType == VOLUMES_FILE)
+  }
+  else if (fileType == PATHS_FILE)
+  {
+    QString name;
+    SimpleColor color;
+    SimpleVector point;
+    QList<SimpleVector> points;
+
+    while (!in.atEnd())
     {
-      QString name;
-      QString type;
-      SimpleVector position;
-      SimpleVector rotation;
-      SimpleVector scale;
-      SimpleColor color;
+      line = in.readLine();
 
-      while (!in.atEnd())
+      if (line.contains("PathName="))
       {
-        line = in.readLine();
+        split = line.split("=");
+        name = split[1];
+      }
+      else if (line.contains("PathColorR="))
+      {
+        split = line.split("=");
+        color.red = split[1].toFloat();
+      }
+      else if (line.contains("PathColorG="))
+      {
+        split = line.split("=");
+        color.green = split[1].toFloat();
+      }
+      else if (line.contains("PathColorB="))
+      {
+        split = line.split("=");
+        color.blue = split[1].toFloat();
+      }
+      else if (line.contains("PathPointX="))
+      {
+        split = line.split("=");
+        point.x = split[1].toFloat();
+      }
+      else if (line.contains("PathPointY="))
+      {
+        split = line.split("=");
+        point.y = split[1].toFloat();
+      }
+      else if (line.contains("PathPointZ="))
+      {
+        split = line.split("=");
+        point.z = split[1].toFloat();
+      }
+      else if (line.contains("ENDPOINT"))
+      {
+        points.append(point);
+      }
+      else if (line.contains("ENDPATH"))
+      {
+        //instantiate path world object
+        WorldObject* worldObject = new WorldObject();
+        worldObject->setName(name);
+        worldObject->setColor(color);
+        worldObject->setGroup(WorldObject::PATH);
 
-        if (line.contains("Name="))
+        //instantiate path renderer and add points
+        PathRenderer* pathRenderer = new PathRenderer();
+        for (int i = 0; i < points.size(); i++)
         {
-          split = line.split("=");
-          name = split[1];
+          pathRenderer->addPoint(points[i]);
         }
-        else if (line.contains("Type="))
-        {
-          split = line.split("=");
-          type = split[1];
-        }
-        else if (line.contains("PositionX="))
-        {
-          split = line.split("=");
-          position.x = split[1].toFloat();
-        }
-        else if (line.contains("PositionY="))
-        {
-          split = line.split("=");
-          position.y = split[1].toFloat();
-        }
-        else if (line.contains("PositionZ="))
-        {
-          split = line.split("=");
-          position.z = split[1].toFloat();
-        }
-        else if (line.contains("RotationX="))
-        {
-          split = line.split("=");
-          rotation.x = split[1].toFloat();
-        }
-        else if (line.contains("RotationY="))
-        {
-          split = line.split("=");
-          rotation.y = split[1].toFloat();
-        }
-        else if (line.contains("RotationZ="))
-        {
-          split = line.split("=");
-          rotation.z = split[1].toFloat();
-        }
-        else if (line.contains("ScaleX="))
-        {
-          split = line.split("=");
-          scale.x = split[1].toFloat();
-        }
-        else if (line.contains("ScaleY="))
-        {
-          split = line.split("=");
-          scale.y = split[1].toFloat();
-        }
-        else if (line.contains("ScaleZ="))
-        {
-          split = line.split("=");
-          scale.z = split[1].toFloat();
-        }
-        else if (line.contains("ColorR="))
-        {
-          split = line.split("=");
-          color.red = split[1].toFloat();
-        }
-        else if (line.contains("ColorG="))
-        {
-          split = line.split("=");
-          color.green = split[1].toFloat();
-        }
-        else if (line.contains("ColorB="))
-        {
-          split = line.split("=");
-          color.blue = split[1].toFloat();
-        }
-        else if (line.contains("END_VOLUME"))
-        {
-          WorldObject* worldObject = new WorldObject();
-          worldObject->setName(name);
-          worldObject->setPosition(position);
-          worldObject->setRotation(rotation);
-          worldObject->setScale(scale);
-          worldObject->setColor(color);
-          worldObject->setGroup(WorldObject::VOLUME);
 
-          //instantiate renderer ans set volume type
-          VolumeRenderer* volumeRenderer = new VolumeRenderer();
-          if (type == "Sphere")
-          {
-            volumeRenderer->setType(VolumeRenderer::SPHERE);
-          }
-          else if (type == "Cube")
-          {
-            volumeRenderer->setType(VolumeRenderer::CUBE);
-          }
-          else if (type == "Pyramid")
-          {
-            volumeRenderer->setType(VolumeRenderer::PYRAMID);
-          }
+        //add renderer to world object
+        worldObject->setMeshRenderer(pathRenderer);
 
-          //add renderer to world object
-          worldObject->setMeshRenderer(volumeRenderer);
+        //add world object to manager's list
+        WorldObjectManager::getInstance()->addWorldObject(worldObject);
 
-          //add world object to manager's list
-          WorldObjectManager::getInstance()->addWorldObject(worldObject);
+        //reset points vector
+        points.clear();
+      }
+    }
+  }
+  else if (fileType == VOLUMES_FILE)
+  {
+    QString name;
+    QString type;
+    SimpleVector position;
+    SimpleVector rotation;
+    SimpleVector scale;
+    SimpleColor color;
 
-        }//else if (line.contains("END_VOLUME"))
-      }//while (in.atEnd())
-    }//else if (fileType == VOLUMES_FILE)
-  }//no error reading
+    while (!in.atEnd())
+    {
+      line = in.readLine();
+
+      if (line.contains("Name="))
+      {
+        split = line.split("=");
+        name = split[1];
+      }
+      else if (line.contains("Type="))
+      {
+        split = line.split("=");
+        type = split[1];
+      }
+      else if (line.contains("PositionX="))
+      {
+        split = line.split("=");
+        position.x = split[1].toFloat();
+      }
+      else if (line.contains("PositionY="))
+      {
+        split = line.split("=");
+        position.y = split[1].toFloat();
+      }
+      else if (line.contains("PositionZ="))
+      {
+        split = line.split("=");
+        position.z = split[1].toFloat();
+      }
+      else if (line.contains("RotationX="))
+      {
+        split = line.split("=");
+        rotation.x = split[1].toFloat();
+      }
+      else if (line.contains("RotationY="))
+      {
+        split = line.split("=");
+        rotation.y = split[1].toFloat();
+      }
+      else if (line.contains("RotationZ="))
+      {
+        split = line.split("=");
+        rotation.z = split[1].toFloat();
+      }
+      else if (line.contains("ScaleX="))
+      {
+        split = line.split("=");
+        scale.x = split[1].toFloat();
+      }
+      else if (line.contains("ScaleY="))
+      {
+        split = line.split("=");
+        scale.y = split[1].toFloat();
+      }
+      else if (line.contains("ScaleZ="))
+      {
+        split = line.split("=");
+        scale.z = split[1].toFloat();
+      }
+      else if (line.contains("ColorR="))
+      {
+        split = line.split("=");
+        color.red = split[1].toFloat();
+      }
+      else if (line.contains("ColorG="))
+      {
+        split = line.split("=");
+        color.green = split[1].toFloat();
+      }
+      else if (line.contains("ColorB="))
+      {
+        split = line.split("=");
+        color.blue = split[1].toFloat();
+      }
+      else if (line.contains("END_VOLUME"))
+      {
+        WorldObject* worldObject = new WorldObject();
+        worldObject->setName(name);
+        worldObject->setPosition(position);
+        worldObject->setRotation(rotation);
+        worldObject->setScale(scale);
+        worldObject->setColor(color);
+        worldObject->setGroup(WorldObject::VOLUME);
+
+        //instantiate renderer ans set volume type
+        VolumeRenderer* volumeRenderer = new VolumeRenderer();
+        if (type == "Sphere")
+        {
+          volumeRenderer->setType(VolumeRenderer::SPHERE);
+        }
+        else if (type == "Cube")
+        {
+          volumeRenderer->setType(VolumeRenderer::CUBE);
+        }
+        else if (type == "Pyramid")
+        {
+          volumeRenderer->setType(VolumeRenderer::PYRAMID);
+        }
+
+        //add renderer to world object
+        worldObject->setMeshRenderer(volumeRenderer);
+
+        //add world object to manager's list
+        WorldObjectManager::getInstance()->addWorldObject(worldObject);
+
+      }//else if (line.contains("END_VOLUME"))
+    }//while (in.atEnd())
+  }//else if (fileType == VOLUMES_FILE)
 }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
- * Based on the file type, writes the current path or volume data to the given
- * file name.
+ * Based on the file type, writes the current label, path or volume data to the
+ * given file name.
  *
  * @param fileName File name to write data to
  * @param fileType See file type enum in header declaration
@@ -284,10 +351,11 @@ void FileIO::readFile(const QString& fileName)
 void FileIO::writeFile(const QString& fileName, int fileType)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
+  //attempt to open file for writing
   QFile file(fileName);
   if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
   {
-    QMessageBox::critical(NULL, "Error", "Error writing file.");
+    QMessageBox::critical(NULL, "Error", "Error opening file for writing.");
     return;
   }
 
@@ -295,7 +363,33 @@ void FileIO::writeFile(const QString& fileName, int fileType)
   WorldObjectManager* worldObjectManager = WorldObjectManager::getInstance();
   WorldObject* worldObject = NULL;
 
-  if (fileType == PATHS_FILE)
+  if (fileType == LABELS_FILE)
+  {
+    out << "LABELS" << "\n";
+    SimpleVector position;
+    SimpleColor color;
+    for (int i = 0; i < worldObjectManager->getNumberOfObjects(); i++)
+    {
+      worldObject = worldObjectManager->getWorldObject(i);
+      if (worldObject!=NULL && !worldObject->getHasExpired() && worldObject->getGroup()==WorldObject::LABEL)
+      {
+        out << "LabelText=" << worldObject->getName() << "\n";
+
+        position = worldObject->getPosition();
+        out << "PositionX=" << position.x << "\n";
+        out << "PositionY=" << position.y << "\n";
+        out << "PositionZ=" << position.z << "\n";
+
+        color = worldObject->getColor();
+        out << "ColorR=" << color.red << "\n";
+        out << "ColorG=" << color.green << "\n";
+        out << "ColorB=" << color.blue << "\n";
+
+        out << "END_LABEL" << "\n";
+      }
+    }//end of for loop
+  }
+  else if (fileType == PATHS_FILE)
   {
     int i,j;
     QList<SimpleVector>* pointList;
@@ -377,5 +471,5 @@ void FileIO::writeFile(const QString& fileName, int fileType)
         out << "END_VOLUME" << "\n";
       }
     }//end of for loop
-  }//end of else if volumes
+  }//end of else if (fileType == VOLUMES_FILE)
 }

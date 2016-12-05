@@ -27,8 +27,8 @@
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
- * This class handles the reading and writing of files such as volumes
- * and paths.
+ * This class encapsulates the functionality behind the reading and writing of
+ * files that contain data for labels, paths and volumes in the system.
  *
  * @version 1.1
  * @author Hector Mendoza
@@ -39,6 +39,7 @@ class FileIO
   public:
     enum FileType
     {
+      LABELS_FILE,
       PATHS_FILE,
       VOLUMES_FILE
     };
