@@ -25,6 +25,7 @@
 
 #include <QDialog>
 #include <QString>
+
 #include "WorldObject.h"
 #include "globals.h"
 
@@ -62,8 +63,8 @@ class VolumeWindow : public QDialog
     void onLatitudeChange();
     void onLongitudeChange();
     void onAltitudeChange();
-    void onRotationSliderMoved(int value);
-    void onScaleSliderMoved(int value);
+    void onRotationSliderMoved(int);
+    void onScaleChange(double);
     void onAccept();
     void onReject();
 

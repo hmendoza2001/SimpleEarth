@@ -33,7 +33,8 @@
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
- * Constructor. Initializes attributes. Connects signals and slots.
+ * Constructor. Calls parent constructor and initializes attributes. Connects
+ * signals and slots.
  *
  * @param parent Handle to parent widget
  */
@@ -50,9 +51,6 @@ VolumeWindow::VolumeWindow(QWidget *parent) : QDialog(parent), ui(new Ui::Volume
   ui->rotationXSlider->setTracking(true);
   ui->rotationYSlider->setTracking(true);
   ui->rotationZSlider->setTracking(true);
-  ui->scaleXSlider->setTracking(true);
-  ui->scaleYSlider->setTracking(true);
-  ui->scaleZSlider->setTracking(true);
 
   connect(ui->typeComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(onTypeChange(int)));
   connect(ui->color, SIGNAL(colorSelected()), this, SLOT(onColorSelected()));
@@ -62,16 +60,16 @@ VolumeWindow::VolumeWindow(QWidget *parent) : QDialog(parent), ui(new Ui::Volume
   connect(ui->rotationXSlider, SIGNAL(valueChanged(int)), this, SLOT(onRotationSliderMoved(int)));
   connect(ui->rotationYSlider, SIGNAL(valueChanged(int)), this, SLOT(onRotationSliderMoved(int)));
   connect(ui->rotationZSlider, SIGNAL(valueChanged(int)), this, SLOT(onRotationSliderMoved(int)));
-  connect(ui->scaleXSlider, SIGNAL(valueChanged(int)), this, SLOT(onScaleSliderMoved(int)));
-  connect(ui->scaleYSlider, SIGNAL(valueChanged(int)), this, SLOT(onScaleSliderMoved(int)));
-  connect(ui->scaleZSlider, SIGNAL(valueChanged(int)), this, SLOT(onScaleSliderMoved(int)));
+  connect(ui->scaleXSpinBox, SIGNAL(valueChanged(double)), this, SLOT(onScaleChange(double)));
+  connect(ui->scaleYSpinBox, SIGNAL(valueChanged(double)), this, SLOT(onScaleChange(double)));
+  connect(ui->scaleZSpinBox, SIGNAL(valueChanged(double)), this, SLOT(onScaleChange(double)));
   connect(this, SIGNAL(accepted()), this, SLOT(onAccept()));
   connect(this, SIGNAL(rejected()), this, SLOT(onReject()));
 }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
- * Destructor.
+ * Destructor. Releases allocated resources.
  */
 VolumeWindow::~VolumeWindow()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -81,8 +79,8 @@ VolumeWindow::~VolumeWindow()
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
- * This function gets called when the user clicks on the volume tool button.
- * It initializes the data displayed.
+ * This function gets called when the user clicks on the volume tool button. It
+ * initializes the tool's data and the data displayed in the dialog.
  */
 void VolumeWindow::initialize()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -131,22 +129,22 @@ void VolumeWindow::initialize()
   ui->rotationZSlider->setValue(rotation.z);
   volumeTool->setRotation(rotation);
 
-  //initialize to scale of 1
+  //initialize to scale of 10 Km
   SimpleVector scale;
   scale.x = 1.0f;
   scale.y = 1.0f;
   scale.z = 1.0f;
-  ui->scaleXSlider->setValue(scale.x*10.0);
-  ui->scaleYSlider->setValue(scale.y*10.0);
-  ui->scaleZSlider->setValue(scale.z*10.0);
+  ui->scaleXSpinBox->setValue(scale.x);
+  ui->scaleYSpinBox->setValue(scale.y);
+  ui->scaleZSpinBox->setValue(scale.z);
   volumeTool->setScale(scale);
 }
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
  * Sets up this window in volume edit mode. We fetch all the attributes from
- * the given volume name and populate the data accordingly. We also set
- * the appropriate rendering parameters.
+ * the given volume name and populate the data accordingly. We also set the
+ * appropriate rendering parameters.
  *
  * @param volumeName Name of the volume we are editing.
  */
@@ -193,9 +191,9 @@ void VolumeWindow::setupEdit(const QString& volumeName)
     ui->rotationYSlider->setValue(rotation.y);
     ui->rotationZSlider->setValue(rotation.z);
     SimpleVector scale = mEditWorldObject->getScale();
-    ui->scaleXSlider->setValue(scale.x*10.0);
-    ui->scaleYSlider->setValue(scale.y*10.0);
-    ui->scaleZSlider->setValue(scale.z*10.0);
+    ui->scaleXSpinBox->setValue(scale.x);
+    ui->scaleYSpinBox->setValue(scale.y);
+    ui->scaleZSpinBox->setValue(scale.z);
     QColor color;
     SimpleColor simpleColor = mEditWorldObject->getColor();
     color.setRedF(simpleColor.red);
@@ -218,7 +216,8 @@ void VolumeWindow::setupEdit(const QString& volumeName)
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
- * Updates the latitude, longitude and altitude fields in the window.
+ * Updates the latitude, longitude and altitude fields in the window. This
+ * method gets called back on a mouse pick from the tool.
  *
  * @param position XYZ position
  */
@@ -239,8 +238,8 @@ void VolumeWindow::setPosition(const SimpleVector& position)
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
- * Qt SLOT. Selects the current volume type to be rendered by the VolumeTool
- * object.
+ * Qt SLOT. Gets called when the user selects a different volume type. Sets the
+ * corresponding changes in the tool.
  *
  * @param index Current combo box index selected
  */
@@ -253,8 +252,9 @@ void VolumeWindow::onTypeChange(int index)
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
- * Qt SLOT. This slot will modify the current volume color to be rendered by the
- * VolumeTool object.
+ * Qt SLOT. Gets called when the user changes the volume color via the Color
+ * Select Widget. Sets the corresponding change in the tool to modify the
+ * current rendering color for the volume.
  */
 void VolumeWindow::onColorSelected()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -271,7 +271,8 @@ void VolumeWindow::onColorSelected()
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
- * Qt SLOT. Sets the current latitude for the volume.
+ * Qt SLOT. Gets called when the user changes the latitude in the dialog. Sets
+ * the corresponding change in the tool.
  */
 void VolumeWindow::onLatitudeChange()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -286,7 +287,8 @@ void VolumeWindow::onLatitudeChange()
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
- * Qt SLOT. Sets the current longitude for the volume.
+ * Qt SLOT. Gets called when the user changes the longitude in the dialog. Sets
+ * the corresponding change in the tool.
  */
 void VolumeWindow::onLongitudeChange()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -301,7 +303,8 @@ void VolumeWindow::onLongitudeChange()
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
- * Qt SLOT. Sets the current altitude for the volume.
+ * Qt SLOT. Gets called when the user changes the altitude in the dialog. Sets
+ * the corresponding change in the tool.
  */
 void VolumeWindow::onAltitudeChange()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -316,7 +319,8 @@ void VolumeWindow::onAltitudeChange()
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
- * Qt SLOT. Gets called when either the X, Y or Z sliders for rotation are moved.
+ * Qt SLOT. Gets called when either the X, Y or Z sliders for rotation are
+ * moved. Sets the corresponding changes in the tool.
  *
  * @param value Current slider value (not used but necessary for override)
  */
@@ -335,21 +339,17 @@ void VolumeWindow::onRotationSliderMoved(int)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 /**
  * Qt SLOT. Gets called when either the X, Y or Z sliders for scaling are moved.
+ * Sets the corresponding changes in the tool.
  *
  * @param value Current slider value (not used but necessary for override)
  */
-void VolumeWindow::onScaleSliderMoved(int)
+void VolumeWindow::onScaleChange(double)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 {
   SimpleVector scale;
-  scale.x = ui->scaleXSlider->value();
-  scale.y = ui->scaleYSlider->value();
-  scale.z = ui->scaleZSlider->value();
-
-  //divide scale by 10 to normalize it
-  scale.x = scale.x/10.0f;
-  scale.y = scale.y/10.0f;
-  scale.z = scale.z/10.0f;
+  scale.x = ui->scaleXSpinBox->value();
+  scale.y = ui->scaleYSpinBox->value();
+  scale.z = ui->scaleZSpinBox->value();
 
   VolumeTool* volumeTool = (VolumeTool*)ToolManager::getInstance()->getTool("Volume");
   volumeTool->setScale(scale);
@@ -359,8 +359,8 @@ void VolumeWindow::onScaleSliderMoved(int)
 /**
  * Qt SLOT. Gets called when the user clicks the OK button. If in edit mode,
  * call aprorpiate method to finalize volume editing. Otherwise, it calls the
- * volume world object to attempt to add volume, displays warning message if
- * world object name is already used.
+ * volume tool to attempt to add a volume, displays warning message if volume
+ * name is already used.
  */
 void VolumeWindow::onAccept()
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
