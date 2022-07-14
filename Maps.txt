@@ -1,6 +1,6 @@
 # This file specifies a list of custom maps to be loaded
 # by the system. The format should look like the following:
-# #-----MAP 1-----
+# #-----MAP 1-----2022
 # SWLat=32:00:00.0N
 # SWLon=106:00:00.0W
 # SWAlt=10
