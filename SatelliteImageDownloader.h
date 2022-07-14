@@ -1,6 +1,6 @@
 /*
  *  The Simple Earth Project
- *  Copyright (C) 2016 HueSoft LLC
+ *  Copyright (C) 2022 HueSoft LLC
  *  Author: Hector Mendoza, hector.mendoza@huesoftllc.com
  *
  *  This file is part of the Simple Earth Project.
@@ -100,7 +100,7 @@ class SatelliteImageDownloader : public QThread
 
   signals:
     void sendNetworkRequest(QString url);//signal to sync request back to Qt's main thread
-		
+
   private:
     void downloadTiles();
     void findTileLocation(int row, int column, double tileWidthDeg, double tileHeightMeters, Tile& tile);

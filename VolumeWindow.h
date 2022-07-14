@@ -1,6 +1,6 @@
 /*
  *  The Simple Earth Project
- *  Copyright (C) 2016 HueSoft LLC
+ *  Copyright (C) 2022 HueSoft LLC
  *  Author: Hector Mendoza, hector.mendoza@huesoftllc.com
  *
  *  This file is part of the Simple Earth Project.
@@ -56,7 +56,7 @@ class VolumeWindow : public QDialog
     void setupEdit(const QString& volumeName);
     void setPosition(const SimpleVector& position);
     void closeEvent(QCloseEvent* event);//OVERRIDE
-  
+
   public slots:
     void onTypeChange(int index);
     void onColorSelected();
