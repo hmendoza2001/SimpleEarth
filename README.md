@@ -58,12 +58,9 @@ Contact us
 ----------
 
    * [Web][1]
-   * [Facebook][3]
-   * [Google+][4]
-   * [LinkedIn][5]
+   * [Facebook][2]
+   * [LinkedIn][3]
 
 [1]: http://www.huesoftllc.com
-[2]: http://www.huesoftllc.com/instructions.html
-[3]: https://www.facebook.com/huesoftllc
-[4]: https://plus.google.com/113335173892471555886/about/p/pub
-[5]: https://www.linkedin.com/company/huesoft-llc?trk=top_nav_home
+[2]: https://www.facebook.com/huesoftllc
+[3]: https://www.linkedin.com/company/huesoft-llc?trk=top_nav_home

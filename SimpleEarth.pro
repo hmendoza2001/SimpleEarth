@@ -1,5 +1,5 @@
 TEMPLATE = app
-TARGET = SimpleEarth
+TARGET = SimpleEarth2022
 
 QT = core gui opengl network
 
