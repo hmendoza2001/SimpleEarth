@@ -58,9 +58,11 @@ Contact us
 ----------
 
    * [Web][1]
-   * [Facebook][2]
-   * [LinkedIn][3]
+   * [YouTube][2]
+   * [Twitch][3]
+   * [LinkedIn][4]
 
 [1]: http://www.huesoftllc.com
-[2]: https://www.facebook.com/huesoftllc
-[3]: https://www.linkedin.com/company/huesoft-llc?trk=top_nav_home
+[2]: https://www.youtube.com/hectormendoza2001
+[3]: https://www.twitch.tv/hmendoza2001
+[4]: https://www.linkedin.com/in/hector-v-mendoza-940b5149/
