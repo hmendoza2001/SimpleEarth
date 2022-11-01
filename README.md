@@ -1,4 +1,4 @@
-<img src="http://www.huesoftllc.com/slider1.jpg" width=400>
+<img src="http://www.huesoftllc.com/oldPage/slider1.jpg" width=400>
 
 
 SimpleEarth
